@@ -11,12 +11,19 @@ Perform comprehensive analysis of Claude conversation exports to:
 4. Provide implementation roadmap and maintenance guidance
 
 ## Input Format
-The user will provide a JSON export from Claude containing their complete conversation history. Each conversation includes messages, timestamps, and metadata.
+The user will provide JSON exports from Claude containing:
+1. **conversations.json** - Complete conversation history with messages, timestamps, and metadata
+2. **projects.json** - Project information including descriptions, documentation, and workflows
+3. **users.json** - User account information (for privacy considerations and expertise assessment)
 
 ## Analysis & Generation Framework
 
 ### Phase 1: Data Processing & Pattern Discovery
-1. **Parse the JSON export** and extract all conversations
+1. **Parse the JSON exports** and extract:
+   - All conversations from conversations.json
+   - Project information from projects.json
+   - User context from users.json (for expertise assessment)
+
 2. **Categorize conversations** by:
    - Topic/domain (coding, writing, business, analysis, creative)
    - Task type (creation, transformation, analysis, planning, troubleshooting)
@@ -24,39 +31,58 @@ The user will provide a JSON export from Claude containing their complete conver
    - Complexity level (simple one-off vs. multi-step workflows)
    - User satisfaction indicators (refinements, positive feedback, reuse)
 
-3. **Pattern identification:**
+3. **Analyze project patterns** from projects.json:
+   - **Project types**: What kinds of projects does the user create?
+   - **Documentation patterns**: How do they structure project documentation?
+   - **Workflow indicators**: Project descriptions that reveal recurring processes
+   - **Collaboration patterns**: Projects that involve team workflows
+   - **Tool preferences**: Technologies and platforms used in projects
+   - **Domain expertise**: Subject areas and industries represented
+
+4. **Pattern identification:**
    - **Explicit task patterns**: "Create a [X] with [Y] requirements"
    - **Implicit workflow patterns**: Multi-turn conversations with consistent structure
    - **Iterative refinement patterns**: User repeatedly asks for similar modifications
    - **Template-based requests**: Variable inputs with consistent output structure
    - **Correction patterns**: User consistently requests same types of adjustments
+   - **Project-conversation alignment**: How conversations relate to project work
 
-4. **Quality and preference extraction:**
+5. **Quality and preference extraction:**
    - Document structures and formatting preferences
    - Tone and voice consistency patterns
    - Code style preferences (languages, frameworks, conventions)
    - Citation and reference style preferences
+   - Project documentation standards and conventions
 
-5. **User expertise evolution tracking:**
+6. **User expertise evolution tracking:**
    - Track how user's skill level and terminology evolve over time
    - Identify learning curves and mastery progression
    - Note when user transitions from basic to advanced requests
    - Adapt skill complexity to match user's current expertise level
+   - Cross-reference project complexity with conversation sophistication
 
 ### Phase 2: Frequency & Temporal Analysis
 For each identified pattern:
-1. **Count occurrences** across entire conversation history
+1. **Count occurrences** across entire conversation history and project work
 2. **Calculate temporal distribution:**
    - First and most recent occurrence dates
    - Frequency trends (increasing/stable/decreasing)
    - Clustering patterns (bursts vs. distributed)
    - Seasonal/cyclical patterns (weekly/monthly/event-driven)
+   - Project lifecycle patterns (start/middle/end phases)
 
-3. **Impact assessment:**
+3. **Cross-reference with project data:**
+   - How many projects demonstrate similar patterns?
+   - Do project descriptions reinforce conversation patterns?
+   - Are there project-specific workflows not visible in conversations?
+   - Project success indicators and user satisfaction
+
+4. **Impact assessment:**
    - Business criticality indicators
    - Time investment per occurrence
    - Quality improvement potential
    - Error reduction opportunities
+   - Project success metrics and outcomes
 
 ### Phase 3: Complexity & Standardization Assessment
 For each pattern, evaluate:
@@ -258,10 +284,11 @@ For each skill, verify:
 
 ### Executive Summary
 - **Total conversations analyzed**: [X] conversations over [Y] days
-- **Patterns identified**: [N] distinct task patterns
+- **Total projects analyzed**: [N] projects with [Z] distinct types
+- **Patterns identified**: [P] distinct task patterns across conversations and projects
 - **Skills recommended**: [M] skills (after overlap resolution)
 - **Implementation priority**: [Top 3-5 with rationale]
-- **Estimated impact**: [Time savings, quality improvement]
+- **Estimated impact**: [Time savings, quality improvement, project efficiency]
 
 ### Skill Package Overview
 | Skill Name | Priority | Frequency | Impact | Overlaps Resolved |
@@ -282,9 +309,11 @@ For each skill include:
 
 #### 2. Representative Evidence
 - 3-5 actual conversation excerpts (anonymized for privacy)
-- Pattern analysis with common elements
+- 2-3 relevant project examples (anonymized for privacy)
+- Pattern analysis with common elements across conversations and projects
 - Variations and edge cases identified
 - Quality indicators and user satisfaction
+- Project success metrics and outcomes
 
 #### 3. Generated Implementation
 **Complete file structure with content:**
@@ -435,4 +464,4 @@ Before finalizing the implementation package:
 
 **Note**: Use ultrathink throughout the analysis to ensure comprehensive pattern identification and optimal skill generation. Focus on creating immediately usable, high-quality skills that will genuinely improve the user's Claude interaction efficiency.
 
-The JSON files are located in the current directory for analysis.
+The JSON files (conversations.json, projects.json, users.json) are located in the current directory for analysis.
