@@ -1,0 +1,53 @@
+# Claude Conversation Data
+*.json
+conversations/
+exports/
+chat-data/
+
+# Personal/Sensitive Files
+.env
+.env.local
+secrets/
+private/
+
+# System Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Output directories that might contain personal data
+output/
+results/
+generated-skills/
+analysis-results/
