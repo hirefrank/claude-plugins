@@ -31,7 +31,7 @@ This repository contains tools and prompts to analyze your Claude conversation p
 
 ```bash
 # Clone this repository
-git clone <your-repo-url>
+git clone https://github.com/hirefrank/claude_skills
 cd claude-skills
 
 # Copy your json file frop Step 1 to this folder
@@ -195,6 +195,3 @@ MIT License - Feel free to use, modify, and distribute for personal and commerci
 - Inspired by the need for more efficient AI workflows
 - Developed through analysis of real-world Claude usage patterns
 
----
-
-**Ready to transform your Claude workflows?** Start by exporting your conversation history and running the enhanced discovery prompt!
