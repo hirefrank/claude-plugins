@@ -82,6 +82,3 @@ I'll perform cross-platform analysis to identify your workflow patterns:
 
 This will give you the most accurate picture of your AI usage patterns.
 ```
-
-For more examples, see [examples.md](examples.md).
-For detailed methodology, see [reference.md](reference.md).
