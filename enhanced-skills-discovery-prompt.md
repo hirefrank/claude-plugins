@@ -9,84 +9,79 @@ Perform comprehensive analysis of Claude conversation exports to:
 2. Eliminate redundancies and optimize skill boundaries  
 3. Generate complete, ready-to-use skill packages
 4. Provide implementation roadmap and maintenance guidance
+5. **Enable incremental processing** - skip previously analyzed conversations and build on prior work
 
 ## Input Format
-The user will provide JSON exports from either Claude or ChatGPT containing:
+Place your conversation export files in the organized directory structure:
 
-### Claude Export Format:
+```
+claude_skills/
+├── data-exports/
+│   ├── chatgpt/          # Place ChatGPT export files here
+│   │   ├── conversations.json
+│   │   ├── user.json
+│   │   ├── shared_conversations.json
+│   │   └── message_feedback.json (optional)
+│   └── claude/           # Place Claude export files here
+│       ├── conversations.json
+│       ├── projects.json
+│       └── users.json
+└── reports/              # Generated analysis reports (timestamped)
+    └── {TIMESTAMP}/
+```
+
+### Claude Export Format (data-exports/claude/):
 1. **conversations.json** - Complete conversation history with messages, timestamps, and metadata
 2. **projects.json** - Project information including descriptions, documentation, and workflows
 3. **users.json** - User account information (for privacy considerations and expertise assessment)
 
-### ChatGPT Export Format:
+### ChatGPT Export Format (data-exports/chatgpt/):
 1. **conversations.json** - Conversation history with mapping structure and message objects
-2. **shared_conversations.json** - Shared conversation metadata with titles and IDs
-3. **user.json** - User profile information with account details
+2. **user.json** - User profile information with account details
+3. **shared_conversations.json** - Shared conversation metadata with titles and IDs
 4. **message_feedback.json** - User feedback on AI responses (if available)
 5. **shopping.json** - Transaction and purchase data (if available)
-6. **projects.json** - Project data (may be empty or different structure)
-7. **users.json** - User data (may be empty or different structure)
 
 ### Platform Detection:
-Automatically detect the export format by analyzing file structures and adapt processing accordingly.
+Automatically detect available platforms by scanning both data-exports/ directories and adapt processing accordingly.
 
 ## Analysis & Generation Framework
 
+### Phase 0: Analysis Scope Determination
+
+1. **Check for Previous Analysis Log**:
+   - If user provides a previous analysis log (from prior runs), parse it to identify:
+     - Previously analyzed conversation IDs and their analysis dates
+     - Generated skills and their source conversations
+     - File modification dates or content hashes of processed files
+     - Analysis metadata (dates, conversation counts, skill counts)
+
+2. **Determine Analysis Scope**:
+   - Compare current conversation files with previous analysis log
+   - Identify new conversations (not in previous log)
+   - Identify potentially modified conversations (based on message counts, dates, or user indication)
+   - Flag conversations that need analysis vs. those to skip for efficiency
+
+3. **Output Analysis Plan**:
+   - List conversations to be analyzed (new + potentially modified)
+   - List conversations being skipped (unchanged from previous run)
+   - Estimated processing scope and rationale
+   - Expected time and complexity of analysis
+
 ### Phase 1: Data Processing & Pattern Discovery
 1. **Platform Detection and Data Parsing**:
-   - Detect export format (Claude vs ChatGPT) by analyzing file structures
-   - Parse available files based on detected platform
-   - Handle different conversation message formats and metadata structures
-   - Extract user context from appropriate user files (users.json for Claude, user.json for ChatGPT)
+   - Auto-detect export format (Claude vs ChatGPT) 
+   - Parse conversations, projects, user data based on platform
+   - Extract expertise indicators and usage patterns
 
-2. **Extract and Normalize Data**:
-   - **Conversations**: Parse message content from both conversation formats
-   - **Projects**: Extract from projects.json (Claude) or handle empty/missing (ChatGPT)
-   - **User Profile**: Get expertise indicators from user files
-   - **Additional Data**: Process shared_conversations.json, message_feedback.json, shopping.json for ChatGPT
-
-3. **Categorize conversations** by:
-   - Topic/domain (coding, writing, business, analysis, creative)
-   - Task type (creation, transformation, analysis, planning, troubleshooting)
-   - Output format (documents, code, presentations, structured data)
-   - Complexity level (simple one-off vs. multi-step workflows)
-   - User satisfaction indicators (refinements, positive feedback, reuse, message feedback)
-
-4. **Analyze project patterns** (if available):
-   - **Project types**: What kinds of projects does the user create?
-   - **Documentation patterns**: How do they structure project documentation?
-   - **Workflow indicators**: Project descriptions that reveal recurring processes
-   - **Collaboration patterns**: Projects that involve team workflows
-   - **Tool preferences**: Technologies and platforms used in projects
-   - **Domain expertise**: Subject areas and industries represented
-
-5. **Analyze ChatGPT-specific patterns** (if applicable):
-   - **Shared conversation themes**: From shared_conversations.json titles
-   - **Feedback patterns**: From message_feedback.json
-   - **Purchase/usage patterns**: From shopping.json (if relevant to workflow analysis)
-   - **Conversation sharing behavior**: Patterns in what gets shared
-
-4. **Pattern identification:**
-   - **Explicit task patterns**: "Create a [X] with [Y] requirements"
-   - **Implicit workflow patterns**: Multi-turn conversations with consistent structure
-   - **Iterative refinement patterns**: User repeatedly asks for similar modifications
-   - **Template-based requests**: Variable inputs with consistent output structure
-   - **Correction patterns**: User consistently requests same types of adjustments
-   - **Project-conversation alignment**: How conversations relate to project work
-
-5. **Quality and preference extraction:**
-   - Document structures and formatting preferences
-   - Tone and voice consistency patterns
-   - Code style preferences (languages, frameworks, conventions)
-   - Citation and reference style preferences
-   - Project documentation standards and conventions
-
-6. **User expertise evolution tracking:**
-   - Track how user's skill level and terminology evolve over time
-   - Identify learning curves and mastery progression
-   - Note when user transitions from basic to advanced requests
-   - Adapt skill complexity to match user's current expertise level
-   - Cross-reference project complexity with conversation sophistication
+2. **Categorize and analyze patterns:**
+   - Topic/domain clustering (coding, writing, business, analysis)
+   - Task types (creation, transformation, analysis, troubleshooting)
+   - Output formats and user preferences
+   - Explicit patterns: "Create a [X] with [Y] requirements"
+   - Implicit workflows: Multi-turn conversation structures
+   - Iterative refinement patterns and correction types
+   - User expertise evolution over time
 
 ### Phase 2: Frequency & Temporal Analysis
 For each identified pattern:
@@ -156,6 +151,46 @@ For each pattern, evaluate:
    - Validate pattern significance using statistical methods
    - Filter out one-off requests that appear similar but lack consistency
    - Ensure patterns represent genuine user needs rather than random occurrences
+
+### Phase 4.5: Cross-Platform Pattern Deduplication
+
+When processing mixed datasets (both ChatGPT and Claude exports), perform comprehensive deduplication before skill generation:
+
+#### 1. **Content Similarity Detection**
+- **Semantic matching**: Compare conversation titles, summaries, and key topics using content similarity
+- **Temporal correlation**: Flag conversations within 24-48 hours discussing identical or closely related topics
+- **Draft content overlap**: Detect when same document drafts, emails, or content pieces appear across platforms
+- **Workflow sequence matching**: Identify multi-platform workflows (e.g., research in ChatGPT → writing in Claude)
+
+#### 2. **Deduplication Classification Rules**
+- **Exact duplicates** (>90% content similarity): Remove from frequency counts completely
+- **Cross-platform workflows** (same project, different phases): Count as single workflow instance
+- **Platform preference patterns**: Analyze which platform user prefers for specific task types
+- **Complementary usage**: Preserve when platforms serve genuinely different purposes in workflow
+
+#### 3. **Pattern Frequency Recalculation**
+- **Adjust occurrence counts**: Subtract duplicate instances from frequency totals
+- **Merge conversation evidence**: Combine excerpts from both platforms for stronger pattern evidence
+- **Recalculate skill-worthiness scores**: Update frequency-based scoring after deduplication
+- **Platform usage insights**: Note platform preferences for different task types
+
+#### 4. **Unified Skill Design Preparation**
+- **Platform-agnostic skill definitions**: Design skills that work regardless of AI platform used
+- **Cross-platform workflow support**: Include guidance for multi-platform processes
+- **Platform-specific usage notes**: Document when certain platforms excel for specific steps
+- **Consolidated skill boundaries**: Merge similar patterns that appeared platform-specific
+
+#### 5. **Deduplication Validation**
+- **Statistical significance check**: Ensure patterns remain statistically significant after deduplication
+- **Evidence quality assessment**: Verify sufficient conversation examples remain after merging
+- **Pattern authenticity confirmation**: Distinguish genuine user patterns from platform-switching noise
+- **Frequency threshold re-evaluation**: Re-apply minimum occurrence thresholds post-deduplication
+
+**Deduplication Quality Standards:**
+- Minimum 3 unique workflow instances required post-deduplication
+- Cross-platform patterns must show genuine workflow integration, not random platform switching
+- Platform preference data should inform skill design, not create separate skills
+- Maintain detailed log of deduplication decisions for transparency
 
 ### Phase 5: Skill Generation & Optimization
 
@@ -229,14 +264,17 @@ skill-name/
 ### SKILL.md Generation Template
 ```yaml
 ---
-name: [Skill Name]
+name: [skill-name]  # Only lowercase letters, numbers, and hyphens. Use gerund form (processing-pdfs, analyzing-data)
+description: [CRITICAL: Must include BOTH what skill does AND when to use it. Written in third person. Include key trigger terms. Example: "Analyzes Excel spreadsheets, creates pivot tables, generates charts. Use when analyzing Excel files, spreadsheets, tabular data, or .xlsx files."]
+---
+name: [skill-name-with-hyphens]  # MUST be lowercase letters, numbers, and hyphens ONLY (no spaces, no uppercase)
 description: [Optimized description for Claude's discovery algorithm - includes what skill does AND when to use it]
 ---
 
-# [Skill Name]
+# [Skill Name]  # Title case for display
 
 ## Instructions
-[Clear, step-by-step guidance for Claude]
+[Clear, step-by-step guidance for Claude - KEEP UNDER 500 LINES TOTAL]
 
 1. **[Phase 1 Name]**
    - [Specific instruction 1]
@@ -253,6 +291,11 @@ description: [Optimized description for Claude's discovery algorithm - includes 
 4. **[Quality Standards]**:
    - [Standard 1]
    - [Standard 2]
+
+**Progressive Disclosure Notes:**
+- Keep SKILL.md focused on overview and workflow
+- Move detailed methodology to reference.md
+- Use one-level-deep references only (no nested linking)
 
 ## Examples
 
@@ -292,9 +335,17 @@ For detailed methodology, see [reference.md](reference.md).
 
 ### Quality Assurance Framework
 
+#### Evaluation-First Development
+For each high-priority skill, CREATE EVALUATIONS BEFORE generating extensive content:
+1. **Identify specific gaps** in Claude's current performance for this task type
+2. **Create 3 test scenarios** that demonstrate these gaps
+3. **Generate minimal viable skill** to address these gaps
+4. **Test against scenarios** to validate effectiveness
+5. **Iterate based on results** rather than assumptions
+
 #### Generated Skill Validation
 For each skill, verify:
-1. **Description field optimization** for Claude's discovery
+1. **Description field optimization** - includes both WHAT and WHEN, third person, trigger terms
 2. **Cross-reference validation** - all file links work
 3. **Example completeness** - covers main use cases
 4. **Template usability** - actually usable for intended purpose
@@ -307,80 +358,120 @@ For each skill, verify:
 - [ ] References provide adequate detail
 - [ ] Integration notes are accurate
 
-## Complete Output Structure
+### Anti-Patterns to Avoid
+- [ ] **Overly verbose explanations** - Don't explain what Claude already knows
+- [ ] **Too many options** - Provide default approach with escape hatch
+- [ ] **Vague descriptions** - Include specific trigger terms and contexts
+- [ ] **Deep reference nesting** - Keep all references one level from SKILL.md
+- [ ] **Time-sensitive info** - Use "legacy patterns" sections instead
+- [ ] **Inconsistent terminology** - Choose one term and stick with it
 
-### Executive Summary
-- **Total conversations analyzed**: [X] conversations over [Y] days
-- **Total projects analyzed**: [N] projects with [Z] distinct types
-- **Patterns identified**: [P] distinct task patterns across conversations and projects
-- **Skills recommended**: [M] skills (after overlap resolution)
-- **Implementation priority**: [Top 3-5 with rationale]
-- **Estimated impact**: [Time savings, quality improvement, project efficiency]
+## Output File Structure
 
-### Skill Package Overview
-| Skill Name | Priority | Frequency | Impact | Overlaps Resolved |
-|------------|----------|-----------|--------|-------------------|
-| [Skill 1] | High | [X] uses | [Impact] | [Resolution] |
-| [Skill 2] | High | [Y] uses | [Impact] | [Resolution] |
+### Report Organization
+All analysis reports are saved to: `reports/{TIMESTAMP}/`
+- **TIMESTAMP format**: `YYYY-MM-DD_HH-MM-SS` (e.g., `2025-01-23_22-40-00`)
+- **Purpose**: Enables historical tracking and comparison of analyses
 
-### Detailed Skill Analysis
-For each skill include:
+### Generated Files (3-file optimized structure)
 
-#### 1. Skill Specification & Metrics
-- **Name**: [Optimized for user terminology]
-- **Description**: [What it does + when to use it]
-- **Frequency**: [X] occurrences over [Y] timespan
-- **Temporal Pattern**: [Weekly/Monthly/Event-driven/Increasing trend]
-- **Skill-Worthiness Score**: [X/10] with breakdown
-- **Overlaps Resolved**: [Which potential skills were consolidated]
-
-#### 2. Representative Evidence
-- 3-5 actual conversation excerpts (anonymized for privacy)
-- 2-3 relevant project examples (anonymized for privacy)
-- Pattern analysis with common elements across conversations and projects
-- Variations and edge cases identified
-- Quality indicators and user satisfaction
-- Project success metrics and outcomes
-
-#### 3. Generated Implementation
-**Complete file structure with content:**
+#### 1. `skills-analysis-log.json` (Root directory)
+**Purpose**: Machine-readable incremental processing data
+**Contents**:
+```json
+{
+  "analysis_date": "YYYY-MM-DDTHH:MM:SSZ",
+  "platform_detected": "claude|chatgpt|mixed",
+  "total_conversations": 150,
+  "report_directory": "reports/2025-01-23_22-40-00",
+  "conversations_analyzed": [
+    {
+      "id": "conv_123",
+      "platform": "chatgpt|claude",
+      "file": "data-exports/chatgpt/conversations.json",
+      "message_count": 45,
+      "first_message_date": "2024-01-01T10:00:00Z",
+      "last_message_date": "2024-01-10T14:20:00Z",
+      "analysis_hash": "sha256:abc123...",
+      "topics_identified": ["coding", "documentation"],
+      "patterns_found": 3
+    }
+  ],
+  "deduplication_summary": {
+    "cross_platform_duplicates_removed": 45,
+    "workflow_instances_merged": 12,
+    "frequency_adjustments": {
+      "newsletter_critique": {"before": 1225, "after": 987},
+      "business_communication": {"before": 709, "after": 643}
+    }
+  },
+  "skills_generated": [
+    {
+      "skill_name": "newsletter-critique-specialist",
+      "source_conversations": ["conv_123", "conv_789"],
+      "frequency_score": 8,
+      "impact_score": 9,
+      "platform_coverage": "both",
+      "generated_files": [
+        "generated-skills/newsletter-critique-specialist/SKILL.md",
+        "generated-skills/newsletter-critique-specialist/reference.md",
+        "generated-skills/newsletter-critique-specialist/examples.md"
+      ]
+    }
+  ],
+  "analysis_metadata": {
+    "total_patterns_identified": 25,
+    "patterns_consolidated": 8,
+    "patterns_deduplicated": 6,
+    "final_skill_count": 5,
+    "processing_time_minutes": 45
+  }
+}
 ```
-[skill-name]/
-├── SKILL.md [generated content]
-├── reference.md [generated content]  
-├── examples.md [generated content]
-└── templates/ [generated templates]
-```
 
-#### 4. Integration Strategy
-- **Related Skills**: [Which skills work together]
-- **Cross-References**: [How skills reference each other]
-- **Workflow Clusters**: [Group usage patterns]
-- **Dependencies**: [Implementation order requirements]
+#### 2. `reports/{TIMESTAMP}/comprehensive-skills-analysis.md`
+**Purpose**: Complete pattern analysis with skill recommendations
+**Contents**:
+- Executive summary with key metrics and platform distribution
+- Detailed pattern evidence with conversation excerpts from both platforms
+- Cross-platform deduplication decisions and rationale
+- Prioritized skill recommendations (top 5-8 only, no generic patterns)
+- Skill-worthiness scoring with evidence-based rationale
+- Temporal and frequency analysis (post-deduplication)
+- Platform preference insights and cross-platform workflow identification
 
-### Implementation Roadmap
+#### 3. `reports/{TIMESTAMP}/implementation-guide.md`
+**Purpose**: Actionable deployment roadmap
+**Contents**:
+- Implementation priority matrix with realistic timelines
+- Phase-by-phase rollout plan (max 3 phases)
+- Testing and validation framework with specific success criteria
+- Success metrics and monitoring approach
+- Maintenance schedule and evolution triggers
+- Platform-agnostic usage instructions
+- Cross-platform workflow optimization guidance
 
-#### Phase 1: Foundation (Week 1)
-**Priority Skills**: [Top 2-3 skills]
-- [Skill 1]: [Rationale for priority]
-- [Skill 2]: [Rationale for priority]
-**Implementation Steps**:
-1. Review generated skill files
-2. Test with sample inputs
-3. Refine based on initial usage
-4. Deploy for team use
+## Analysis Quality Standards
 
-#### Phase 2: Core Workflows (Weeks 2-4)
-**Next Tier Skills**: [Next 3-5 skills]
-**Integration Focus**: [How new skills work with Phase 1]
+### Pattern Validation Requirements
+- **Statistical significance**: Patterns must occur in >5% of total conversations
+- **Consistency threshold**: 70%+ similarity across pattern instances
+- **Business value**: Clear time savings (>30 min/week) or quality improvement potential
+- **Avoid generic categories**: No broad domains like "creative" or "research"
+- **Evidence requirement**: Minimum 3 specific conversation excerpts per pattern
 
-#### Phase 3: Optimization (Month 2)
-**Enhancement Skills**: [Skills that improve existing ones]
-**Workflow Integration**: [Multi-skill workflows]
+### Skill Consolidation Rules
+- **Maximum 8 skills total**: Focus on highest-impact patterns only
+- **Minimum frequency**: 50+ occurrences OR high strategic value (executive/business critical)
+- **Clear boundaries**: Each skill should have distinct, non-overlapping purpose
+- **Platform agnostic**: Skills must work with content from any AI platform
+- **Cross-platform evidence**: Include examples from both platforms when available
 
-#### Phase 4: Advanced (Month 3+)
-**Specialized Skills**: [Lower frequency, high value]
-**Ecosystem Completion**: [Full skill integration]
+### Cross-Platform Quality Checks
+- **Deduplication validation**: Verify removal of genuine duplicates, not unique platform usage
+- **Workflow integrity**: Ensure cross-platform workflows are properly identified and preserved
+- **Platform preference insights**: Document when specific platforms excel for certain tasks
+- **Unified skill design**: Skills should enhance workflow regardless of platform choice
 
 ### Validation & Testing Guide
 
@@ -482,13 +573,35 @@ Before finalizing the implementation package:
 
 ## Instructions for Execution
 
-1. **Start with user choice** of output option (A/B/C/D)
-2. **Perform complete analysis** following all phases
-3. **Generate implementation package** if requested (Option B/C)
-4. **Validate all generated content** using quality framework
-5. **Provide testing guidance** and success metrics
-6. **Include maintenance roadmap** for long-term success
+1. **Initialize Timestamp**: Create `TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)`
+2. **Create Reports Directory**: `mkdir -p reports/{TIMESTAMP}`
+3. **Check for Previous Analysis Log**: Look for existing `skills-analysis-log.json` in root directory
+4. **Scan Data Directories**: Check `data-exports/chatgpt/` and `data-exports/claude/` for available platforms
+5. **Determine analysis scope** using Phase 0 if previous log exists
+6. **Start with user choice** of output option (A/B/C/D)
+7. **Perform complete analysis** following all phases for determined scope
+8. **Execute cross-platform deduplication** if both ChatGPT and Claude data detected (Phase 4.5)
+9. **Generate 3-file output**:
+   - Update/create `skills-analysis-log.json` in root directory
+   - Create `reports/{TIMESTAMP}/comprehensive-skills-analysis.md`
+   - Create `reports/{TIMESTAMP}/implementation-guide.md`
+10. **Generate skill packages** in `generated-skills/` if requested (Option B/C)
+11. **Validate all content** using quality framework and analysis standards
 
-**Note**: Use ultrathink throughout the analysis to ensure comprehensive pattern identification and optimal skill generation. Focus on creating immediately usable, high-quality skills that will genuinely improve the user's AI interaction efficiency.
+### Quality Focus Requirements
+- **Eliminate generic patterns**: Focus only on specific, actionable workflows
+- **Consolidate overlapping skills**: Maximum 5-8 high-value skills total
+- **Validate frequency claims**: Ensure pattern counts are mathematically sound post-deduplication
+- **Prioritize by genuine impact**: Time savings (>30 min/week) and quality improvement potential
+- **Platform-agnostic design**: Skills must work regardless of AI platform used
 
-The JSON files are located in the current directory for analysis. The system will automatically detect the platform (Claude vs ChatGPT) and process the available files accordingly.
+### For Incremental Processing
+If user provides previous analysis log:
+- Parse the log to understand what was previously analyzed
+- Skip unchanged conversations (based on IDs and metadata)
+- Focus on new or modified conversations only
+- Re-run deduplication if new platform data added
+- Integrate new findings with previous skill recommendations
+- Update the analysis log with new data
+
+**Data Location**: JSON files are located in `data-exports/chatgpt/` and `data-exports/claude/` subdirectories. The system will automatically detect available platform(s) and process files accordingly.

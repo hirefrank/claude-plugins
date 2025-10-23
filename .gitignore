@@ -1,5 +1,26 @@
-# Claude Conversation Data
-*.json
+# User conversation data (sensitive - should not be committed)
+data-exports/chatgpt/*.json
+data-exports/claude/*.json
+
+# But keep directory structure
+!data-exports/chatgpt/.gitkeep
+!data-exports/claude/.gitkeep
+
+# Analysis reports (contains conversation analysis - potentially sensitive)
+reports/*
+!reports/.gitkeep
+
+# Analysis logs (may contain conversation metadata)
+skills-analysis-log.json
+*-analysis-log.json
+
+# Legacy analysis files (cleanup from previous structure)
+conversation_analysis_report.md
+enhanced_pattern_analysis.md
+final_skills_analysis.md
+IMPLEMENTATION_PACKAGE_SUMMARY.md
+
+# Legacy conversation data directories
 conversations/
 exports/
 chat-data/
