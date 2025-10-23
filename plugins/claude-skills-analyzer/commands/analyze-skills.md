@@ -253,6 +253,58 @@ Ask user to choose:
 Generate timestamped reports in `reports/{TIMESTAMP}/`:
 
 1. **`skills-analysis-log.json`** (Root directory) - Machine-readable incremental processing data
+
+**Example structure:**
+```json
+{
+  "analysis_date": "YYYY-MM-DDTHH:MM:SSZ",
+  "platform_detected": "claude|chatgpt|mixed",
+  "total_conversations": 150,
+  "report_directory": "reports/2025-01-23_22-40-00",
+  "conversations_analyzed": [
+    {
+      "id": "conv_123",
+      "platform": "chatgpt|claude",
+      "file": "data-exports/chatgpt/conversations.json",
+      "message_count": 45,
+      "first_message_date": "2024-01-01T10:00:00Z",
+      "last_message_date": "2024-01-10T14:20:00Z",
+      "analysis_hash": "sha256:abc123...",
+      "topics_identified": ["coding", "documentation"],
+      "patterns_found": 3
+    }
+  ],
+  "deduplication_summary": {
+    "cross_platform_duplicates_removed": 45,
+    "workflow_instances_merged": 12,
+    "frequency_adjustments": {
+      "newsletter_critique": {"before": 1225, "after": 987},
+      "business_communication": {"before": 709, "after": 643}
+    }
+  },
+  "skills_generated": [
+    {
+      "skill_name": "newsletter-critique-specialist",
+      "source_conversations": ["conv_123", "conv_789"],
+      "frequency_score": 8,
+      "impact_score": 9,
+      "platform_coverage": "both",
+      "generated_files": [
+        "generated-skills/newsletter-critique-specialist/SKILL.md",
+        "generated-skills/newsletter-critique-specialist/reference.md"
+      ]
+    }
+  ],
+  "analysis_metadata": {
+    "total_patterns_identified": 25,
+    "patterns_consolidated": 8,
+    "patterns_deduplicated": 6,
+    "final_skill_count": 5,
+    "processing_time_minutes": 45
+  }
+}
+```
+
 2. **`comprehensive-skills-analysis.md`** - Complete pattern analysis with skill recommendations
 3. **`implementation-guide.md`** - Actionable deployment roadmap
 
