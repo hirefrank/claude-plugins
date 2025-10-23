@@ -135,7 +135,7 @@ skill-name/
 - **Consistency threshold**: 70%+ similarity across instances
 - **Time savings focus**: Target >30 min/week automation potential
 - **Evidence-based**: Minimum 3 conversation excerpts per pattern
-- **Maximum focus**: Generate 5-8 high-impact skills only
+- **Maximum focus**: Generate up to 12 high-impact skills (recommend top 5-8 for initial implementation)
 
 ## Example Use Cases
 

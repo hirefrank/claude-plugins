@@ -325,7 +325,7 @@ For detailed methodology, see [reference.md](reference.md).
 - **Evidence requirement**: Minimum 3 specific conversation excerpts per pattern
 
 ### Skill Consolidation Rules
-- **Maximum 8 skills total**: Focus on highest-impact patterns only
+- **Maximum 12 skills total**: Focus on highest-impact patterns (recommend prioritizing top 5-8)
 - **Minimum frequency**: 50+ occurrences OR high strategic value (executive/business critical)
 - **Clear boundaries**: Each skill should have distinct, non-overlapping purpose
 - **Platform agnostic**: Skills must work with content from any AI platform
@@ -350,7 +350,7 @@ For detailed methodology, see [reference.md](reference.md).
 
 ### Quality Focus Requirements
 - **Eliminate generic patterns**: Focus only on specific, actionable workflows
-- **Consolidate overlapping skills**: Maximum 5-8 high-value skills total
+- **Consolidate overlapping skills**: Maximum 12 high-value skills total (recommend top 5-8 for initial implementation)
 - **Validate frequency claims**: Ensure pattern counts are mathematically sound post-deduplication
 - **Prioritize by genuine impact**: Time savings (>30 min/week) and quality improvement potential
 - **Platform-agnostic design**: Skills must work regardless of AI platform used

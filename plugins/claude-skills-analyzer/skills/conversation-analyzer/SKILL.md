@@ -46,7 +46,7 @@ This skill provides specialized capability for analyzing AI conversation exports
 - Focus on patterns with >5% conversation frequency
 - Require 70%+ consistency across pattern instances
 - Target >30 min/week time savings potential
-- Maximum 8 skills total (highest-impact only)
+- Maximum 12 skills total (recommend prioritizing top 5-8)
 - Platform-agnostic skill design
 - Evidence-based recommendations with conversation excerpts
 
