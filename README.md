@@ -67,7 +67,7 @@ cp /path/to/your/chatgpt-export/*.json data-exports/chatgpt/
 1. Open Claude Code in this directory with **Claude Sonnet 4.5** or another reasoning model
 2. Run the enhanced discovery prompt:
    ```
-   run @enhanced-skills-discovery-prompt.md
+    run @analyze.md
    ```
 3. Choose your preferred output option:
    - **Option B**: Complete Implementation Package (generates ready-to-use skills)
@@ -78,7 +78,7 @@ cp /path/to/your/chatgpt-export/*.json data-exports/chatgpt/
 #### Option B: Using Claude.ai Web Interface
 
 1. Switch to **Claude Sonnet 4.5** in the model selector
-2. Copy the content of `enhanced-skills-discovery-prompt.md`
+2. Copy the content of `analyze.md`
 3. Paste it into a new Claude conversation
 4. Upload your JSON files (conversations.json and any other available files)
 5. Follow the generated analysis and recommendations
@@ -129,13 +129,13 @@ The enhanced discovery prompt follows a comprehensive 5-phase process with multi
 - Optimizes skill boundaries for clarity
 - Accounts for platform-specific workflow differences
 
-### Phase 4.5: Cross-Platform Deduplication (when both platforms detected)
+### Phase 5: Cross-Platform Deduplication (when both platforms detected)
 - Eliminates duplicate patterns between ChatGPT and Claude exports
 - Merges cross-platform workflows (e.g., research in ChatGPT → writing in Claude)
 - Adjusts frequency counts to reflect actual usage patterns
 - Creates platform-agnostic skills that work with any AI
 
-### Phase 5: Skill Generation & Optimization
+### Phase 6: Skill Generation & Optimization
 - Creates prioritization matrix
 - Generates complete skill packages with proper structure
 - Provides implementation roadmap and maintenance guidance
@@ -159,14 +159,14 @@ claude-skills-generator/
 │   ├── business-communication-designer/
 │   └── voice-consistency-checker/
 ├── skills-analysis-log.json        # Incremental processing data (git-ignored)
-└── enhanced-skills-discovery-prompt.md
+└── analyze.md
 ```
 
 ## Customization Options
 
 ### Analysis Prompts
 
-- **[enhanced-skills-discovery-prompt.md](enhanced-skills-discovery-prompt.md)** - Complete analysis and generation system
+- **[analyze.md](analyze.md)** - Complete analysis and generation system
 
 ### Output Options
 
@@ -239,12 +239,6 @@ Found a bug or have suggestions for improving the analysis prompts?
 - If overlaps remain, manually consolidate using the overlap resolution guidance
 - Consider whether separate skills serve different contexts
 
-### Getting Help
-
-1. Check the [examples](examples/) directory for reference implementations
-2. Review the analysis best practices in the enhanced prompt
-3. Open an issue with your specific use case and analysis results
-
 ## License
 
 MIT License - Feel free to use, modify, and distribute for personal and commercial use.
@@ -254,4 +248,3 @@ MIT License - Feel free to use, modify, and distribute for personal and commerci
 - Built for use with Anthropic's Claude AI assistant
 - Inspired by the need for more efficient AI workflows
 - Developed through analysis of real-world Claude usage patterns
-

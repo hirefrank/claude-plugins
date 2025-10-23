@@ -4,7 +4,7 @@
 A documentation-focused project for analyzing AI conversation exports (Claude/ChatGPT) and generating reusable Custom Skills. Primarily markdown-based with analysis workflows executed via Claude Code CLI.
 
 ## Build & Test Commands
-- **Main workflow**: Use Claude Code CLI with `run @enhanced-skills-discovery-prompt.md`
+- **Main workflow**: Use Claude Code CLI with `run @analyze.md`
 - **No formal build system**: Direct analysis via uploaded JSON exports
 - **Testing**: Manual validation of generated skills against conversation patterns
 - **Single test**: N/A - this is a prompt-based analysis system, not executable code
@@ -44,7 +44,7 @@ A documentation-focused project for analyzing AI conversation exports (Claude/Ch
 - **Data exports**: Keep original platform naming conventions from exports
 
 ## Notes for Agents
-- **Prompt-based system**: Primary workflow is running enhanced-skills-discovery-prompt.md via Claude Code
+- **Prompt-based system**: Primary workflow is running analyze.md via Claude Code
 - **No build process**: Analysis happens through Claude conversation, not executable code
 - **Privacy-first**: All user exports (.json files) are gitignored and must stay local
 - **Output focus**: Generate complete skill packages (SKILL.md + supporting files) ready for Claude use
