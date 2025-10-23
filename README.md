@@ -64,7 +64,7 @@ cp /path/to/your/chatgpt-export/*.json data-exports/chatgpt/
 
 #### Option A: Using Claude Code (Recommended)
 
-1. Open Claude Code in this directory
+1. Open Claude Code in this directory with **Claude Sonnet 4.5** or another reasoning model
 2. Run the enhanced discovery prompt:
    ```
    run @enhanced-skills-discovery-prompt.md
@@ -73,12 +73,17 @@ cp /path/to/your/chatgpt-export/*.json data-exports/chatgpt/
    - **Option B**: Complete Implementation Package (generates ready-to-use skills)
    - **Option C**: Incremental Implementation (start with top 3-5 skills)
 
+**Note**: For best results, use Claude Sonnet 4.5 or another reasoning model, as the analysis requires complex pattern recognition and multi-step reasoning across large conversation datasets.
+
 #### Option B: Using Claude.ai Web Interface
 
-1. Copy the content of `enhanced-skills-discovery-prompt.md`
-2. Paste it into a new Claude conversation
-3. Upload your JSON files (conversations.json and any other available files)
-4. Follow the generated analysis and recommendations
+1. Switch to **Claude Sonnet 4.5** in the model selector
+2. Copy the content of `enhanced-skills-discovery-prompt.md`
+3. Paste it into a new Claude conversation
+4. Upload your JSON files (conversations.json and any other available files)
+5. Follow the generated analysis and recommendations
+
+**Important**: Use Claude Sonnet 4.5 for optimal analysis quality, as it provides the reasoning capabilities needed for complex pattern detection and skill generation.
 
 ### 4. Deploy Your Generated Skills
 
