@@ -47,26 +47,92 @@ Ready to proceed? Just confirm and I'll create the full structure.
 ## 📥 How to Export Your Conversations
 
 ### For Claude Conversations:
-1. **Go to Claude.ai Settings**: Visit [claude.ai/settings](https://claude.ai/settings)
-2. **Navigate to Privacy & Data**: Look for the data export section
-3. **Request Data Export**: Click the export button
-4. **Download when ready**: You'll get an email when it's ready (usually within 24 hours)
-5. **Extract files**: Unzip and place the JSON files in `data-exports/claude/`
+
+**Step 1: Request Export**
+1. Go to [claude.ai/settings](https://claude.ai/settings)
+2. Click on **"Privacy & Data"** in the left sidebar
+3. Look for **"Request data export"** or similar option
+4. Click the button to request your export
+
+**Step 2: Wait for Email**
+- Claude will send you an email when your export is ready
+- This typically takes 24 hours (sometimes sooner)
+- The email will contain a download link
+
+**Step 3: Extract and Organize**
+1. Download the ZIP file from the email
+2. Extract all files (you should have `conversations.json`, `projects.json`, etc.)
+3. Create the directory if not already done: `data-exports/claude/`
+4. Move all extracted JSON files into `data-exports/claude/`
+
+**Files you should see:**
+- `conversations.json` (required) - Your conversation history
+- `projects.json` (optional) - Project information and metadata
+- `users.json` (optional) - Account information
 
 ### For ChatGPT Conversations:
-1. **Go to ChatGPT Settings**: Visit [chatgpt.com/settings/general](https://chatgpt.com/settings/general)
-2. **Navigate to Data Controls**: Look for the export option
-3. **Click Export Data**: Request your data export
-4. **Download when ready**: Usually available within a few hours
-5. **Extract files**: Unzip and place the JSON files in `data-exports/chatgpt/`
+
+**Step 1: Request Export**
+1. Go to [chatgpt.com/settings/general](https://chatgpt.com/settings/general)
+2. Scroll down to **"Data controls"** section
+3. Click **"Export data"**
+4. Select what you want to export (conversations are usually pre-selected)
+5. Confirm the export request
+
+**Step 2: Wait for Email**
+- ChatGPT will send you an email when your export is ready
+- This usually takes 2-4 hours
+- The email will contain a download link
+
+**Step 3: Extract and Organize**
+1. Download the ZIP file from the email
+2. Extract all files (you should have `conversations.json`, `user.json`, etc.)
+3. Create the directory if not already done: `data-exports/chatgpt/`
+4. Move all extracted JSON files into `data-exports/chatgpt/`
+
+**Files you should see:**
+- `conversations.json` (required) - Your conversation history
+- `user.json` (optional) - Account information
+- `shared_conversations.json` (optional) - Shared conversations metadata
+- `message_feedback.json` (optional) - Your feedback on responses
+
+### Troubleshooting Export:
+
+**Can't find Settings?**
+- Claude: Look for your account icon (bottom left) → Settings → Privacy & Data
+- ChatGPT: Click your account name (bottom left) → Settings → scroll to Data controls
+
+**Export not arriving?**
+- Check spam/junk email folder
+- Wait a bit longer (can take up to 24 hours)
+- Try requesting again if it's been >24 hours
+
+**Files look different?**
+- Export formats can vary slightly between updates
+- As long as you have `conversations.json`, the analysis will work
+- Missing optional files is fine
 
 ## ⚡ Quick Start Checklist
 
-- [ ] Create `data-exports/` directory structure
-- [ ] Export conversations from Claude and/or ChatGPT
-- [ ] Place exported JSON files in correct subdirectories
-- [ ] Verify you have 50+ conversations for good analysis
-- [ ] Run `/analyze-skills` to start the analysis
+**Setup Phase:**
+- [ ] Directories created (`data-exports/`, `reports/`, `generated-skills/`)
+- [ ] At least one platform export requested (Claude and/or ChatGPT)
+- [ ] Waiting for export email to arrive (24 hours or less)
+
+**Data Phase:**
+- [ ] Export files downloaded and extracted
+- [ ] JSON files placed in correct `data-exports/` subdirectories
+- [ ] You have at least 20+ conversations (more is better for patterns)
+
+**Analysis Phase:**
+- [ ] Ready to run `/analyze-skills` when exports are ready
+- [ ] Know which output option you want (A, B, C, or D)
+- [ ] Have time for analysis to complete (2-5 minutes typically)
+
+**Completion:**
+- [ ] Analysis finished and reports generated
+- [ ] Review skills recommendations
+- [ ] Generate or implement skills as desired
 
 ## 🎯 What the Analysis Will Find
 
