@@ -1,4 +1,4 @@
-# Claude Custom Skills Generator
+# Claude Skills Generator
 
 Transform your AI conversation history (Claude or ChatGPT) into powerful, reusable Custom Skills that improve your AI workflow efficiency.
 
@@ -26,7 +26,7 @@ This repository contains tools and prompts to analyze your Claude conversation p
 3. Go to "Settings" → "Privacy"
 4. Click "Export data"
 5. Wait for the email with instructions to download the export
-6. Unzip the file and copy the files to the same folder as `claude_skills` in Step 2.
+6. Unzip the file - you'll use these files in Step 2.
 
 #### Option B: ChatGPT Export
 1. Go to [ChatGPT.com](https://chat.openai.com)
@@ -34,21 +34,30 @@ This repository contains tools and prompts to analyze your Claude conversation p
 3. Go to "Data controls" → "Export data"
 4. Select "Conversations" and any other data types
 5. Wait for the email with download link
-6. Download and unzip the export
-7. Copy all JSON files to same folder as `claude_skills` in Step 2.
+6. Download and unzip the export - you'll use these files in Step 2.
 
 **Supported Files:**
 - **Claude**: conversations.json, projects.json, users.json
 - **ChatGPT**: conversations.json, shared_conversations.json, user.json, message_feedback.json, shopping.json, projects.json, users.json
 
+**Note**: The system supports both single-platform and mixed exports. If you have conversations from both Claude and ChatGPT, place them in their respective directories - the analysis will automatically detect both platforms and perform cross-platform deduplication to avoid counting the same workflows twice.
+
 ### 2. Set Up the Analysis Environment
 
 ```bash
 # Clone this repository
-git clone https://github.com/hirefrank/claude_skills
-cd claude-skills
+git clone https://github.com/hirefrank/claude-skills-generator.git
+cd claude-skills-generator
 
-# Copy your JSON files from Step 1 to this folder
+# Copy your JSON files from Step 1 to the appropriate directories:
+
+# For Claude exports:
+cp /path/to/your/claude-export/*.json data-exports/claude/
+
+# For ChatGPT exports:
+cp /path/to/your/chatgpt-export/*.json data-exports/chatgpt/
+
+# Or copy both if you have exports from both platforms
 ```
 
 ### 3. Run the Skills Discovery Analysis
@@ -89,7 +98,7 @@ code-review-assistant/
 
 ## Understanding the Analysis Process
 
-The enhanced discovery prompt follows a comprehensive 5-phase process with multi-platform support:
+The enhanced discovery prompt follows a comprehensive 5-phase process with multi-platform support and generates organized, timestamped reports:
 
 ### Phase 1: Platform Detection & Data Processing
 - Automatically detects Claude vs ChatGPT export format
@@ -115,11 +124,38 @@ The enhanced discovery prompt follows a comprehensive 5-phase process with multi
 - Optimizes skill boundaries for clarity
 - Accounts for platform-specific workflow differences
 
+### Phase 4.5: Cross-Platform Deduplication (when both platforms detected)
+- Eliminates duplicate patterns between ChatGPT and Claude exports
+- Merges cross-platform workflows (e.g., research in ChatGPT → writing in Claude)
+- Adjusts frequency counts to reflect actual usage patterns
+- Creates platform-agnostic skills that work with any AI
+
 ### Phase 5: Skill Generation & Optimization
 - Creates prioritization matrix
 - Generates complete skill packages with proper structure
 - Provides implementation roadmap and maintenance guidance
 - Ensures skills work across both Claude and ChatGPT contexts
+
+## Generated Output Structure
+
+After analysis, you'll get organized outputs:
+
+```
+claude-skills-generator/
+├── data-exports/                    # Your private conversation data
+│   ├── chatgpt/                    # ChatGPT JSON files (git-ignored)
+│   └── claude/                     # Claude JSON files (git-ignored)
+├── reports/                        # Analysis reports (git-ignored)
+│   └── 2025-01-23_22-40-00/       # Timestamped analysis session
+│       ├── comprehensive-skills-analysis.md    # Complete analysis with evidence
+│       └── implementation-guide.md             # Deployment roadmap
+├── generated-skills/               # Ready-to-use skill packages
+│   ├── newsletter-critique-specialist/
+│   ├── business-communication-designer/
+│   └── voice-consistency-checker/
+├── skills-analysis-log.json        # Incremental processing data (git-ignored)
+└── enhanced-skills-discovery-prompt.md
+```
 
 ## Customization Options
 
