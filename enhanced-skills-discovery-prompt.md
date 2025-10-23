@@ -11,33 +11,60 @@ Perform comprehensive analysis of Claude conversation exports to:
 4. Provide implementation roadmap and maintenance guidance
 
 ## Input Format
-The user will provide JSON exports from Claude containing:
+The user will provide JSON exports from either Claude or ChatGPT containing:
+
+### Claude Export Format:
 1. **conversations.json** - Complete conversation history with messages, timestamps, and metadata
 2. **projects.json** - Project information including descriptions, documentation, and workflows
 3. **users.json** - User account information (for privacy considerations and expertise assessment)
 
+### ChatGPT Export Format:
+1. **conversations.json** - Conversation history with mapping structure and message objects
+2. **shared_conversations.json** - Shared conversation metadata with titles and IDs
+3. **user.json** - User profile information with account details
+4. **message_feedback.json** - User feedback on AI responses (if available)
+5. **shopping.json** - Transaction and purchase data (if available)
+6. **projects.json** - Project data (may be empty or different structure)
+7. **users.json** - User data (may be empty or different structure)
+
+### Platform Detection:
+Automatically detect the export format by analyzing file structures and adapt processing accordingly.
+
 ## Analysis & Generation Framework
 
 ### Phase 1: Data Processing & Pattern Discovery
-1. **Parse the JSON exports** and extract:
-   - All conversations from conversations.json
-   - Project information from projects.json
-   - User context from users.json (for expertise assessment)
+1. **Platform Detection and Data Parsing**:
+   - Detect export format (Claude vs ChatGPT) by analyzing file structures
+   - Parse available files based on detected platform
+   - Handle different conversation message formats and metadata structures
+   - Extract user context from appropriate user files (users.json for Claude, user.json for ChatGPT)
 
-2. **Categorize conversations** by:
+2. **Extract and Normalize Data**:
+   - **Conversations**: Parse message content from both conversation formats
+   - **Projects**: Extract from projects.json (Claude) or handle empty/missing (ChatGPT)
+   - **User Profile**: Get expertise indicators from user files
+   - **Additional Data**: Process shared_conversations.json, message_feedback.json, shopping.json for ChatGPT
+
+3. **Categorize conversations** by:
    - Topic/domain (coding, writing, business, analysis, creative)
    - Task type (creation, transformation, analysis, planning, troubleshooting)
    - Output format (documents, code, presentations, structured data)
    - Complexity level (simple one-off vs. multi-step workflows)
-   - User satisfaction indicators (refinements, positive feedback, reuse)
+   - User satisfaction indicators (refinements, positive feedback, reuse, message feedback)
 
-3. **Analyze project patterns** from projects.json:
+4. **Analyze project patterns** (if available):
    - **Project types**: What kinds of projects does the user create?
    - **Documentation patterns**: How do they structure project documentation?
    - **Workflow indicators**: Project descriptions that reveal recurring processes
    - **Collaboration patterns**: Projects that involve team workflows
    - **Tool preferences**: Technologies and platforms used in projects
    - **Domain expertise**: Subject areas and industries represented
+
+5. **Analyze ChatGPT-specific patterns** (if applicable):
+   - **Shared conversation themes**: From shared_conversations.json titles
+   - **Feedback patterns**: From message_feedback.json
+   - **Purchase/usage patterns**: From shopping.json (if relevant to workflow analysis)
+   - **Conversation sharing behavior**: Patterns in what gets shared
 
 4. **Pattern identification:**
    - **Explicit task patterns**: "Create a [X] with [Y] requirements"
@@ -462,6 +489,6 @@ Before finalizing the implementation package:
 5. **Provide testing guidance** and success metrics
 6. **Include maintenance roadmap** for long-term success
 
-**Note**: Use ultrathink throughout the analysis to ensure comprehensive pattern identification and optimal skill generation. Focus on creating immediately usable, high-quality skills that will genuinely improve the user's Claude interaction efficiency.
+**Note**: Use ultrathink throughout the analysis to ensure comprehensive pattern identification and optimal skill generation. Focus on creating immediately usable, high-quality skills that will genuinely improve the user's AI interaction efficiency.
 
-The JSON files (conversations.json, projects.json, users.json) are located in the current directory for analysis.
+The JSON files are located in the current directory for analysis. The system will automatically detect the platform (Claude vs ChatGPT) and process the available files accordingly.

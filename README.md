@@ -1,6 +1,6 @@
 # Claude Custom Skills Generator
 
-Transform your Claude conversation history into powerful, reusable Custom Skills that improve your AI workflow efficiency.
+Transform your AI conversation history (Claude or ChatGPT) into powerful, reusable Custom Skills that improve your AI workflow efficiency.
 
 ## Overview
 
@@ -18,14 +18,28 @@ This repository contains tools and prompts to analyze your Claude conversation p
 
 ## Quick Start
 
-### 1. Export Your Claude Conversation History
+### 1. Export Your AI Conversation History
 
+#### Option A: Claude Export
 1. Go to [Claude.ai](https://claude.ai)
 2. Click your profile in the bottom left
 3. Go to "Settings" → "Privacy"
 4. Click "Export data"
 5. Wait for the email with instructions to download the export
 6. Unzip the file and copy the files to the same folder as `claude_skills` in Step 2.
+
+#### Option B: ChatGPT Export
+1. Go to [ChatGPT.com](https://chat.openai.com)
+2. Click your profile → "Settings"
+3. Go to "Data controls" → "Export data"
+4. Select "Conversations" and any other data types
+5. Wait for the email with download link
+6. Download and unzip the export
+7. Copy all JSON files to same folder as `claude_skills` in Step 2.
+
+**Supported Files:**
+- **Claude**: conversations.json, projects.json, users.json
+- **ChatGPT**: conversations.json, shared_conversations.json, user.json, message_feedback.json, shopping.json, projects.json, users.json
 
 ### 2. Set Up the Analysis Environment
 
@@ -34,7 +48,7 @@ This repository contains tools and prompts to analyze your Claude conversation p
 git clone https://github.com/hirefrank/claude_skills
 cd claude-skills
 
-# Copy your json file frop Step 1 to this folder
+# Copy your JSON files from Step 1 to this folder
 ```
 
 ### 3. Run the Skills Discovery Analysis
@@ -54,7 +68,7 @@ cd claude-skills
 
 1. Copy the content of `enhanced-skills-discovery-prompt.md`
 2. Paste it into a new Claude conversation
-3. Upload your conversation JSON file
+3. Upload your JSON files (conversations.json and any other available files)
 4. Follow the generated analysis and recommendations
 
 ### 4. Deploy Your Generated Skills
@@ -75,32 +89,37 @@ code-review-assistant/
 
 ## Understanding the Analysis Process
 
-The enhanced discovery prompt follows a comprehensive 5-phase process:
+The enhanced discovery prompt follows a comprehensive 5-phase process with multi-platform support:
 
-### Phase 1: Data Processing & Pattern Discovery
-- Extracts and categorizes all conversations
-- Identifies explicit and implicit task patterns
-- Analyzes user preferences and quality indicators
+### Phase 1: Platform Detection & Data Processing
+- Automatically detects Claude vs ChatGPT export format
+- Extracts and normalizes data from both platforms
+- Processes conversations, projects, user profiles, and platform-specific data
+- Identifies explicit and implicit task patterns across all available data
 
 ### Phase 2: Frequency & Temporal Analysis
-- Counts pattern occurrences across conversation history
-- Identifies trends and seasonal patterns
+- Counts pattern occurrences across conversation history and additional data
+- Identifies trends, seasonal patterns, and platform-specific behaviors
 - Assesses business impact and time investment
+- Analyzes shared conversations and feedback patterns (ChatGPT)
 
 ### Phase 3: Complexity & Standardization Assessment
 - Evaluates task complexity and standardization potential
 - Calculates skill-worthiness scores (0-10 scale)
-- Determines automation value
+- Determines automation value across platforms
+- Considers cross-platform workflow patterns
 
 ### Phase 4: Relationship Mapping & Overlap Analysis
 - Maps relationships between potential skills
 - Identifies and resolves overlapping functionality
 - Optimizes skill boundaries for clarity
+- Accounts for platform-specific workflow differences
 
 ### Phase 5: Skill Generation & Optimization
 - Creates prioritization matrix
 - Generates complete skill packages with proper structure
 - Provides implementation roadmap and maintenance guidance
+- Ensures skills work across both Claude and ChatGPT contexts
 
 ## Customization Options
 
