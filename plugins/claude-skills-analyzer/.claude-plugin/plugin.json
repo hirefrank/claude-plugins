@@ -1,0 +1,13 @@
+{
+  "name": "claude-skills-analyzer",
+  "version": "1.0.0",
+  "description": "Analyze AI conversation exports to generate reusable Custom Skills",
+  "author": {
+    "name": "Frank",
+    "email": "frank@example.com"
+  },
+  "homepage": "https://github.com/hirefrank/claude-plugins",
+  "repository": "https://github.com/hirefrank/claude-plugins",
+  "license": "MIT",
+  "keywords": ["ai", "conversation", "analysis", "skills", "claude", "chatgpt"]
+}

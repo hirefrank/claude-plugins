@@ -1,10 +1,13 @@
-# Claude Skills Analysis
+---
+description: Analyze AI conversation exports to generate reusable Custom Skills
+---
 
-## Context
-You are a Claude Skills Architect analyzing a user's complete Claude conversation history to identify, prioritize, and automatically generate custom Claude Skills. Custom Skills are reusable instruction sets with proper YAML frontmatter, supporting documentation, and templates that help Claude consistently produce high-quality outputs for recurring tasks.
+# Analyze Skills Command
+
+You are a Claude Skills Architect analyzing a user's complete AI conversation history to identify, prioritize, and automatically generate custom Claude Skills. Custom Skills are reusable instruction sets with proper YAML frontmatter, supporting documentation, and templates that help Claude consistently produce high-quality outputs for recurring tasks.
 
 ## Your Mission
-Perform comprehensive analysis of Claude conversation exports to:
+Perform comprehensive analysis of conversation exports to:
 1. Identify all potential custom skill opportunities
 2. Eliminate redundancies and optimize skill boundaries  
 3. Generate complete, ready-to-use skill packages
@@ -12,23 +15,23 @@ Perform comprehensive analysis of Claude conversation exports to:
 5. **Enable incremental processing** - skip previously analyzed conversations and build on prior work
 
 ## Input Format
-Place your conversation export files in the organized directory structure:
+The user should have their conversation export files in the `data-exports/` directory structure. If not already created, the `/skills-setup` command will create this automatically.
 
+Expected structure:
 ```
-claude_skills/
-├── data-exports/
-│   ├── chatgpt/          # Place ChatGPT export files here
-│   │   ├── conversations.json
-│   │   ├── user.json
-│   │   ├── shared_conversations.json
-│   │   └── message_feedback.json (optional)
-│   └── claude/           # Place Claude export files here
-│       ├── conversations.json
-│       ├── projects.json
-│       └── users.json
-└── reports/              # Generated analysis reports (timestamped)
-    └── {TIMESTAMP}/
+data-exports/
+├── chatgpt/          # Place ChatGPT export files here
+│   ├── conversations.json
+│   ├── user.json
+│   ├── shared_conversations.json
+│   └── message_feedback.json (optional)
+└── claude/           # Place Claude export files here
+    ├── conversations.json
+    ├── projects.json
+    └── users.json
 ```
+
+**Note**: If you haven't run `/skills-setup` yet, use it first to create the necessary directory structure and get detailed export instructions.
 
 ### Claude Export Format (data-exports/claude/):
 1. **conversations.json** - Complete conversation history with messages, timestamps, and metadata
@@ -45,7 +48,7 @@ claude_skills/
 ### Platform Detection:
 Automatically detect available platforms by scanning both data-exports/ directories and adapt processing accordingly.
 
-## Analysis & Generation Framework
+## Analysis Framework
 
 ### Phase 0: Analysis Scope Determination
 
@@ -152,7 +155,7 @@ For each pattern, evaluate:
    - Filter out one-off requests that appear similar but lack consistency
    - Ensure patterns represent genuine user needs rather than random occurrences
 
-### Phase 4.5: Cross-Platform Pattern Deduplication
+### Phase 5: Cross-Platform Pattern Deduplication
 
 When processing mixed datasets (both ChatGPT and Claude exports), perform comprehensive deduplication before skill generation:
 
@@ -192,7 +195,7 @@ When processing mixed datasets (both ChatGPT and Claude exports), perform compre
 - Platform preference data should inform skill design, not create separate skills
 - Maintain detailed log of deduplication decisions for transparency
 
-### Phase 5: Skill Generation & Optimization
+### Phase 6: Skill Generation & Optimization
 
 #### A. Skill Prioritization Matrix
 Create comprehensive 2x2 matrix with additional dimensions:
@@ -220,7 +223,7 @@ For each overlapping skill pair:
 
 ## Output Generation Options
 
-Before proceeding, ask user to choose:
+Ask user to choose:
 
 **Option A: Analysis Report Only**
 - Comprehensive analysis with recommendations
@@ -242,12 +245,19 @@ Before proceeding, ask user to choose:
 - Specific modifications or requirements
 - Tailored to particular use cases
 
----
+## File Generation (Option B/C)
 
-## Implementation Package Generation (Option B)
+**Note**: If these directories don't exist, they will be automatically created by the analysis process.
 
-### Skill Folder Structure Generation
-For each approved skill, create complete folder structure:
+### Create Analysis Reports
+Generate timestamped reports in `reports/{TIMESTAMP}/`:
+
+1. **`skills-analysis-log.json`** (Root directory) - Machine-readable incremental processing data
+2. **`comprehensive-skills-analysis.md`** - Complete pattern analysis with skill recommendations
+3. **`implementation-guide.md`** - Actionable deployment roadmap
+
+### Generate Skill Packages
+For each approved skill, create complete folder structure in `generated-skills/`:
 
 ```
 skill-name/
@@ -261,20 +271,19 @@ skill-name/
     └── helper-script.py
 ```
 
+**Auto-creation**: The `generated-skills/` directory will be created automatically when you select Option B or C.
+
 ### SKILL.md Generation Template
 ```yaml
 ---
-name: [skill-name]  # Only lowercase letters, numbers, and hyphens. Use gerund form (processing-pdfs, analyzing-data)
-description: [CRITICAL: Must include BOTH what skill does AND when to use it. Written in third person. Include key trigger terms. Example: "Analyzes Excel spreadsheets, creates pivot tables, generates charts. Use when analyzing Excel files, spreadsheets, tabular data, or .xlsx files."]
----
-name: [skill-name-with-hyphens]  # MUST be lowercase letters, numbers, and hyphens ONLY (no spaces, no uppercase)
-description: [Optimized description for Claude's discovery algorithm - includes what skill does AND when to use it]
+name: [skill-name]  # Only lowercase letters, numbers, and hyphens
+description: [CRITICAL: Must include BOTH what skill does AND when to use it. Written in third person. Include key trigger terms.]
 ---
 
-# [Skill Name]  # Title case for display
+# [Skill Name]
 
 ## Instructions
-[Clear, step-by-step guidance for Claude - KEEP UNDER 500 LINES TOTAL]
+[Clear, step-by-step guidance - KEEP UNDER 500 LINES TOTAL]
 
 1. **[Phase 1 Name]**
    - [Specific instruction 1]
@@ -292,11 +301,6 @@ description: [Optimized description for Claude's discovery algorithm - includes 
    - [Standard 1]
    - [Standard 2]
 
-**Progressive Disclosure Notes:**
-- Keep SKILL.md focused on overview and workflow
-- Move detailed methodology to reference.md
-- Use one-level-deep references only (no nested linking)
-
 ## Examples
 
 ### [Example Scenario 1]
@@ -307,151 +311,11 @@ description: [Optimized description for Claude's discovery algorithm - includes 
 [Complete example showing proper skill usage]
 ```
 
-[Additional examples as needed]
-
 For more examples, see [examples.md](examples.md).
 For detailed methodology, see [reference.md](reference.md).
 ```
 
-### Supporting File Generation
-
-#### reference.md Structure
-- Detailed frameworks and methodologies
-- Step-by-step processes
-- Domain-specific guidelines
-- Quality standards and best practices
-- Integration notes with other skills
-
-#### examples.md Structure  
-- Multiple real-world scenarios
-- Before/after comparisons
-- Edge cases and variations
-- Integration examples with other skills
-
-#### Template Files
-- Ready-to-use output templates
-- Structured formats for consistency
-- Variable placeholders for customization
-
-### Quality Assurance Framework
-
-#### Evaluation-First Development
-For each high-priority skill, CREATE EVALUATIONS BEFORE generating extensive content:
-1. **Identify specific gaps** in Claude's current performance for this task type
-2. **Create 3 test scenarios** that demonstrate these gaps
-3. **Generate minimal viable skill** to address these gaps
-4. **Test against scenarios** to validate effectiveness
-5. **Iterate based on results** rather than assumptions
-
-#### Generated Skill Validation
-For each skill, verify:
-1. **Description field optimization** - includes both WHAT and WHEN, third person, trigger terms
-2. **Cross-reference validation** - all file links work
-3. **Example completeness** - covers main use cases
-4. **Template usability** - actually usable for intended purpose
-5. **Integration coherence** - works well with other skills
-
-#### Content Quality Checks
-- [ ] Instructions are clear and actionable
-- [ ] Examples are realistic and helpful
-- [ ] Templates are complete and usable
-- [ ] References provide adequate detail
-- [ ] Integration notes are accurate
-
-### Anti-Patterns to Avoid
-- [ ] **Overly verbose explanations** - Don't explain what Claude already knows
-- [ ] **Too many options** - Provide default approach with escape hatch
-- [ ] **Vague descriptions** - Include specific trigger terms and contexts
-- [ ] **Deep reference nesting** - Keep all references one level from SKILL.md
-- [ ] **Time-sensitive info** - Use "legacy patterns" sections instead
-- [ ] **Inconsistent terminology** - Choose one term and stick with it
-
-## Output File Structure
-
-### Report Organization
-All analysis reports are saved to: `reports/{TIMESTAMP}/`
-- **TIMESTAMP format**: `YYYY-MM-DD_HH-MM-SS` (e.g., `2025-01-23_22-40-00`)
-- **Purpose**: Enables historical tracking and comparison of analyses
-
-### Generated Files (3-file optimized structure)
-
-#### 1. `skills-analysis-log.json` (Root directory)
-**Purpose**: Machine-readable incremental processing data
-**Contents**:
-```json
-{
-  "analysis_date": "YYYY-MM-DDTHH:MM:SSZ",
-  "platform_detected": "claude|chatgpt|mixed",
-  "total_conversations": 150,
-  "report_directory": "reports/2025-01-23_22-40-00",
-  "conversations_analyzed": [
-    {
-      "id": "conv_123",
-      "platform": "chatgpt|claude",
-      "file": "data-exports/chatgpt/conversations.json",
-      "message_count": 45,
-      "first_message_date": "2024-01-01T10:00:00Z",
-      "last_message_date": "2024-01-10T14:20:00Z",
-      "analysis_hash": "sha256:abc123...",
-      "topics_identified": ["coding", "documentation"],
-      "patterns_found": 3
-    }
-  ],
-  "deduplication_summary": {
-    "cross_platform_duplicates_removed": 45,
-    "workflow_instances_merged": 12,
-    "frequency_adjustments": {
-      "newsletter_critique": {"before": 1225, "after": 987},
-      "business_communication": {"before": 709, "after": 643}
-    }
-  },
-  "skills_generated": [
-    {
-      "skill_name": "newsletter-critique-specialist",
-      "source_conversations": ["conv_123", "conv_789"],
-      "frequency_score": 8,
-      "impact_score": 9,
-      "platform_coverage": "both",
-      "generated_files": [
-        "generated-skills/newsletter-critique-specialist/SKILL.md",
-        "generated-skills/newsletter-critique-specialist/reference.md",
-        "generated-skills/newsletter-critique-specialist/examples.md"
-      ]
-    }
-  ],
-  "analysis_metadata": {
-    "total_patterns_identified": 25,
-    "patterns_consolidated": 8,
-    "patterns_deduplicated": 6,
-    "final_skill_count": 5,
-    "processing_time_minutes": 45
-  }
-}
-```
-
-#### 2. `reports/{TIMESTAMP}/comprehensive-skills-analysis.md`
-**Purpose**: Complete pattern analysis with skill recommendations
-**Contents**:
-- Executive summary with key metrics and platform distribution
-- Detailed pattern evidence with conversation excerpts from both platforms
-- Cross-platform deduplication decisions and rationale
-- Prioritized skill recommendations (top 5-8 only, no generic patterns)
-- Skill-worthiness scoring with evidence-based rationale
-- Temporal and frequency analysis (post-deduplication)
-- Platform preference insights and cross-platform workflow identification
-
-#### 3. `reports/{TIMESTAMP}/implementation-guide.md`
-**Purpose**: Actionable deployment roadmap
-**Contents**:
-- Implementation priority matrix with realistic timelines
-- Phase-by-phase rollout plan (max 3 phases)
-- Testing and validation framework with specific success criteria
-- Success metrics and monitoring approach
-- Maintenance schedule and evolution triggers
-- Platform-agnostic usage instructions
-- Cross-platform workflow optimization guidance
-
-## Analysis Quality Standards
+## Quality Standards
 
 ### Pattern Validation Requirements
 - **Statistical significance**: Patterns must occur in >5% of total conversations
@@ -467,110 +331,6 @@ All analysis reports are saved to: `reports/{TIMESTAMP}/`
 - **Platform agnostic**: Skills must work with content from any AI platform
 - **Cross-platform evidence**: Include examples from both platforms when available
 
-### Cross-Platform Quality Checks
-- **Deduplication validation**: Verify removal of genuine duplicates, not unique platform usage
-- **Workflow integrity**: Ensure cross-platform workflows are properly identified and preserved
-- **Platform preference insights**: Document when specific platforms excel for certain tasks
-- **Unified skill design**: Skills should enhance workflow regardless of platform choice
-
-### Validation & Testing Guide
-
-#### Pre-Deployment Testing
-1. **Individual Skill Testing**:
-   - Test each skill with representative inputs
-   - Verify template functionality
-   - Check cross-references and links
-
-2. **Integration Testing**:
-   - Test multi-skill workflows
-   - Verify skill discovery works properly
-   - Check for description field conflicts
-
-3. **User Acceptance Testing**:
-   - Have team members test priority skills
-   - Gather feedback on usability
-   - Refine based on real usage
-
-#### Success Metrics
-- **Adoption Rate**: [% of relevant tasks using skills]
-- **Time Savings**: [Measured reduction in task time]
-- **Quality Improvement**: [User satisfaction, output quality]
-- **Error Reduction**: [Fewer iterations needed]
-
-### Maintenance & Evolution Plan
-
-#### Regular Review Schedule
-- **Weekly** (First month): Usage monitoring and quick fixes
-- **Monthly** (Ongoing): Performance assessment and minor updates
-- **Quarterly**: Major skill updates and new skill evaluation
-- **Annually**: Complete skills ecosystem review
-
-#### Evolution Triggers
-- **Performance Issues**: Skills not achieving expected results
-- **Usage Changes**: Task patterns evolving over time
-- **New Requirements**: Business needs changing
-- **Technology Updates**: Claude capabilities expanding
-
-#### Feedback Integration Process
-1. **Usage Analytics**: Track skill usage patterns
-2. **User Feedback**: Regular surveys and input collection
-3. **Performance Monitoring**: Time savings and quality metrics
-4. **Iterative Improvement**: Regular skill updates and refinements
-
-## Advanced Features
-
-### Skill Ecosystem Optimization
-- **Cross-Skill Templates**: Shared templates used by multiple skills
-- **Skill Inheritance**: Specialized skills building on general ones
-- **Workflow Orchestration**: Multi-skill process automation
-- **Context Awareness**: Skills that adapt based on user history
-
-### Quality Assurance Automation
-- **Template Validation**: Automated checking of template functionality
-- **Example Verification**: Ensuring examples work as documented
-- **Integration Testing**: Automated multi-skill workflow testing
-- **Performance Monitoring**: Tracking skill effectiveness over time
-
-## Additional Considerations
-
-1. **Privacy and Data Protection:**
-   - Anonymize all sensitive information in conversation examples
-   - Remove personal identifiers, company names, and confidential data
-   - Ensure compliance with data protection regulations
-   - Consider user consent for conversation analysis
-
-2. **Data Completeness and Limitations:**
-   - Note if conversations are truncated or incomplete
-   - Identify gaps in conversation history
-   - Account for potential missing context
-   - Flag areas where additional data would improve analysis
-
-3. **Ambiguity Handling:**
-   - Flag unclear patterns for further investigation
-   - Suggest clarifying questions for ambiguous use cases
-   - Document assumptions made during analysis
-   - Provide confidence levels for pattern identification
-
-4. **User Expertise Considerations:**
-   - Consider the user's apparent skill level and how it's evolved
-   - Adapt skill complexity to match user's current capabilities
-   - Account for learning curves and mastery progression
-   - Balance challenge with usability in skill design
-
-## Validation Questions
-
-Before finalizing the implementation package:
-1. Are all skill descriptions optimized for Claude's discovery algorithm?
-2. Have overlapping skills been properly consolidated or differentiated?
-3. Do all cross-references and integrations work correctly?
-4. Are the examples realistic and helpful for the target use cases?
-5. Is the implementation roadmap achievable with available resources?
-6. Have edge cases and error scenarios been adequately addressed?
-7. Does the maintenance plan ensure long-term skill effectiveness?
-8. Have privacy and data protection requirements been fully addressed?
-9. Are false positive patterns properly filtered out?
-10. Does the analysis account for user expertise evolution?
-
 ## Instructions for Execution
 
 1. **Initialize Timestamp**: Create `TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)`
@@ -580,8 +340,8 @@ Before finalizing the implementation package:
 5. **Determine analysis scope** using Phase 0 if previous log exists
 6. **Start with user choice** of output option (A/B/C/D)
 7. **Perform complete analysis** following all phases for determined scope
-8. **Execute cross-platform deduplication** if both ChatGPT and Claude data detected (Phase 4.5)
-9. **Generate 3-file output**:
+8. **Execute cross-platform deduplication** if both ChatGPT and Claude data detected (Phase 5)
+9. **Generate output files**:
    - Update/create `skills-analysis-log.json` in root directory
    - Create `reports/{TIMESTAMP}/comprehensive-skills-analysis.md`
    - Create `reports/{TIMESTAMP}/implementation-guide.md`
