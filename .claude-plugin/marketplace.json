@@ -1,8 +1,8 @@
 {
-  "name": "frank-claude-plugins",
+  "name": "hirefrank-plugins",
   "owner": {
-    "name": "Frank",
-    "email": "frank@example.com"
+    "name": "Frank Harris",
+    "email": "frank@hirefrank.com"
   },
   "metadata": {
     "description": "Frank's collection of Claude Code plugins for AI workflow optimization",
@@ -12,16 +12,23 @@
     {
       "name": "claude-skills-analyzer",
       "source": "./plugins/claude-skills-analyzer",
-      "description": "Analyze AI conversation exports to generate reusable Custom Skills",
+      "description": "Analyze AI conversation exports to generate reusable Claude Skills",
       "version": "1.0.0",
       "author": {
-        "name": "Frank",
-        "email": "frank@example.com"
+        "name": "Frank Harris",
+        "email": "frank@hirefrank.com"
       },
       "homepage": "https://github.com/hirefrank/claude-plugins",
       "repository": "https://github.com/hirefrank/claude-plugins",
       "license": "MIT",
-      "keywords": ["ai", "conversation", "analysis", "skills", "claude", "chatgpt"],
+      "keywords": [
+        "ai",
+        "conversation",
+        "analysis",
+        "skills",
+        "claude",
+        "chatgpt"
+      ],
       "category": "productivity"
     }
   ]
