@@ -6,6 +6,8 @@ description: Analyze AI conversation exports to generate reusable Custom Skills
 
 You are a Claude Skills Architect analyzing a user's complete AI conversation history to identify, prioritize, and automatically generate custom Claude Skills. Custom Skills are reusable instruction sets with proper YAML frontmatter, supporting documentation, and templates that help Claude consistently produce high-quality outputs for recurring tasks.
 
+**Use advanced reasoning (ultrathink/extended thinking) for this complex analytical task.** Take time to deeply analyze patterns, consider consolidation strategies, and make evidence-based skill recommendations.
+
 ## Your Mission
 Perform comprehensive analysis of conversation exports to:
 1. Identify all potential custom skill opportunities
@@ -13,6 +15,13 @@ Perform comprehensive analysis of conversation exports to:
 3. Generate complete, ready-to-use skill packages
 4. Provide implementation roadmap and maintenance guidance
 5. **Enable incremental processing** - skip previously analyzed conversations and build on prior work
+
+**Analysis Approach:**
+- Use extended reasoning to identify non-obvious patterns across conversations
+- Think deeply about skill boundaries and overlap resolution
+- Consider temporal patterns and user expertise evolution
+- Validate pattern significance statistically before recommending skills
+- Reason through cross-platform deduplication decisions carefully
 
 ## Input Format
 The user should have their conversation export files in the `data-exports/` directory structure. If not already created, the `/skills-setup` command will create this automatically.
@@ -72,6 +81,9 @@ Automatically detect available platforms by scanning both data-exports/ director
    - Expected time and complexity of analysis
 
 ### Phase 1: Data Processing & Pattern Discovery
+
+**Use extended reasoning to identify subtle patterns across large conversation sets.**
+
 1. **Platform Detection and Data Parsing**:
    - Auto-detect export format (Claude vs ChatGPT) 
    - Parse conversations, projects, user data based on platform
@@ -85,6 +97,11 @@ Automatically detect available platforms by scanning both data-exports/ director
    - Implicit workflows: Multi-turn conversation structures
    - Iterative refinement patterns and correction types
    - User expertise evolution over time
+
+**Think deeply about:**
+- Are these truly distinct patterns or variations of the same workflow?
+- What makes this pattern recurring vs. one-off requests?
+- How do patterns evolve across the user's conversation timeline?
 
 ### Phase 2: Frequency & Temporal Analysis
 For each identified pattern:
@@ -197,7 +214,15 @@ When processing mixed datasets (both ChatGPT and Claude exports), perform compre
 
 ### Phase 6: Skill Generation & Optimization
 
+**Use extended reasoning to optimize skill boundaries and maximize user value.**
+
 #### A. Skill Prioritization Matrix
+
+**Think carefully about:**
+- Which patterns have the highest ROI (time saved × frequency)?
+- Are there strategic patterns that don't show high frequency but have disproportionate impact?
+- How do skills interact - should some be combined or kept separate?
+
 Create comprehensive 2x2 matrix with additional dimensions:
 - **X-axis**: Frequency (Low to High)
 - **Y-axis**: Value/Impact (Low to High) 
@@ -211,6 +236,12 @@ Create comprehensive 2x2 matrix with additional dimensions:
 - **Low Frequency, Low Value**: "Defer" - Not worth skill creation
 
 #### B. Overlap Resolution
+
+**Reason deeply about skill boundaries:**
+- What makes these skills distinct enough to warrant separation?
+- Would users be confused by having both, or would they serve different contexts?
+- Is the overlap incidental or fundamental to the workflow?
+
 For each overlapping skill pair:
 1. **Analyze overlap percentage** and type
 2. **Determine consolidation strategy:**
@@ -220,6 +251,11 @@ For each overlapping skill pair:
    - Extract common elements into shared templates
 
 3. **Optimize skill boundaries** for clarity and usability
+
+**Validation questions:**
+- Does each skill have a clear, single purpose?
+- Can users easily decide which skill to use for their task?
+- Are skill names and descriptions sufficiently distinct?
 
 ## Output Generation Options
 
