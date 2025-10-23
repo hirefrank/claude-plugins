@@ -12,37 +12,7 @@ To analyze your AI usage patterns and generate Custom Skills, you need:
 
 1. **AI conversation exports** (Claude and/or ChatGPT)
 2. **Organized directory structure** for your data
-3. **At least 50+ conversations** for meaningful pattern detection
-
-## 🗂️ Directory Structure Setup
-
-I'll automatically create the proper directory structure for you. Here's what will be created:
-
-```
-your-project/
-├── data-exports/
-│   ├── claude/           # Place Claude exports here
-│   │   ├── conversations.json
-│   │   ├── projects.json
-│   │   └── users.json
-│   └── chatgpt/          # Place ChatGPT exports here
-│       ├── conversations.json
-│       ├── user.json
-│       ├── shared_conversations.json
-│       └── message_feedback.json (optional)
-├── reports/              # Analysis reports will appear here
-└── generated-skills/     # Generated skills will appear here
-```
-
-**Let me create these directories now:**
-
-I'll set up:
-- ✅ `data-exports/claude/` - for your Claude conversation exports
-- ✅ `data-exports/chatgpt/` - for your ChatGPT conversation exports
-- ✅ `reports/` - for timestamped analysis reports
-- ✅ `generated-skills/` - for your generated Custom Skills
-
-Ready to proceed? Just confirm and I'll create the full structure.
+3. **At least 20+ conversations** for basic analysis (50+ recommended for robust patterns)
 
 ## 📥 How to Export Your Conversations
 
@@ -59,11 +29,10 @@ Ready to proceed? Just confirm and I'll create the full structure.
 - This typically takes 24 hours (sometimes sooner)
 - The email will contain a download link
 
-**Step 3: Extract and Organize**
+**Step 3: Extract and Save**
 1. Download the ZIP file from the email
-2. Extract all files (you should have `conversations.json`, `projects.json`, etc.)
-3. Create the directory if not already done: `data-exports/claude/`
-4. Move all extracted JSON files into `data-exports/claude/`
+2. Extract all files (you'll have `conversations.json`, `projects.json`, etc.)
+3. Save these files to your `data-exports/claude/` folder (we'll create this next)
 
 **Files you should see:**
 - `conversations.json` (required) - Your conversation history
@@ -84,11 +53,10 @@ Ready to proceed? Just confirm and I'll create the full structure.
 - This usually takes 2-4 hours
 - The email will contain a download link
 
-**Step 3: Extract and Organize**
+**Step 3: Extract and Save**
 1. Download the ZIP file from the email
-2. Extract all files (you should have `conversations.json`, `user.json`, etc.)
-3. Create the directory if not already done: `data-exports/chatgpt/`
-4. Move all extracted JSON files into `data-exports/chatgpt/`
+2. Extract all files (you'll have `conversations.json`, `user.json`, etc.)
+3. Save these files to your `data-exports/chatgpt/` folder (we'll create this next)
 
 **Files you should see:**
 - `conversations.json` (required) - Your conversation history
@@ -111,6 +79,31 @@ Ready to proceed? Just confirm and I'll create the full structure.
 - Export formats can vary slightly between updates
 - As long as you have `conversations.json`, the analysis will work
 - Missing optional files is fine
+
+---
+
+## 🗂️ Directory Structure Setup
+
+I can create the proper directory structure for you automatically. Here's what will be created:
+
+```
+your-project/
+├── data-exports/
+│   ├── claude/           # Place Claude exports here
+│   └── chatgpt/          # Place ChatGPT exports here
+├── reports/              # Analysis reports will appear here
+└── generated-skills/     # Generated skills will appear here
+```
+
+**Ready to create these directories?**
+
+Just confirm and I'll set up:
+- ✅ `data-exports/claude/` - for your Claude conversation exports
+- ✅ `data-exports/chatgpt/` - for your ChatGPT conversation exports
+- ✅ `reports/` - for timestamped analysis reports
+- ✅ `generated-skills/` - for your generated Custom Skills
+
+Confirm when you're ready!
 
 ## ⚡ Quick Start Checklist
 
