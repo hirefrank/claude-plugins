@@ -66,7 +66,9 @@ Automatically detect available platforms by scanning both data-exports/ director
 
 ## Analysis Framework
 
-### Phase 0: Analysis Scope Determination
+This command uses the **[shared analysis methodology](../shared/analysis-methodology.md)** with export-specific enhancements.
+
+### Phase 0: Analysis Scope Determination (Export-Specific)
 
 1. **Check for Previous Analysis Log**:
    - If user provides a previous analysis log (from prior runs), parse it to identify:
@@ -91,178 +93,69 @@ Automatically detect available platforms by scanning both data-exports/ director
 
 **Use extended reasoning to identify subtle patterns across large conversation sets.**
 
-1. **Platform Detection and Data Parsing**:
+1. **Platform Detection and Data Parsing** (Export-Specific):
    - Auto-detect export format (Claude vs ChatGPT) 
    - Parse conversations, projects, user data based on platform
    - Extract expertise indicators and usage patterns
 
-2. **Categorize and analyze patterns:**
+2. **Apply [Shared Pattern Discovery](../shared/analysis-methodology.md#phase-1-pattern-discovery--classification)**:
    - Topic/domain clustering (coding, writing, business, analysis)
    - Task types (creation, transformation, analysis, troubleshooting)
-   - Output formats and user preferences
-   - Explicit patterns: "Create a [X] with [Y] requirements"
-   - Implicit workflows: Multi-turn conversation structures
-   - Iterative refinement patterns and correction types
+   - Explicit and implicit pattern markers
+   - Temporal pattern detection
    - User expertise evolution over time
+
+3. **Export-Specific Enhancements**:
+   - Cross-reference with project data (Claude exports):
+     - How many projects demonstrate similar patterns?
+     - Do project descriptions reinforce conversation patterns?
+     - Project success indicators and user satisfaction
+   - Message feedback analysis (ChatGPT exports):
+     - User feedback patterns on AI responses
+     - Quality improvement opportunities
 
 **Think deeply about:**
 - Are these truly distinct patterns or variations of the same workflow?
 - What makes this pattern recurring vs. one-off requests?
 - How do patterns evolve across the user's conversation timeline?
 
-### Phase 2: Frequency & Temporal Analysis
-For each identified pattern:
-1. **Count occurrences** across entire conversation history and project work
-2. **Calculate temporal distribution:**
-   - First and most recent occurrence dates
-   - Frequency trends (increasing/stable/decreasing)
-   - Clustering patterns (bursts vs. distributed)
-   - Seasonal/cyclical patterns (weekly/monthly/event-driven)
-   - Project lifecycle patterns (start/middle/end phases)
+### Phase 2-4: Core Analysis
 
-3. **Cross-reference with project data:**
-   - How many projects demonstrate similar patterns?
-   - Do project descriptions reinforce conversation patterns?
-   - Are there project-specific workflows not visible in conversations?
-   - Project success indicators and user satisfaction
+Apply the **[shared analysis methodology](../shared/analysis-methodology.md)** phases:
 
-4. **Impact assessment:**
-   - Business criticality indicators
-   - Time investment per occurrence
-   - Quality improvement potential
-   - Error reduction opportunities
-   - Project success metrics and outcomes
+- **Phase 2**: Frequency & Temporal Analysis with project data cross-referencing
+- **Phase 3**: Skill-Worthiness Scoring (0-50 composite scale)
+- **Phase 4**: Relationship Mapping & Overlap Analysis
 
-### Phase 3: Complexity & Standardization Assessment
-For each pattern, evaluate:
-1. **Task complexity factors:**
-   - Number of steps involved
-   - Decision points and branching logic
-   - Required domain knowledge
-   - External dependencies
-   - Cognitive load requirements
+See [shared methodology](../shared/analysis-methodology.md) for complete details.
 
-2. **Standardization potential:**
-   - Consistency of requirements across instances
-   - Input/output variation levels
-   - Documentable rules and procedures
-   - Automation/templating value potential
+### Phase 5: Cross-Platform Pattern Deduplication (Export-Specific)
 
-3. **Skill-worthiness scoring** (0-10 scale):
-   - **Frequency**: How often does this task occur?
-   - **Consistency**: How similar are requirements each time?
-   - **Complexity**: Would a skill meaningfully improve quality?
-   - **Time savings**: How much effort would a skill save?
-   - **Error reduction**: Common pitfalls a skill could prevent?
+When processing mixed datasets (both ChatGPT and Claude exports), perform comprehensive deduplication before skill generation.
 
-### Phase 4: Relationship Mapping & Overlap Analysis
-1. **Identify skill relationships:**
-   - Sequential workflows (tasks in sequence)
-   - Complementary tasks (serving same goal)
-   - Hierarchical relationships (high-level composed of sub-tasks)
-   - Shared components (common elements across task types)
+See **[shared methodology - Cross-Platform Deduplication](../shared/analysis-methodology.md#cross-platform-deduplication-export-analysis-only)** for:
+- Content similarity detection
+- Deduplication classification rules
+- Pattern frequency recalculation
+- Unified skill design preparation
+- Deduplication validation
 
-2. **Overlap detection and resolution:**
-   - Map overlapping functionality between potential skills
-   - Identify consolidation opportunities
-   - Determine optimal skill boundaries
-   - Plan integration strategies between related skills
-
-3. **Dependency analysis:**
-   - Which skills build on others
-   - Shared templates or reference materials
-   - Cross-skill workflow patterns
-
-4. **False positive detection and validation:**
-   - Distinguish between true recurring patterns and coincidental similarities
-   - Validate pattern significance using statistical methods
-   - Filter out one-off requests that appear similar but lack consistency
-   - Ensure patterns represent genuine user needs rather than random occurrences
-
-### Phase 5: Cross-Platform Pattern Deduplication
-
-When processing mixed datasets (both ChatGPT and Claude exports), perform comprehensive deduplication before skill generation:
-
-#### 1. **Content Similarity Detection**
-- **Semantic matching**: Compare conversation titles, summaries, and key topics using content similarity
-- **Temporal correlation**: Flag conversations within 24-48 hours discussing identical or closely related topics
-- **Draft content overlap**: Detect when same document drafts, emails, or content pieces appear across platforms
-- **Workflow sequence matching**: Identify multi-platform workflows (e.g., research in ChatGPT → writing in Claude)
-
-#### 2. **Deduplication Classification Rules**
-- **Exact duplicates** (>90% content similarity): Remove from frequency counts completely
-- **Cross-platform workflows** (same project, different phases): Count as single workflow instance
-- **Platform preference patterns**: Analyze which platform user prefers for specific task types
-- **Complementary usage**: Preserve when platforms serve genuinely different purposes in workflow
-
-#### 3. **Pattern Frequency Recalculation**
-- **Adjust occurrence counts**: Subtract duplicate instances from frequency totals
-- **Merge conversation evidence**: Combine excerpts from both platforms for stronger pattern evidence
-- **Recalculate skill-worthiness scores**: Update frequency-based scoring after deduplication
-- **Platform usage insights**: Note platform preferences for different task types
-
-#### 4. **Unified Skill Design Preparation**
-- **Platform-agnostic skill definitions**: Design skills that work regardless of AI platform used
-- **Cross-platform workflow support**: Include guidance for multi-platform processes
-- **Platform-specific usage notes**: Document when certain platforms excel for specific steps
-- **Consolidated skill boundaries**: Merge similar patterns that appeared platform-specific
-
-#### 5. **Deduplication Validation**
-- **Statistical significance check**: Ensure patterns remain statistically significant after deduplication
-- **Evidence quality assessment**: Verify sufficient conversation examples remain after merging
-- **Pattern authenticity confirmation**: Distinguish genuine user patterns from platform-switching noise
-- **Frequency threshold re-evaluation**: Re-apply minimum occurrence thresholds post-deduplication
-
-**Deduplication Quality Standards:**
-- Minimum 3 unique workflow instances required post-deduplication
-- Cross-platform patterns must show genuine workflow integration, not random platform switching
-- Platform preference data should inform skill design, not create separate skills
-- Maintain detailed log of deduplication decisions for transparency
+**Export-Specific Advantages:**
+- Access to complete conversation history (not just recent/accessible)
+- Project metadata integration (Claude)
+- Message feedback data (ChatGPT)
+- Temporal analysis across months/years
 
 ### Phase 6: Skill Generation & Optimization
 
 **Use extended reasoning to optimize skill boundaries and maximize user value.**
 
-#### A. Skill Prioritization Matrix
+Apply **[shared methodology - Prioritization Matrix](../shared/analysis-methodology.md#phase-5-prioritization-matrix)** and boundary optimization strategies.
 
-**Think carefully about:**
-- Which patterns have the highest ROI (time saved × frequency)?
-- Are there strategic patterns that don't show high frequency but have disproportionate impact?
-- How do skills interact - should some be combined or kept separate?
-
-Create comprehensive 2x2 matrix with additional dimensions:
-- **X-axis**: Frequency (Low to High)
-- **Y-axis**: Value/Impact (Low to High) 
-- **Color coding**: Implementation complexity
-- **Size indicators**: Time savings potential
-
-**Quadrant strategies:**
-- **High Frequency, High Value**: "Quick Wins" - Implement immediately
-- **High Frequency, Low Value**: "Automate" - Simple skills worth creating
-- **Low Frequency, High Value**: "Strategic" - Important complex skills
-- **Low Frequency, Low Value**: "Defer" - Not worth skill creation
-
-#### B. Overlap Resolution
-
-**Reason deeply about skill boundaries:**
-- What makes these skills distinct enough to warrant separation?
-- Would users be confused by having both, or would they serve different contexts?
-- Is the overlap incidental or fundamental to the workflow?
-
-For each overlapping skill pair:
-1. **Analyze overlap percentage** and type
-2. **Determine consolidation strategy:**
-   - Merge into single comprehensive skill
-   - Keep separate with cross-references
-   - Create hierarchical relationship (main + specialized)
-   - Extract common elements into shared templates
-
-3. **Optimize skill boundaries** for clarity and usability
-
-**Validation questions:**
-- Does each skill have a clear, single purpose?
-- Can users easily decide which skill to use for their task?
-- Are skill names and descriptions sufficiently distinct?
+**Export-Specific Enhancements:**
+- Leverage project success data for impact validation
+- Use message feedback for quality improvement insights
+- Apply historical trend analysis for strategic pattern identification
 
 ## Output Generation Options
 
@@ -412,19 +305,17 @@ For detailed methodology, see [reference.md](reference.md).
 
 ## Quality Standards
 
-### Pattern Validation Requirements
-- **Statistical significance**: Patterns must occur in >5% of total conversations
-- **Consistency threshold**: 70%+ similarity across pattern instances
-- **Business value**: Clear time savings (>30 min/week) or quality improvement potential
-- **Avoid generic categories**: No broad domains like "creative" or "research"
-- **Evidence requirement**: Minimum 3 specific conversation excerpts per pattern
+All quality standards follow the **[shared analysis methodology](../shared/analysis-methodology.md#quality-standards)**:
 
-### Skill Consolidation Rules
-- **Maximum 12 skills total**: Focus on highest-impact patterns (recommend prioritizing top 5-8)
-- **Minimum frequency**: 50+ occurrences OR high strategic value (executive/business critical)
-- **Clear boundaries**: Each skill should have distinct, non-overlapping purpose
-- **Platform agnostic**: Skills must work with content from any AI platform
-- **Cross-platform evidence**: Include examples from both platforms when available
+- Pattern validation requirements (frequency, consistency, evidence)
+- Skill consolidation rules (max 8-12 skills, clear boundaries)
+- Skill package generation standards
+- Anti-patterns to avoid
+
+**Export-Specific Enhancements:**
+- Minimum frequency: 50+ occurrences OR high strategic value (with complete history available)
+- Cross-platform evidence: Include examples from both platforms when available
+- Project data validation: Cross-reference patterns with project success metrics
 
 ## Instructions for Execution
 
@@ -444,11 +335,13 @@ For detailed methodology, see [reference.md](reference.md).
 11. **Validate all content** using quality framework and analysis standards
 
 ### Quality Focus Requirements
-- **Eliminate generic patterns**: Focus only on specific, actionable workflows
-- **Consolidate overlapping skills**: Maximum 12 high-value skills total (recommend top 5-8 for initial implementation)
-- **Validate frequency claims**: Ensure pattern counts are mathematically sound post-deduplication
-- **Prioritize by genuine impact**: Time savings (>30 min/week) and quality improvement potential
-- **Platform-agnostic design**: Skills must work regardless of AI platform used
+
+Apply **[shared methodology quality standards](../shared/analysis-methodology.md#quality-standards)** with export-specific validation:
+- Eliminate generic patterns and focus on specific workflows
+- Consolidate overlapping skills (max 8-12, recommend top 5-8)
+- Validate frequency claims post-deduplication
+- Prioritize by genuine impact (>30 min/week time savings)
+- Platform-agnostic design for all generated skills
 
 ### For Incremental Processing
 If user provides previous analysis log:
