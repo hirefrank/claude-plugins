@@ -20,7 +20,7 @@ To analyze your AI usage patterns and generate Custom Skills, you need:
 
 **Step 1: Request Export**
 1. Go to [claude.ai/settings](https://claude.ai/settings)
-2. Click on **"Privacy & Data"** in the left sidebar
+2. Click on **"Privacy"** in the left sidebar
 3. Look for **"Request data export"** or similar option
 4. Click the button to request your export
 
