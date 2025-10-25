@@ -333,6 +333,23 @@ All quality standards follow the **[shared analysis methodology](../shared/analy
    - Create `reports/{TIMESTAMP}/implementation-guide.md`
 10. **Generate skill packages** in `generated-skills/` if requested (Option B/C)
 11. **Validate all content** using quality framework and analysis standards
+12. **Cleanup Phase**:
+    - Remove temporary analysis scripts from `scripts/` directory
+    - Delete intermediate data processing files (*.tmp, *.cache, etc.)
+    - Remove empty directories created during processing
+    - Clean up any Python virtual environments or temporary dependencies
+    - Remove duplicate or staging files from skill generation process
+13. **Archive Organization** (Optional):
+    - Compress older reports directories (keep last 3-5 runs)
+    - Move temporary logs to archive subdirectory
+    - Consolidate debug output into single log file
+14. **Cleanup Validation**:
+    - Verify all essential outputs remain intact:
+      - `skills-analysis-log.json` (root)
+      - `reports/{TIMESTAMP}/` directory with analysis reports
+      - `generated-skills/` directory with skill packages
+    - Confirm no critical files were accidentally removed
+    - Display cleanup summary showing what was removed vs. retained
 
 ### Quality Focus Requirements
 
