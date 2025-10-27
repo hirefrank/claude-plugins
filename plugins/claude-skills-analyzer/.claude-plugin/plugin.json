@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "description": "Analyze AI conversation exports to generate reusable Custom Skills",
   "author": {
-    "name": "Frank",
-    "email": "frank@example.com"
+    "name": "Frank Harris",
+    "email": "frank@hirefrank.com"
   },
   "homepage": "https://github.com/hirefrank/claude-plugins",
   "repository": "https://github.com/hirefrank/claude-plugins",

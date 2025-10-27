@@ -16,9 +16,9 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 - Complete skill package generation
 - Incremental processing for efficiency
 
-**Usage**: 
+**Usage**:
 - `/skills-setup` - Get setup guidance and export instructions
-- `/analyze-skills` - Run the main conversation analysis  
+- `/analyze-skills` - Run the main conversation analysis
 - `/skills-troubleshoot` - Diagnose and fix common issues
 
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
@@ -86,12 +86,12 @@ Interested in contributing? Check out:
 ### Feedback & Issues
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/hirefrank/claude-plugins/issues)
 - 💡 **Feature Requests**: [GitHub Discussions](https://github.com/hirefrank/claude-plugins/discussions)
-- 📧 **Direct Contact**: frank@example.com
+- 📧 **Direct Contact**: frank@hirefrank.com
 
 ## Repository Structure
 
 ```
-frank-claude-plugins/
+claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace configuration
 ├── plugins/
@@ -106,22 +106,6 @@ frank-claude-plugins/
 └── README.md              # This file
 ```
 
-## Marketplace Information
-
-- **Marketplace Name**: `frank-claude-plugins`
-- **Owner**: Frank
-- **Plugin Count**: 1 (growing)
-- **Total Downloads**: 🔄 *Coming soon*
-- **Last Updated**: *Automatically synced*
-
 ## License
 
 All plugins are released under MIT License - feel free to use, modify, and distribute for personal and commercial use.
-
-## Support
-
-For plugin-specific issues, please refer to individual plugin documentation. For marketplace-level questions or multi-plugin workflows, reach out via the contact methods above.
-
----
-
-*Built with ❤️ for the Claude Code community*
