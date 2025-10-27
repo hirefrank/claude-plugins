@@ -1,6 +1,6 @@
 {
   "name": "claude-skills-analyzer",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Analyze AI conversation exports to generate reusable Custom Skills",
   "author": {
     "name": "Frank",

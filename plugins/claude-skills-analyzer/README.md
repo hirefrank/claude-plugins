@@ -8,6 +8,15 @@ Transform your conversation history into actionable Claude Skills! This plugin p
 
 **Architecture**: Uses a modular design with [shared analysis methodology](./shared/analysis-methodology.md) powering both export-based analysis and tool-based pattern detection.
 
+## Prerequisites
+
+- **Claude Code** - [Installation instructions](https://docs.anthropic.com/en/docs/claude-code)
+- **Conversation Exports** - For export-based analysis (`/analyze-skills`):
+  - Claude conversation exports (JSON format)
+  - ChatGPT conversation exports (JSON format)
+  - Or both for cross-platform analysis
+  - At least 20+ conversations for basic analysis (50+ recommended for robust patterns)
+
 ## Installation
 
 ```shell
@@ -19,52 +28,6 @@ Transform your conversation history into actionable Claude Skills! This plugin p
 
 # Restart Claude Code to activate
 ```
-
-## Usage
-
-### 1. Get Setup Guidance
-
-```shell
-/skills-setup
-```
-
-This command will:
-- Create the necessary directory structure automatically
-- Walk you through exporting from Claude and ChatGPT
-- Explain privacy and security features
-- Show you what to expect from analysis
-
-### 2. Export Your Conversations
-
-For detailed export instructions, follow the guidance provided by `/skills-setup` - it will walk you through both Claude and ChatGPT exports step-by-step.
-
-### 3. Run the Analysis
-
-```shell
-/analyze-skills
-```
-
-Choose from output options:
-- **Option A**: Analysis report only
-- **Option B**: Complete implementation package (recommended)
-- **Option C**: Incremental implementation (top 3-5 skills)
-- **Option D**: Custom specification
-
-The analysis will automatically create the `reports/` and `generated-skills/` directories as needed.
-
-### 4. Troubleshoot if Needed
-
-```shell
-/skills-troubleshoot
-```
-
-Get help diagnosing issues like:
-- Missing conversation files
-- JSON parsing errors
-- Analysis producing no patterns
-- Plugin installation problems
-
-
 
 ## Components
 
@@ -106,6 +69,242 @@ All components use the [shared analysis methodology](./shared/analysis-methodolo
 - Maintain analysis logs for efficiency
 - Build on previous analysis results
 
+## Quick Start
+
+### 1. Get Setup Guidance
+
+```shell
+/skills-setup
+```
+
+This command will:
+- Create the necessary directory structure automatically
+- Walk you through exporting from Claude and ChatGPT
+- Explain privacy and security features
+- Show you what to expect from analysis
+
+### 2. Export Your Conversations
+
+Export your conversation history from Claude and/or ChatGPT. The `/skills-setup` command provides detailed step-by-step instructions, or see the [Exporting Your Conversations](#exporting-your-conversations) section below for complete details.
+
+### 3. Run the Analysis
+
+```shell
+/analyze-skills
+```
+
+Choose from output options:
+- **Option A**: Analysis report only
+- **Option B**: Complete implementation package (recommended)
+- **Option C**: Incremental implementation (top 3-5 skills)
+- **Option D**: Custom specification
+
+The analysis will automatically create the `reports/` and `generated-skills/` directories as needed.
+
+### 4. Install Your Generated Skills
+
+After analysis completes, you'll have custom skills in the `generated-skills/` directory. Here's how to use them:
+
+> **Learn more about Skills**: [What are Skills?](https://support.claude.com/en/articles/12512176-what-are-skills) | [How to Create Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
+
+#### In Claude Code
+
+Claude automatically discovers skills from:
+- **Personal skills**: `~/.claude/skills/` (available across all projects)
+- **Project skills**: `.claude/skills/` (shared with your team via git)
+- **Plugin skills**: bundled with installed plugins
+
+**Option 1: Copy to Personal Skills Directory**
+```shell
+# Copy a generated skill to your personal Claude Code skills directory
+cp -r generated-skills/skill-name ~/.claude/skills/
+```
+
+**Option 2: Copy to Project Skills Directory**
+```shell
+# Copy to project directory to share with your team
+cp -r generated-skills/skill-name .claude/skills/
+```
+
+**Option 3: Symlink for Easy Updates**
+```shell
+# Create a symlink to keep skills in your project
+ln -s $(pwd)/generated-skills/skill-name ~/.claude/skills/skill-name
+```
+
+**Using the skill:**
+
+Skills are **model-invoked** - Claude automatically decides when to use them based on your request and the skill's description. Simply ask questions or make requests that match what the skill does:
+- "Help me with [task that matches skill description]"
+- Use trigger phrases from the skill's description
+- Claude will automatically load and apply the skill when relevant
+
+**Tip**: Ask "What skills are available?" to see all your installed skills.
+
+> **Source**: [Claude Code Skills Documentation](https://docs.claude.com/en/docs/claude-code/skills.md)
+
+#### In Claude.ai Web Interface
+
+**Requirements**: 
+- Available for Pro, Max, Team, and Enterprise plans
+- **Code execution must be enabled** in Settings > Capabilities
+
+**Step 1: Package Your Skill**
+```shell
+# Create a properly structured ZIP file
+cd generated-skills
+zip -r skill-name.zip skill-name/
+```
+
+**Important**: The ZIP must contain the skill folder as its root, not files directly in the ZIP.
+
+**Correct structure:**
+```
+skill-name.zip
+└── skill-name/
+    ├── SKILL.md
+    ├── reference.md
+    └── templates/
+```
+
+**Step 2: Upload to Claude**
+1. Click your initials in the lower left corner
+2. Go to **Settings > Capabilities**
+3. Ensure **"Code execution and file creation"** is enabled
+4. In the Skills section, click **"Upload skill"**
+5. Upload the `skill-name.zip` file
+
+**Note**: Custom skills you upload are private to your individual account.
+
+**Step 3: Enable and Use Your Skill**
+
+After upload, toggle the skill on using the switch next to it in Settings > Capabilities. Claude automatically determines when to use your skill based on the **description** in the YAML frontmatter. Simply make requests that match what the skill does:
+- "Help me with [task that matches skill description]"
+- Use trigger phrases from the skill description
+- Claude will automatically load and apply the skill when relevant
+
+**Note**: Skills activate automatically based on context - no slash commands needed.
+
+**Single-file alternative**: You can upload just `SKILL.md`, but you'll lose supporting documentation (`reference.md`, `examples.md`) and templates.
+
+> **Source**: [Using Skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude) | [How to Create Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
+
+#### How Skills Work
+
+Skills use **progressive disclosure** - Claude reviews available skills, loads only relevant ones, and applies their instructions when needed. Your skill's description (max 200 characters) is critical because Claude uses it to determine when to invoke your skill.
+
+**Generated skill structure**:
+```
+skill-name/
+├── SKILL.md           # Main skill with YAML frontmatter
+├── reference.md       # Detailed methodology (loaded when needed)
+├── examples.md        # Additional use cases
+└── templates/         # Reusable output templates
+```
+
+#### Testing Your Skills
+
+**Before uploading:**
+- Review `SKILL.md` for clarity
+- Verify the description accurately reflects when Claude should use it (max 200 characters)
+- Ensure the name field uses only lowercase letters, numbers, and hyphens (max 64 characters)
+- Test trigger phrases align with the description
+
+**After uploading:**
+1. Enable the skill using the toggle switch in Settings > Capabilities
+2. Try prompts that should trigger it
+3. Check if Claude loads the skill (visible in expanded thinking when available)
+4. Iterate on the description if Claude doesn't invoke it as expected
+
+**Pro tip**: Start with your highest-impact skills (Option C: top 3-5) rather than implementing all at once.
+
+> **YAML Requirements**: [How to Create Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
+
+### 5. Troubleshoot if Needed
+
+```shell
+/skills-troubleshoot
+```
+
+Get help diagnosing issues like:
+- Missing conversation files
+- JSON parsing errors
+- Analysis producing no patterns
+- Plugin installation problems
+- Skill installation or activation issues
+
+## Exporting Your Conversations
+
+Before running analysis, you'll need to export your conversation history from Claude and/or ChatGPT.
+
+### From Claude
+
+**Step 1: Request Export**
+1. Click your initials in the lower left corner of claude.ai
+2. Select **"Settings"** from the menu
+3. Navigate to **"Privacy"** section
+4. Click **"Export data"** button
+
+**Step 2: Wait for Email**
+- You'll receive a download link via email once the export is processed
+- The download link expires 24 hours after delivery
+- You must be signed in to your account to download
+
+**Step 3: Extract and Save**
+1. Download the ZIP file from the email
+2. Extract all files (you'll get `conversations.json`, `projects.json`, etc.)
+3. Save these files to your `data-exports/claude/` folder (created by `/skills-setup`)
+
+**Files included:**
+- `conversations.json` - Your conversation history
+- `projects.json` - Project information and metadata  
+- `users.json` - Account information
+
+> **Source**: [How can I export my Claude data?](https://support.claude.com/en/articles/9450526-how-can-i-export-my-claude-data)
+
+### From ChatGPT
+
+**Step 1: Request Export**
+1. Sign in to ChatGPT
+2. Click your profile icon in the top right corner
+3. Click **"Settings"**
+4. Click **"Data Controls"** menu
+5. Under Export Data, click **"Export"**
+6. Click **"Confirm export"** in the confirmation screen
+
+**Step 2: Wait for Email**
+- The downloadable ZIP file will be sent to your registered email address
+- The download link expires 24 hours after delivery
+- Export may take some time depending on the amount of data
+
+**Step 3: Extract and Save**
+1. Download the ZIP file from the email
+2. Extract all files (you'll get `conversations.json`, `user.json`, etc.)
+3. Save these files to your `data-exports/chatgpt/` folder (created by `/skills-setup`)
+
+**Files included:**
+- `conversations.json` - Your conversation history (including shared conversations)
+- `user.json` - Account information
+- `shared_conversations.json` - Shared conversations metadata
+- `message_feedback.json` - Your feedback on responses
+
+> **Source**: [How do I export my ChatGPT history and data?](https://help.openai.com/en/articles/7260999-how-do-i-export-my-chatgpt-history-and-data)
+
+### Troubleshooting Exports
+
+**Can't find Settings?**
+- **Claude**: Click your initials (lower left corner) → Settings → Privacy
+- **ChatGPT**: Click profile icon (top right corner) → Settings → Data Controls
+
+**Export not arriving?**
+- Check spam/junk email folder
+- Remember: Links expire 24 hours after being sent
+- Request a new export if the link has expired
+
+**Files look different?**
+- Export formats can vary slightly between updates
+- As long as you have `conversations.json`, the analysis will work
+
 ## Generated Output
 
 All output is automatically organized in your project directory:
@@ -113,7 +312,7 @@ All output is automatically organized in your project directory:
 ### Analysis Reports
 Located in `reports/{timestamp}/`:
 - **comprehensive-skills-analysis.md** - Complete pattern analysis with evidence
-- **implementation-guide.md** - Actionable deployment roadmap  
+- **implementation-guide.md** - Actionable deployment roadmap
 - **skills-analysis-log.json** - Machine-readable data for incremental processing
 
 ### Skill Packages
