@@ -47,19 +47,14 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 # 1. Install the plugin
 /plugin install claude-skills-analyzer@hirefrank
 
-# 2. Get setup help (creates directory structure + export instructions)
+# 2. Follow the interactive setup
 /skills-setup
 
-# 3. Export your conversations using the provided instructions
-
-# 4. Run the analysis (generates reports and skills automatically)
+# 3. Run the analysis
 /analyze-skills
-
-# 5. Get help if needed
-/skills-troubleshoot
 ```
 
-All directories and output files are created automatically - no manual setup required!
+See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quick-start) for detailed instructions including export steps and skill installation.
 
 ## Plugin Categories
 
