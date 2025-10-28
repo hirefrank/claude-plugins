@@ -25,13 +25,45 @@ Identify patterns through multiple detection methods:
 - **Context re-explanation**: Same background info provided repeatedly
 - **Problem-solving approaches**: Consistent debugging/analysis methodologies
 
-#### C. Domain Clustering
-- **Topic frequency analysis**: coding, writing, business, analysis
-- **Task type patterns**: creation, transformation, analysis, troubleshooting
-- **Subject matter expertise areas**: Technical depth indicators
+#### C. Domain Discovery (Data-Driven)
+- **Let domains emerge from the data** - Do NOT pre-categorize into standard domains
+- **Topic frequency analysis**: Extract actual subject matter from conversations
+  - Examples of specialized domains: recipe transcription, cannabis strains, image prompting, game design, book summaries
+  - Examples of traditional domains: coding, business strategy, creative writing, data analysis, technical writing
+- **Task type patterns**: Identify the action types that appear (creation, transformation, analysis, troubleshooting, curation, etc.)
+- **Niche specialization detection**: Look specifically for narrow, specialized topics with high engagement
 - **Cross-domain workflows**: Patterns that span multiple topics
+- **Domain diversity scoring**: Reward finding 8-15 distinct domains vs. forcing into 3-4 buckets
 
-#### D. Temporal Patterns
+**CRITICAL**: Avoid fitting patterns into predefined categories. Each user's conversation history will have unique domains based on their actual usage.
+
+#### D. Niche & Specialized Pattern Detection
+
+**Explicitly search for underrepresented domains:**
+- **Hobbyist domains**: Recipes, cocktails, cannabis, gardening, gaming, fitness, travel planning
+- **Creative domains**: Story writing, worldbuilding, character development, art direction, music composition
+- **Prompt engineering**: Image generation (Midjourney, Stable Diffusion, DALL-E), video generation, AI art workflows
+- **Learning & education**: Book summaries, concept explanations, study guides, teaching materials
+- **Personal organization**: Resume writing, cover letters, personal branding, goal setting
+- **Entertainment & media**: Game design, narrative design, content creation, video scripts
+- **Wellness & lifestyle**: Meal planning, workout routines, meditation guides, habit tracking
+
+**Detection strategy:**
+- Look for concentrated clusters of 5+ conversations on the same narrow topic
+- Identify specialized vocabulary/jargon (strain names, recipe terms, art styles, game mechanics)
+- Find recurring templates/formats specific to that domain
+- Don't dismiss low-frequency patterns if they show high consistency and complexity
+- Pay special attention to patterns that appear in artifacts, project names, or conversation titles
+- Consider that niche patterns may have lower frequency but higher value due to specialization
+
+**Quality indicators for niche patterns:**
+- Consistent terminology and domain-specific language
+- Recurring output formats or structures
+- User demonstrates growing expertise over time
+- High engagement (longer conversations, multiple refinements)
+- Clear workflow or methodology emerging
+
+#### E. Temporal Patterns
 - **Weekly/monthly recurring tasks**: Reports, summaries, check-ins
 - **Event-driven patterns**: Meeting prep, post-mortems, launches
 - **Seasonal trends**: Quarterly reviews, annual planning
@@ -298,6 +330,9 @@ Before finalizing recommendations:
 - [ ] Composite scores correctly calculated
 - [ ] Time savings estimates realistic
 - [ ] No generic/broad skill categories
+- [ ] Domain diversity validated - patterns span 6+ distinct topic areas (not just business/coding)
+- [ ] Niche specializations identified and not dismissed as outliers
+- [ ] No artificial categorization into predefined domains (coding, writing, business, analysis)
 - [ ] Maximum 8-12 skills recommended (prefer 5-8)
 - [ ] Each skill has 2-3 conversation excerpts as evidence
 - [ ] Progressive disclosure strategy implemented

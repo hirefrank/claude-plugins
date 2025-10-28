@@ -69,6 +69,15 @@ All components use the [shared analysis methodology](./shared/analysis-methodolo
 - Maintain analysis logs for efficiency
 - Build on previous analysis results
 
+### 🎯 Data-Driven Domain Discovery
+- **No predefined categories**: Patterns emerge from actual usage instead of forcing into business/coding/writing buckets
+- **Niche specialization detection**: Explicitly searches for hobbyist, creative, prompt engineering, learning, and lifestyle patterns
+- **Domain diversity validation**: Ensures analysis spans 6+ distinct topic areas
+- **Specialized vocabulary tracking**: Identifies domain-specific language (strain names, recipe terms, art styles, game mechanics)
+- **Quality indicators**: Tracks recurring formats, user expertise growth, and high-engagement patterns
+
+This addresses user feedback where diverse interests (recipes, cannabis, image generation, game design) were previously overlooked in favor of traditional domains.
+
 ## Quick Start
 
 ### 1. Get Setup Guidance
@@ -486,6 +495,12 @@ claude-skills-analyzer/
 
 ## Version History
 
+- **v1.3.0**: Enhanced pattern detection with data-driven domain discovery
+  - Removed prescriptive categorization (coding, writing, business, analysis)
+  - Added niche pattern detection (hobbyist, creative, prompt engineering, learning, lifestyle)
+  - Domain diversity validation (6+ distinct topic areas)
+  - Specialized vocabulary tracking and quality indicators
+  - Better detection of low-frequency but high-value patterns
 - **v1.2.0**: Added web-compatible workflow-pattern-analyzer-web skill for universal platform support
 - **v1.1.0**: Added modular architecture with shared methodology and workflow-pattern-analyzer skill
 - **v1.0.0**: Initial release with cross-platform analysis

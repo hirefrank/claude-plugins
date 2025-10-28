@@ -99,9 +99,10 @@ This command uses the **[shared analysis methodology](../shared/analysis-methodo
    - Extract expertise indicators and usage patterns
 
 2. **Apply [Shared Pattern Discovery](../shared/analysis-methodology.md#phase-1-pattern-discovery--classification)**:
-   - Topic/domain clustering (coding, writing, business, analysis)
-   - Task types (creation, transformation, analysis, troubleshooting)
+   - **Data-driven domain discovery** (let actual topics emerge - DO NOT force into predefined categories)
+   - Task types (creation, transformation, analysis, troubleshooting, curation)
    - Explicit and implicit pattern markers
+   - Niche & specialized pattern detection (hobbyist domains, creative work, prompt engineering, etc.)
    - Temporal pattern detection
    - User expertise evolution over time
 
