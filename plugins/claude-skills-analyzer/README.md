@@ -21,10 +21,10 @@ Transform your conversation history into actionable Claude Skills! This plugin p
 
 ```shell
 # Add the marketplace (if not already added)
-/plugin marketplace add hirefrank/claude-plugins
+/plugin marketplace add hirefrank/hirefrank-marketplace
 
 # Install this plugin
-/plugin install claude-skills-analyzer@hirefrank
+/plugin install claude-skills-analyzer
 
 # Restart Claude Code to activate
 ```
@@ -455,8 +455,8 @@ All analysis components use the [shared methodology](./shared/analysis-methodolo
 ## Contributing
 
 Issues and suggestions for this plugin:
-- [Plugin Issues](https://github.com/hirefrank/claude-plugins/issues?q=label:claude-skills-analyzer)
-- [Feature Requests](https://github.com/hirefrank/claude-plugins/discussions)
+- [Plugin Issues](https://github.com/hirefrank/hirefrank-marketplace/issues?q=label:claude-skills-analyzer)
+- [Feature Requests](https://github.com/hirefrank/hirefrank-marketplace/discussions)
 
 ## Architecture
 

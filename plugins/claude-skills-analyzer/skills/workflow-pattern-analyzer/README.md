@@ -326,8 +326,8 @@ Week 4: Evaluate usage, iterate, consider remaining patterns
 
 Found a bug or have suggestions for improving the analysis methodology? 
 
-- Open an issue: [GitHub Issues](https://github.com/hirefrank/claude-plugins/issues)
-- Discuss improvements: [GitHub Discussions](https://github.com/hirefrank/claude-plugins/discussions)
+- Open an issue: [GitHub Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
+- Discuss improvements: [GitHub Discussions](https://github.com/hirefrank/hirefrank-marketplace/discussions)
 
 ## License
 

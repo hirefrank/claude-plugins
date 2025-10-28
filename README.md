@@ -1,6 +1,6 @@
-# Frank's Claude Code Plugins
+# hirefrank Marketplace
 
-A curated collection of Claude Code plugins for AI workflow optimization and productivity enhancement.
+The official hirefrank marketplace where I share my AI workflow tools and productivity plugins. Currently featuring the Claude Skills Analyzer plugin.
 
 ## Available Plugins
 
@@ -23,22 +23,29 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
 
-## Installation
+## Quick Start
 
-### Quick Install
-```shell
-# Add this marketplace
-/plugin marketplace add hirefrank/claude-plugins
+### Standard Installation
+Run Claude and add the marketplace:
 
-# Install specific plugins
-/plugin install claude-skills-analyzer@hirefrank
+```bash
+/plugin marketplace add hirefrank/hirefrank-marketplace
 ```
 
-### Browse All Plugins
-```shell
-# Browse all available plugins interactively
-/plugin
+Then install the plugin:
+
+```bash
+/plugin install claude-skills-analyzer
 ```
+
+### One-Command Installation
+Use the [Claude Plugins CLI](https://claude-plugins.dev) to skip the marketplace setup:
+
+```bash
+npx claude-plugins install @hirefrank/hirefrank-marketplace/claude-skills-analyzer
+```
+
+This automatically adds the marketplace and installs the plugin in a single step.
 
 ## Quick Start Guide
 
@@ -72,7 +79,7 @@ Future plugins in development:
 ## Contributing
 
 ### Suggesting New Plugins
-Have an idea for a plugin? [Open an issue](https://github.com/hirefrank/claude-plugins/issues) with:
+Have an idea for a plugin? [Open an issue](https://github.com/hirefrank/hirefrank-marketplace/issues) with:
 - Plugin concept and use case
 - Expected input/output formats
 - Target user workflow
@@ -84,14 +91,14 @@ Interested in contributing? Check out:
 - Code standards and testing requirements
 
 ### Feedback & Issues
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/hirefrank/claude-plugins/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/hirefrank/claude-plugins/discussions)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
+- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/hirefrank/hirefrank-marketplace/discussions)
 - 📧 **Direct Contact**: frank@hirefrank.com
 
 ## Repository Structure
 
 ```
-claude-plugins/
+hirefrank-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace configuration
 ├── plugins/

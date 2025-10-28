@@ -181,7 +181,7 @@ rm -rf reports/* generated-skills/*
 - Consider smaller dataset for initial testing
 
 ### For Technical Issues
-- Check [GitHub Issues](https://github.com/hirefrank/claude-plugins/issues)
+- Check [GitHub Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
 - Report bugs with error messages and setup details
 - Join discussions for community support
 

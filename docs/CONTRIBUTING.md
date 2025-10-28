@@ -1,17 +1,17 @@
-# Contributing to Frank's Claude Plugins
+# Contributing to hirefrank Marketplace
 
 Thank you for your interest in contributing! This marketplace welcomes contributions in several forms.
 
 ## Types of Contributions
 
 ### 🐛 Bug Reports
-- Use the [issue template](https://github.com/hirefrank/claude-plugins/issues/new?template=bug_report.md)
+- Use the [issue template](https://github.com/hirefrank/hirefrank-marketplace/issues/new?template=bug_report.md)
 - Include plugin name and version
 - Provide clear reproduction steps
 - Include relevant error messages or logs
 
 ### 💡 Feature Requests
-- Use [GitHub Discussions](https://github.com/hirefrank/claude-plugins/discussions)
+- Use [GitHub Discussions](https://github.com/hirefrank/hirefrank-marketplace/discussions)
 - Describe the use case and expected behavior
 - Consider whether it fits existing plugins or needs a new one
 
@@ -105,11 +105,11 @@ Thank you for your interest in contributing! This marketplace welcomes contribut
 ### For Contributors
 - [Plugin Development Guide](./PLUGIN_DEVELOPMENT.md)
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code/plugins)
-- [GitHub Discussions](https://github.com/hirefrank/claude-plugins/discussions)
+- [GitHub Discussions](https://github.com/hirefrank/hirefrank-marketplace/discussions)
 
 ### For Users
 - Plugin-specific README files
-- [Marketplace Issues](https://github.com/hirefrank/claude-plugins/issues)
+- [Marketplace Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
 - [Usage Examples](../examples/)
 
 ## Recognition

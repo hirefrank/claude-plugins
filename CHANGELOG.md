@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No sensitive data in version control
 
 ### Technical Details
-- Plugin marketplace: `hirefrank/claude-plugins`
+- Plugin marketplace: `hirefrank-marketplace`
 - Plugin name: `claude-skills-analyzer`
 - Supported platforms: Claude.ai, ChatGPT
 - Minimum conversations: 20+ (50+ recommended)
@@ -58,5 +58,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [1.0.0] - 2025-01-23
 Initial release of claude-skills-analyzer plugin with complete conversation analysis and skill generation capabilities.
 
-[Unreleased]: https://github.com/hirefrank/claude-plugins/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/hirefrank/claude-plugins/releases/tag/v1.0.0
+[Unreleased]: https://github.com/hirefrank/hirefrank-marketplace/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/hirefrank/hirefrank-marketplace/releases/tag/v1.0.0
