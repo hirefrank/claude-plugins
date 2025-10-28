@@ -31,8 +31,8 @@ To analyze your AI usage patterns and generate Custom Skills, you need:
 
 **Step 3: Extract and Save**
 1. Download the ZIP file from the email
-2. Extract all files (you'll have `conversations.json`, `projects.json`, etc.)
-3. Save these files to your `data-exports/claude/` folder (we'll create this next)
+2. **Option A - Automatic** (Recommended): Place the ZIP file in your project directory and run `/extract-exports` - it will automatically extract and organize everything for you
+3. **Option B - Manual**: Extract all files (you'll have `conversations.json`, `projects.json`, etc.) and save them to your `data-exports/claude/` folder (we'll create this next)
 
 **Files you should see:**
 - `conversations.json` (required) - Your conversation history
@@ -55,8 +55,8 @@ To analyze your AI usage patterns and generate Custom Skills, you need:
 
 **Step 3: Extract and Save**
 1. Download the ZIP file from the email
-2. Extract all files (you'll have `conversations.json`, `user.json`, etc.)
-3. Save these files to your `data-exports/chatgpt/` folder (we'll create this next)
+2. **Option A - Automatic** (Recommended): Place the ZIP file in your project directory and run `/extract-exports` - it will automatically extract and organize everything for you
+3. **Option B - Manual**: Extract all files (you'll have `conversations.json`, `user.json`, etc.) and save them to your `data-exports/chatgpt/` folder (we'll create this next)
 
 **Files you should see:**
 - `conversations.json` (required) - Your conversation history
@@ -104,6 +104,8 @@ Just confirm and I'll set up:
 - ✅ `generated-skills/` - for your generated Custom Skills
 
 Confirm when you're ready!
+
+**💡 Quick Tip**: Once you have the ZIP files from Claude/ChatGPT, you can use the `/extract-exports` command to automatically extract and organize everything for you! Just place the ZIP files in your project directory and run the command.
 
 ## ⚡ Quick Start Checklist
 
@@ -202,10 +204,11 @@ A: Typically 2-5 minutes for 100 conversations, longer for larger datasets or co
 
 ## 🛠️ Next Steps
 
-1. **Set up your directories**: Create the folder structure above
+1. **Set up your directories**: Create the folder structure above (or let `/extract-exports` do it automatically)
 2. **Export your data**: Follow the export guides for your platforms
-3. **Run the analysis**: Use `/analyze-skills` when ready
-4. **Implement skills**: Start with the highest-impact recommendations
+3. **Organize your exports**: Run `/extract-exports` to automatically extract and organize ZIP files, or manually place JSON files in the appropriate directories
+4. **Run the analysis**: Use `/analyze-skills` when ready
+5. **Implement skills**: Start with the highest-impact recommendations
 
 ## 💡 Pro Tips
 
