@@ -12,7 +12,7 @@ Transform your conversation history into actionable Claude Skills! This plugin p
 
 - **Claude Code** - [Installation instructions](https://docs.anthropic.com/en/docs/claude-code)
 - **Conversation Exports** - For export-based analysis (`/analyze-skills`):
-  - Claude conversation exports (JSON format)
+  - Claude conversation exports (JSON format) - **Note:** Only includes claude.ai web conversations, not Claude Code conversations
   - ChatGPT conversation exports (JSON format)
   - Or both for cross-platform analysis
   - At least 20+ conversations for basic analysis (50+ recommended for robust patterns)
@@ -438,6 +438,8 @@ For detailed troubleshooting, the `/skills-troubleshoot` command provides compre
 - `conversations.json` - Message history with metadata
 - `projects.json` - Project workflows and documentation
 - `users.json` - Account information for context
+
+**⚠️ Important:** Claude exports from claude.ai **DO NOT include Claude Code conversations**. Only web interface (claude.ai) conversations are exported. Claude Code conversations are stored separately and not included in data exports.
 
 **ChatGPT Export Structure:**
 - `conversations.json` - Conversation history with mapping

@@ -39,6 +39,9 @@ To analyze your AI usage patterns and generate Custom Skills, you need:
 - `projects.json` (optional) - Project information and metadata
 - `users.json` (optional) - Account information
 
+**⚠️ Important Note:**
+Claude exports from claude.ai **DO NOT include Claude Code conversations**. Only conversations from the web interface (claude.ai) are included in the export. If you primarily use Claude Code, your export may have fewer conversations than expected.
+
 ### For ChatGPT Conversations:
 
 **Step 1: Request Export**
@@ -192,6 +195,9 @@ After analysis, you'll get:
 
 **Q: How many conversations do I need?**
 A: Minimum 20-30 for basic analysis, 50+ for meaningful patterns, 100+ for comprehensive insights.
+
+**Q: Are Claude Code conversations included in exports?**
+A: No. Claude exports from claude.ai only include web interface conversations. Claude Code conversations are stored separately and are not included in data exports. If you primarily use Claude Code, consider using ChatGPT exports or the web-based workflow-pattern-analyzer skill instead.
 
 **Q: Can I analyze both Claude and ChatGPT together?**
 A: Yes! The plugin performs smart cross-platform deduplication and creates unified skills.
