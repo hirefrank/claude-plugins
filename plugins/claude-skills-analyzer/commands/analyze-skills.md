@@ -120,6 +120,26 @@ This command uses the **[shared analysis methodology](../shared/analysis-methodo
 - What makes this pattern recurring vs. one-off requests?
 - How do patterns evolve across the user's conversation timeline?
 
+**Terminal Output - Domain Diversity Visualization:**
+
+After completing pattern discovery, display an ASCII chart showing domain distribution to validate data-driven discovery:
+
+```
+📊 Domain Distribution Analysis
+
+Business & Strategy    ████████████░░░░░░░░ 12 patterns (32%)
+Creative & Writing     ██████████░░░░░░░░░░ 10 patterns (27%)
+Image Prompting        ████████░░░░░░░░░░░░  8 patterns (22%)
+Learning & Education   ████░░░░░░░░░░░░░░░░  4 patterns (11%)
+Recipe & Cooking       ██░░░░░░░░░░░░░░░░░░  2 patterns  (5%)
+Gaming & Design        █░░░░░░░░░░░░░░░░░░░  1 pattern   (3%)
+
+✅ Domain Diversity: 6 distinct topic areas detected
+✅ No predefined categorization - domains emerged from your data
+```
+
+This validates that the analysis discovered diverse patterns beyond traditional business/coding domains.
+
 ### Phase 2-4: Core Analysis
 
 Apply the **[shared analysis methodology](../shared/analysis-methodology.md)** phases:
@@ -242,8 +262,42 @@ Generate timestamped reports in `reports/{TIMESTAMP}/`:
 }
 ```
 
-2. **`comprehensive-skills-analysis.md`** - Complete pattern analysis with skill recommendations
+2. **`comprehensive-skills-analysis.md`** - Complete pattern analysis with skill recommendations and prioritization visualization
 3. **`implementation-guide.md`** - Actionable deployment roadmap
+
+**Report Visualization Requirements:**
+
+Include a Mermaid quadrant chart in `comprehensive-skills-analysis.md` showing the prioritization matrix:
+
+```markdown
+## 📊 Skill Prioritization Matrix
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+quadrantChart
+    title Skill Prioritization: Frequency vs Impact
+    x-axis Low Frequency --> High Frequency
+    y-axis Low Impact --> High Impact
+    quadrant-1 Strategic
+    quadrant-2 Quick Wins
+    quadrant-3 Defer
+    quadrant-4 Automate
+    [Skill Name 1]: [freq_score/10, impact_score/10]
+    [Skill Name 2]: [freq_score/10, impact_score/10]
+    [Skill Name 3]: [freq_score/10, impact_score/10]
+```
+\```
+
+**Legend:**
+- **Quick Wins** (top-right): High frequency, high impact - implement first
+- **Strategic** (top-left): Lower frequency but high value - critical capabilities
+- **Automate** (bottom-right): High frequency, simpler - nice efficiency gains
+- **Defer** (bottom-left): Low priority - consider simple prompts instead
+
+**Calculations:**
+- X-axis (Frequency): Use frequency score (0-10) from skill-worthiness evaluation
+- Y-axis (Impact): Average of complexity + time savings + error reduction scores (0-10)
+```
 
 ### Generate Skill Packages
 For each approved skill, create complete folder structure in `generated-skills/`:

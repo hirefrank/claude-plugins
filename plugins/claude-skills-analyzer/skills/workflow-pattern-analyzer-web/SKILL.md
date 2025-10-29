@@ -74,6 +74,26 @@ Ask user: "How deep should I analyze your conversation history?"
 
 **CRITICAL**: Avoid fitting patterns into predefined categories. Each user's conversation history will have unique domains based on their actual usage.
 
+**Terminal Output - Domain Diversity Visualization:**
+
+After completing pattern discovery, display an ASCII chart showing domain distribution:
+
+```
+📊 Domain Distribution Analysis
+
+Business & Strategy    ████████████░░░░░░░░ 12 patterns (32%)
+Creative & Writing     ██████████░░░░░░░░░░ 10 patterns (27%)
+Image Prompting        ████████░░░░░░░░░░░░  8 patterns (22%)
+Learning & Education   ████░░░░░░░░░░░░░░░░  4 patterns (11%)
+Recipe & Cooking       ██░░░░░░░░░░░░░░░░░░  2 patterns  (5%)
+Gaming & Design        █░░░░░░░░░░░░░░░░░░░  1 pattern   (3%)
+
+✅ Domain Diversity: 6 distinct topic areas detected
+✅ No predefined categorization - domains emerged from your data
+```
+
+This validates data-driven discovery of diverse patterns.
+
 #### D. Niche & Specialized Pattern Detection
 
 **Explicitly search for underrepresented domains:**
@@ -303,6 +323,30 @@ After analysis completion, present:
 **Conversations Analyzed**: [X conversations across Y time period]
 **Patterns Identified**: [X patterns]
 **Skills Recommended**: [Y skills]
+
+## 📊 Skill Prioritization Matrix
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+quadrantChart
+    title Skill Prioritization: Frequency vs Impact
+    x-axis Low Frequency --> High Frequency
+    y-axis Low Impact --> High Impact
+    quadrant-1 Strategic
+    quadrant-2 Quick Wins
+    quadrant-3 Defer
+    quadrant-4 Automate
+    [Skill Name 1]: [freq_score/10, impact_score/10]
+    [Skill Name 2]: [freq_score/10, impact_score/10]
+    [Skill Name 3]: [freq_score/10, impact_score/10]
+```
+\```
+
+**Legend:**
+- **Quick Wins** (top-right): High frequency, high impact - implement first
+- **Strategic** (top-left): Lower frequency but high value - critical capabilities
+- **Automate** (bottom-right): High frequency, simpler - nice efficiency gains
+- **Defer** (bottom-left): Low priority - consider simple prompts instead
 
 ## 🔥 HIGH-PRIORITY OPPORTUNITIES
 
