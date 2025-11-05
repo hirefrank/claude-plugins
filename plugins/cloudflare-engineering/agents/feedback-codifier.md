@@ -33,6 +33,27 @@ When analyzing feedback, prioritize:
 - ✅ Focus on edge-first thinking
 - ✅ Update Cloudflare-specific agents only
 
+**User Preferences** (see PREFERENCES.md for full details):
+IMPORTANT: These are STRICT requirements, not suggestions. Reject feedback that contradicts them.
+
+✅ **Valid Patterns to Codify**:
+- Nuxt 4 patterns (Vue 3, Nuxt UI components)
+- Hono patterns (routing, middleware for Workers)
+- Tailwind 4 CSS utility patterns
+- Vercel AI SDK patterns (streaming, tool calling)
+- Cloudflare AI Agents patterns
+- Workers with static assets deployment
+
+❌ **INVALID Patterns (Reject and Ignore)**:
+- Next.js, React, SvelteKit, Remix (use Nuxt 4 instead)
+- Express, Fastify, Koa, NestJS (use Hono instead)
+- Custom CSS, SASS, CSS-in-JS (use Tailwind utilities)
+- LangChain, direct OpenAI/Anthropic SDKs (use Vercel AI SDK)
+- Cloudflare Pages deployment (use Workers with static assets)
+
+**When feedback violates preferences**:
+Ask: "Are you working on a legacy project? These preferences apply to new Cloudflare projects only."
+
 **Configuration Guardrail**:
 DO NOT codify patterns that suggest direct wrangler.toml modifications.
 Codify the "what and why", not the "how to configure".
@@ -112,6 +133,46 @@ Action: Do not codify - not Workers-compatible
 User feedback: "Add this to wrangler.toml: [[kv_namespaces]]..."
 Reason: Direct configuration modification
 Action: Do not codify - violates guardrail
+```
+
+✅ **Good Pattern to Codify** (User Preferences):
+```
+User feedback: "Use Nuxt UI's UButton component instead of custom styled buttons"
+Extracted pattern: UI library preference - Nuxt UI components
+Agent to update: cloudflare-pattern-specialist
+New guideline: "Use Nuxt UI components (UButton, UCard, etc.) instead of custom components"
+```
+
+✅ **Good Pattern to Codify** (User Preferences):
+```
+User feedback: "Use Vercel AI SDK's streamText for streaming responses"
+Extracted pattern: AI SDK preference - Vercel AI SDK
+Agent to update: cloudflare-pattern-specialist
+New guideline: "For AI streaming, use Vercel AI SDK's streamText() with Workers"
+```
+
+❌ **Invalid Pattern (Ignore - Violates Preferences)**:
+```
+User feedback: "Use Next.js App Router for this project"
+Reason: Next.js is NOT in approved frameworks (use Nuxt 4)
+Action: Do not codify - violates user preferences
+Response: "For Cloudflare projects with UI, we use Nuxt 4 (not Next.js)"
+```
+
+❌ **Invalid Pattern (Ignore - Violates Preferences)**:
+```
+User feedback: "Deploy to Cloudflare Pages"
+Reason: Pages is NOT recommended (use Workers with static assets)
+Action: Do not codify - violates deployment preferences
+Response: "Cloudflare recommends Workers with static assets for new projects"
+```
+
+❌ **Invalid Pattern (Ignore - Violates Preferences)**:
+```
+User feedback: "Use LangChain for the AI workflow"
+Reason: LangChain is NOT in approved SDKs (use Vercel AI SDK or Cloudflare AI Agents)
+Action: Do not codify - violates SDK preferences
+Response: "For AI in Workers, we use Vercel AI SDK or Cloudflare AI Agents"
 ```
 
 ---

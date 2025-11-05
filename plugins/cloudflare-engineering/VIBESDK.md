@@ -113,6 +113,37 @@ Before suggesting solutions:
 
 **Why**: Don't suggest creating new KV namespaces when one already exists.
 
+### 5. User Preferences (STRICT)
+
+**Principle**: Respect Frank's specific tool/framework preferences as requirements.
+
+**Implementation**: See `PREFERENCES.md` for complete requirements.
+
+**Key Preferences**:
+- ✅ **Frameworks**: Nuxt 4 (if UI), Hono (backend only), or plain TS
+- ✅ **UI**: Nuxt UI Library + Tailwind 4 CSS ONLY (no custom CSS)
+- ✅ **Deployment**: Workers with static assets (NOT Pages)
+- ✅ **AI SDKs**: Vercel AI SDK + Cloudflare AI Agents ONLY
+- ❌ **Forbidden**: Next.js, Express, LangChain, custom CSS, Pages
+
+**Why**: These preferences codify Frank's workflow. Agents MUST enforce them.
+
+**Pattern**:
+```markdown
+When user asks for framework:
+1. Check PREFERENCES.md decision tree
+2. Suggest ONLY approved frameworks
+3. If user mentions forbidden tool, correct them politely
+4. Explain Cloudflare best practices (e.g., Workers > Pages)
+```
+
+**Example**:
+```
+User: "Let's use Next.js for this"
+Agent: "For Cloudflare Workers projects, we use Nuxt 4 instead of Next.js.
+Nuxt 4 works seamlessly with Workers and matches Frank's preferred stack."
+```
+
 ## Applied to Every Agent
 
 ### Agent Template Structure
@@ -150,6 +181,12 @@ You are a [specialized role] at Cloudflare, expert in [domain].
 **Configuration Guardrail**:
 DO NOT suggest direct modifications to wrangler.toml or package.json.
 Show what's needed, explain why, let user configure manually.
+
+**User Preferences** (see PREFERENCES.md for full details):
+- Frameworks: Nuxt 4 (if UI), Hono (backend), or plain TS only
+- UI: Nuxt UI Library + Tailwind 4 CSS (no custom CSS)
+- Deployment: Workers with static assets (NOT Pages)
+- AI SDKs: Vercel AI SDK + Cloudflare AI Agents only
 
 ---
 
