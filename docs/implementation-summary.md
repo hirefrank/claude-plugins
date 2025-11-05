@@ -34,7 +34,7 @@ A Cloudflare-focused engineering plugin based on Every's compounding-engineering
 
 ### Agents: 12 Total
 
-#### ✅ Complete (7 agents)
+#### ✅ Complete (12 agents) - ALL DONE!
 
 **Generic (kept from upstream)**:
 1. `feedback-codifier.md` - **THE LEARNING ENGINE** that makes the plugin smarter
@@ -42,21 +42,19 @@ A Cloudflare-focused engineering plugin based on Every's compounding-engineering
 3. `repo-research-analyst.md` - Codebase pattern research
 4. `code-simplicity-reviewer.md` - YAGNI enforcement
 
-**Cloudflare-Specific (created)**:
+**Cloudflare-Specific (created from scratch)**:
 5. `workers-runtime-guardian.md` - Runtime compatibility, Node.js API detection
 6. `binding-context-analyzer.md` - wrangler.toml parsing, binding validation
 7. `durable-objects-architect.md` - DO patterns, lifecycle, state management
 
-#### 🚧 Need Adaptation (5 agents)
+**Adapted with vibesdk Constraints (completed)**:
+8. `cloudflare-security-sentinel.md` (493 lines) - Workers security model, secret management
+9. `edge-performance-oracle.md` (500 lines) - Cold starts, edge caching, global distribution
+10. `cloudflare-architecture-strategist.md` (740 lines) - Workers architecture, service bindings
+11. `cloudflare-pattern-specialist.md` (837 lines) - KV/DO/R2/D1 patterns and anti-patterns
+12. `cloudflare-data-guardian.md` (792 lines) - Data integrity across KV/D1/R2/DO
 
-These have been renamed but still contain generic content:
-1. `cloudflare-architecture-strategist.md` - Needs Workers/DO/KV/R2 examples
-2. `cloudflare-security-sentinel.md` - Needs Workers security model
-3. `edge-performance-oracle.md` - Needs edge optimization focus
-4. `cloudflare-pattern-specialist.md` - Needs Cloudflare-specific patterns
-5. `cloudflare-data-guardian.md` - Needs KV/D1/R2 data patterns
-
-**Task**: Replace generic examples with Cloudflare-specific ones
+**Total**: 3,362 lines of Cloudflare-specific agent documentation (adapted agents)
 
 #### 📋 Planned (4 agents)
 
@@ -119,17 +117,35 @@ Preserved `feedback-codifier.md` - the learning engine that:
 
 **Value**: Compounding returns over time
 
+### 5. Complete vibesdk Constraint Application ✅
+
+Applied comprehensive Cloudflare constraints to all 12 agents:
+- **Persona Tuning**: Every agent identifies as Cloudflare specialist
+- **Environmental Constraints**: Workers runtime only (no Node.js)
+- **Configuration Guardrails**: No direct wrangler.toml modifications
+- **Contextual Awareness**: Checks bindings before suggesting
+
+Created 3,362 lines of Cloudflare-specific agent documentation:
+- cloudflare-security-sentinel.md (493 lines)
+- edge-performance-oracle.md (500 lines)
+- cloudflare-architecture-strategist.md (740 lines)
+- cloudflare-pattern-specialist.md (837 lines)
+- cloudflare-data-guardian.md (792 lines)
+
+**Value**: 100% Cloudflare-focused advice, zero generic suggestions
+
 ## What's Left to Do
 
-### Priority 1: Adapt Existing Agents (Est: 8-12 hours)
+### ✅ Priority 1: COMPLETED - Adapt Existing Agents
 
-Update 5 renamed agents with Cloudflare context:
-- Replace generic examples with Workers/DO/KV/R2 examples
-- Add Cloudflare-specific patterns and anti-patterns
-- Update security model for Workers
-- Focus performance on edge optimization
+All 5 renamed agents now have complete vibesdk constraints applied:
+- ✅ cloudflare-security-sentinel.md (493 lines) - Workers security patterns
+- ✅ edge-performance-oracle.md (500 lines) - Edge optimization patterns
+- ✅ cloudflare-architecture-strategist.md (740 lines) - Edge architecture patterns
+- ✅ cloudflare-pattern-specialist.md (837 lines) - Workers-specific patterns
+- ✅ cloudflare-data-guardian.md (792 lines) - KV/D1/R2/DO data integrity
 
-**Impact**: Makes existing agents actually useful for Cloudflare
+**Impact**: All 12 agents now enforce 100% Cloudflare-only thinking
 
 ### Priority 2: Create Missing Agents (Est: 6-8 hours)
 
