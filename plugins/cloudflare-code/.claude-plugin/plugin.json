@@ -1,0 +1,13 @@
+{
+  "name": "cloudflare-code",
+  "version": "1.0.0",
+  "description": "AI-tuned assistant for Cloudflare Workers development with personas and guardrails",
+  "author": {
+    "name": "Frank Harris",
+    "email": "frank@hirefrank.com"
+  },
+  "homepage": "https://github.com/hirefrank/hirefrank-marketplace",
+  "repository": "https://github.com/hirefrank/hirefrank-marketplace",
+  "license": "MIT",
+  "keywords": ["cloudflare", "workers", "durable-objects", "serverless", "ai-tuning", "vibesdk"]
+}

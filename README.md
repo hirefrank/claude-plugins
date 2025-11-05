@@ -1,6 +1,6 @@
 # hirefrank Marketplace
 
-The official hirefrank marketplace where I share my AI workflow tools and productivity plugins. Currently featuring the Claude Skills Analyzer plugin.
+The official hirefrank marketplace where I share my AI workflow tools and productivity plugins. Featuring specialized Claude Code plugins for AI analysis and Cloudflare Workers development.
 
 ## Available Plugins
 
@@ -22,6 +22,24 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 - `/skills-troubleshoot` - Diagnose and fix common issues
 
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
+
+### ☁️ Cloudflare Code
+**Plugin ID**: `cloudflare-code`
+
+AI-tuned assistant for Cloudflare Workers development with specialized personas and guardrails. Inspired by vibesdk's AI-tuning techniques.
+
+**Key Features:**
+- Persona-driven responses (Senior Software Architect)
+- Automatic wrangler.toml binding detection
+- Workers runtime compatibility enforcement
+- Architecture planning and code generation
+- Configuration protection guardrails
+
+**Usage**:
+- `/cf-plan` - Plan Cloudflare Workers projects with architectural guidance
+- `/cf-worker` - Generate production-ready Workers code with proper bindings
+
+[📖 Full Documentation](./plugins/cloudflare-code/README.md)
 
 ## Quick Start
 
@@ -52,7 +70,7 @@ This automatically adds the marketplace and installs the plugin in a single step
 ### For Claude Skills Analyzer:
 ```shell
 # 1. Install the plugin
-/plugin install claude-skills-analyzer@hirefrank
+/plugin install claude-skills-analyzer
 
 # 2. Follow the interactive setup
 /skills-setup
@@ -62,6 +80,20 @@ This automatically adds the marketplace and installs the plugin in a single step
 ```
 
 See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quick-start) for detailed instructions including export steps and skill installation.
+
+### For Cloudflare Code:
+```shell
+# 1. Install the plugin
+/plugin install cloudflare-code
+
+# 2. Plan your Cloudflare Workers project
+/cf-plan build a URL shortener
+
+# 3. Generate Worker code
+/cf-worker create the URL shortener API
+```
+
+See the [full Quick Start guide](./plugins/cloudflare-code/README.md#quick-start-guide) for detailed instructions including architecture planning and code generation.
 
 ## Plugin Categories
 
@@ -102,11 +134,16 @@ hirefrank-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace configuration
 ├── plugins/
-│   └── claude-skills-analyzer/
+│   ├── claude-skills-analyzer/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── commands/
+│   │   ├── skills/
+│   │   └── README.md
+│   └── cloudflare-code/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── commands/
-│       ├── skills/
 │       └── README.md
 ├── docs/                    # Shared documentation
 ├── examples/               # Usage examples
