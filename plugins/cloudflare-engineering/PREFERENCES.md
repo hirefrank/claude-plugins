@@ -181,6 +181,88 @@ compatibility_date = "2025-09-15"  # Minimum for remote bindings GA
 
 **If existing project has older date**: Update to 2025-09-15 or later (safe, opt-in to new features).
 
+### 📦 Package Manager: pnpm ONLY (STRICT)
+
+**ALWAYS use pnpm** (NOT npm or yarn):
+
+```bash
+# ❌ NEVER use npm
+npm install
+npm run dev
+
+# ❌ NEVER use yarn
+yarn install
+yarn dev
+
+# ✅ ALWAYS use pnpm
+pnpm install
+pnpm dev
+```
+
+**Rationale**:
+- ✅ Faster installation (shared dependency cache)
+- ✅ More efficient disk usage (content-addressable storage)
+- ✅ Stricter dependency resolution (no phantom dependencies)
+- ✅ Better monorepo support
+- ✅ Consistent lockfile format
+
+**In Documentation**:
+```markdown
+# ❌ DON'T
+npm install
+
+# ✅ DO
+pnpm install
+```
+
+### 📦 Scripts Documentation (STRICT)
+
+**ALWAYS document script shorthands in package.json**:
+
+```json
+{
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "types:generate": "wrangler types",
+    "db:migrate": "wrangler d1 migrations apply DB",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local"
+  }
+}
+```
+
+**Rationale**:
+- ✅ Easier to remember and type (`pnpm dev` vs `wrangler dev`)
+- ✅ Documentation lives in codebase (package.json is single source of truth)
+- ✅ Consistent across projects (everyone uses same commands)
+- ✅ Can add flags/options without memorizing them
+- ✅ Works with `pnpm run` tab completion
+
+**Common Scripts to Include**:
+- `dev` - Start development server
+- `build` - Build for production (dry-run)
+- `deploy` - Deploy to production
+- `deploy:staging` - Deploy to staging environment
+- `test` - Run tests
+- `typecheck` - TypeScript checking
+- `lint` - Linting
+- `types:generate` - Generate TypeScript types for bindings
+
+**In Documentation**:
+```markdown
+# ❌ DON'T write raw commands
+Run: wrangler dev
+
+# ✅ DO use pnpm scripts
+Run: pnpm dev
+```
+
 ## Deployment Preferences (CRITICAL)
 
 ### ✅ Workers with Static Assets (ONLY)
@@ -213,6 +295,74 @@ assets = { directory = "public" }
 ```
 
 **If user says "deploy to Pages"**: Correct them and explain Workers is the modern approach.
+
+## Code Organization & Style (CRITICAL)
+
+### 📄 File Size Limit (STRICT)
+
+**ALWAYS keep files under 500 lines of code** for optimal AI code generation:
+
+```
+# ❌ BAD: Single large file
+src/
+  utils.ts  # 1200 LOC - too large!
+
+# ✅ GOOD: Split into focused modules
+src/utils/
+  validation.ts  # 150 LOC
+  formatting.ts  # 120 LOC
+  api.ts  # 180 LOC
+  dates.ts  # 90 LOC
+```
+
+**Rationale**:
+- ✅ Better for AI code generation (context window limits)
+- ✅ Easier to reason about and maintain
+- ✅ Encourages modular, focused code
+- ✅ Improves code review process
+- ✅ Reduces merge conflicts
+
+**When file exceeds 500 LOC**:
+1. Identify logical groupings
+2. Split into separate files by responsibility
+3. Use clear, descriptive file names
+4. Keep related files in same directory
+5. Use index.ts for clean exports (if needed)
+
+**Example Split**:
+```typescript
+// ❌ BAD: mega-utils.ts (800 LOC)
+export function validateEmail() { ... }
+export function validatePhone() { ... }
+export function formatDate() { ... }
+export function formatCurrency() { ... }
+export function fetchUser() { ... }
+export function fetchPost() { ... }
+
+// ✅ GOOD: Split by responsibility
+// utils/validation.ts (200 LOC)
+export function validateEmail() { ... }
+export function validatePhone() { ... }
+
+// utils/formatting.ts (150 LOC)
+export function formatDate() { ... }
+export function formatCurrency() { ... }
+
+// api/users.ts (180 LOC)
+export function fetchUser() { ... }
+
+// api/posts.ts (220 LOC)
+export function fetchPost() { ... }
+```
+
+**Component Files**:
+- Vue/Nuxt components: < 300 LOC preferred
+- If larger, split into sub-components
+- Use composition API composables for logic reuse
+
+**Configuration Files**:
+- wrangler.toml: Keep concise, well-commented
+- nuxt.config.ts: < 200 LOC (extract plugins/modules if needed)
 
 ## SDK Preferences (STRICT)
 
