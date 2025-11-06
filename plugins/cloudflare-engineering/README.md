@@ -73,6 +73,41 @@ Enhance agents with real-time Cloudflare account context and accurate component 
 # Restart Claude Code to activate
 ```
 
+## Stop Hooks (Optional but Recommended)
+
+Automated validation and cleanup before ending sessions:
+
+```bash
+# Copy stop hook to Claude Code hooks directory
+cp plugins/cloudflare-engineering/hooks/stop-cloudflare-validation.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/stop-cloudflare-validation.sh
+```
+
+**What it checks**:
+- ✅ wrangler.toml syntax and validity
+- ✅ compatibility_date is 2025-09-15+
+- ✅ Remote bindings configuration
+- ✅ TypeScript errors (if applicable)
+- ✅ Bundle size estimation
+
+**Prompt-based stop hook** (for comprehensive cleanup):
+
+Add to `~/.claude/settings.json`:
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "prompt",
+        "prompt": "Before ending: Run pnpm typecheck, pnpm lint, pnpm test. Validate wrangler.toml. Check compatibility_date >= 2025-09-15. Verify bindings have remote = true. Remove console.log and unused code. Ensure files < 500 LOC. Verify all changes committed and pushed. Provide summary of work completed."
+      }
+    ]
+  }
+}
+```
+
+See `hooks/README.md` for detailed hook documentation and customization.
+
 ## Commands
 
 ### `/review` - Comprehensive Code Review
