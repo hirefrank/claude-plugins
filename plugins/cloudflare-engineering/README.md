@@ -314,7 +314,7 @@ All 16 agents are complete with MCP integration for enhanced real-time context.
 
 ## Current Status
 
-### ✅ Completed (Priority 1-3)
+### ✅ Completed (Priority 1-5)
 
 **Priority 1: Core Infrastructure** ✅
 - [x] Plugin structure from compounding-engineering
@@ -337,17 +337,20 @@ All 16 agents are complete with MCP integration for enhanced real-time context.
 - [x] workers-ai-specialist (Vercel AI SDK, RAG)
 - [x] edge-caching-optimizer (cache hierarchies, invalidation)
 
+**Priority 4: Command Updates** ✅
+- [x] Update all 6 commands with Cloudflare agent references
+- [x] /review → reference all 16 agents in 4 phases
+- [x] /plan → use binding-context-analyzer as critical first step
+- [x] /work → validate with 4 Cloudflare agents after each task
+- [x] /triage → add Cloudflare-specific tags
+- [x] /generate_command → Workers examples and MCP integrations
+- [x] /resolve_todo_parallel → no changes needed (already generic)
+
+**Priority 5: Cloudflare Commands** ✅
+- [x] Create /cf-deploy command (pre-flight + deployment)
+- [x] Create /cf-migrate command (platform → Workers migration)
+
 ### 📋 Remaining Priorities
-
-**Priority 4: Command Updates** (4-6 hours)
-- [ ] Update all 6 commands with Cloudflare agent references
-- [ ] /review → reference all 16 agents
-- [ ] /plan → use binding-context-analyzer
-- [ ] /work → validate with workers-runtime-guardian
-
-**Priority 5: Cloudflare Commands** (4-6 hours)
-- [ ] Create /cf-deploy command (pre-flight + deployment)
-- [ ] Create /cf-migrate command (platform → Workers migration)
 
 **Priority 6: Testing & Refinement** (8-12 hours)
 - [ ] Test with real Cloudflare projects
