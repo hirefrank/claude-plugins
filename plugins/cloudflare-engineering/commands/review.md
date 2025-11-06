@@ -1,3 +1,7 @@
+---
+description: Perform exhaustive code reviews using multi-agent analysis and Git worktrees
+---
+
 # Review Command
 
 <command_purpose> Perform exhaustive code reviews using multi-agent analysis, ultra-thinking, and Git worktrees for deep local inspection. </command_purpose>

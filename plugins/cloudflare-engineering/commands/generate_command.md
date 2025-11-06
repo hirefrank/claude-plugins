@@ -1,3 +1,7 @@
+---
+description: Create a custom Claude Code slash command in .claude/commands/
+---
+
 # Create a Custom Claude Code Command
 
 Create a new slash command in `.claude/commands/` for the requested task.

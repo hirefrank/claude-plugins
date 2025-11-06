@@ -1,3 +1,7 @@
+---
+description: Create well-structured GitHub issues following project conventions
+---
+
 # Create GitHub Issue
 
 ## Introduction

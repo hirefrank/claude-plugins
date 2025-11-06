@@ -1,3 +1,7 @@
+---
+description: Resolve all TODO comments using parallel processing with multiple agents
+---
+
 Resolve all TODO comments using parallel processing.
 
 ## Workflow
