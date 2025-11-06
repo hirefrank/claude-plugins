@@ -1,3 +1,7 @@
+---
+description: Triage findings and decisions to add to the CLI todo system
+---
+
 Present all findings, decisions, or issues here one by one for triage. The goal is to go through each item and decide whether to add it to the CLI todo system.
 
 **IMPORTANT: DO NOT CODE ANYTHING DURING TRIAGE!**

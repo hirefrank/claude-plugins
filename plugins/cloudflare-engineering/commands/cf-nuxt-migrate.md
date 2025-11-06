@@ -1,3 +1,7 @@
+---
+description: Migrate Cloudflare Workers applications from any frontend framework to Nuxt 4 while preserving infrastructure
+---
+
 # Cloudflare Workers Framework Migration to Nuxt 4
 
 <command_purpose> Migrate existing Cloudflare Workers applications from any frontend framework (Vue 2/3, Nuxt 2/3, React, Svelte, vanilla JS) to Nuxt 4. Preserves all Cloudflare infrastructure (Workers, bindings, wrangler.toml) while modernizing the application layer. </command_purpose>

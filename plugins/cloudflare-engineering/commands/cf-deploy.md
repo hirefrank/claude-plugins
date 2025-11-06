@@ -1,3 +1,7 @@
+---
+description: Perform comprehensive pre-flight checks and deploy Cloudflare Workers safely using wrangler
+---
+
 # Cloudflare Workers Deployment Command
 
 <command_purpose> Perform comprehensive pre-flight checks and deploy Cloudflare Workers safely using wrangler with multi-agent validation. </command_purpose>

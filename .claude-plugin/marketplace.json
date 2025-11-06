@@ -34,7 +34,7 @@
     {
       "name": "cloudflare-engineering",
       "source": "./plugins/cloudflare-engineering",
-      "description": "AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing with 16 agents and 6 workflow commands.",
+      "description": "AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing. Includes 16 Cloudflare-focused agents and 6 commands. Architecture inspired by Every's compounding-engineering.",
       "version": "1.0.0",
       "author": {
         "name": "Frank Harris",
@@ -54,10 +54,7 @@
         "code-review",
         "cloudflare-workers"
       ],
-      "category": "development",
-      "tags": ["cloudflare", "development", "workflow"],
-      "mcpServers": "./plugins/cloudflare-engineering/mcp.json",
-      "hooks": "./plugins/cloudflare-engineering/hooks/hooks.json"
+      "category": "development"
     }
   ]
 }

@@ -1,3 +1,7 @@
+---
+description: Analyze work documents and systematically execute tasks until completion
+---
+
 # Work Plan Execution Command
 
 ## Introduction

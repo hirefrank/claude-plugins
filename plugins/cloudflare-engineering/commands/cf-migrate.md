@@ -1,3 +1,7 @@
+---
+description: Migrate applications from other platforms to Cloudflare Workers with comprehensive analysis and validation
+---
+
 # Cloudflare Workers Migration Command
 
 <command_purpose> Migrate applications from other platforms (Heroku, AWS Lambda, Vercel Functions, etc.) to Cloudflare Workers with comprehensive analysis, code transformation, and multi-agent validation. </command_purpose>
