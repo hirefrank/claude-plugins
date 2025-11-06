@@ -14,6 +14,101 @@ Parses `wrangler.toml` to understand configured Cloudflare bindings and ensures 
 
 Bindings connect your Worker to Cloudflare resources like KV namespaces, R2 buckets, Durable Objects, and D1 databases. They're configured in `wrangler.toml` and accessed via the `env` parameter.
 
+## MCP Server Integration (Optional but Recommended)
+
+This agent can use the **Cloudflare MCP server** for real-time binding information when available.
+
+### MCP-First Approach
+
+**If Cloudflare MCP server is available**:
+1. Query real account state via MCP tools
+2. Get structured binding data with actual IDs, namespaces, and metadata
+3. Cross-reference with `wrangler.toml` to detect mismatches
+4. Warn if config references non-existent resources
+
+**If MCP server is not available**:
+1. Fall back to manual `wrangler.toml` parsing (documented below)
+2. Parse config file using Glob and Read tools
+3. Generate TypeScript interface from config alone
+
+### MCP Tools Available
+
+When the Cloudflare MCP server is configured, these tools become available:
+
+```typescript
+// Get all configured bindings for project
+cloudflare-bindings.getProjectBindings() → {
+  kv: [{ binding: "USER_DATA", id: "abc123", title: "prod-users" }],
+  r2: [{ binding: "UPLOADS", id: "def456", bucket: "my-uploads" }],
+  d1: [{ binding: "DB", id: "ghi789", name: "production-db" }],
+  do: [{ binding: "COUNTER", class: "Counter", script: "my-worker" }],
+  vectorize: [{ binding: "VECTOR_INDEX", id: "jkl012", name: "embeddings" }],
+  ai: { binding: "AI" }
+}
+
+// List all KV namespaces in account
+cloudflare-bindings.listKV() → [
+  { id: "abc123", title: "prod-users" },
+  { id: "def456", title: "cache-data" }
+]
+
+// List all R2 buckets in account
+cloudflare-bindings.listR2() → [
+  { id: "def456", name: "my-uploads" },
+  { id: "xyz789", name: "backups" }
+]
+
+// List all D1 databases in account
+cloudflare-bindings.listD1() → [
+  { id: "ghi789", name: "production-db" },
+  { id: "mno345", name: "analytics-db" }
+]
+```
+
+### Benefits of Using MCP
+
+✅ **Real account state** - Know what resources actually exist, not just what's configured
+✅ **Detect mismatches** - Find bindings in wrangler.toml that reference non-existent resources
+✅ **Suggest reuse** - If user wants to add KV namespace, check if one already exists
+✅ **Accurate IDs** - Get actual resource IDs without manual lookup
+✅ **Namespace discovery** - Find existing resources that could be reused
+
+### Workflow with MCP
+
+```markdown
+1. Check if Cloudflare MCP server is available
+2. If YES:
+   a. Call cloudflare-bindings.getProjectBindings()
+   b. Parse wrangler.toml for comparison
+   c. Cross-reference: warn if config differs from account
+   d. Generate Env interface from real account state
+3. If NO:
+   a. Fall back to manual wrangler.toml parsing (see below)
+   b. Generate Env interface from config file
+```
+
+### Example MCP-Enhanced Analysis
+
+```typescript
+// Step 1: Get real bindings from account (via MCP)
+const accountBindings = await cloudflare-bindings.getProjectBindings();
+// Returns: { kv: [{ binding: "USER_DATA", id: "abc123" }], ... }
+
+// Step 2: Parse wrangler.toml
+const wranglerConfig = parseWranglerToml();
+// Returns: { kv: [{ binding: "USER_DATA", id: "abc123" }, { binding: "CACHE", id: "old456" }] }
+
+// Step 3: Detect mismatches
+const configOnlyBindings = wranglerConfig.kv.filter(
+  configKV => !accountBindings.kv.some(accountKV => accountKV.binding === configKV.binding)
+);
+// Finds: CACHE binding exists in config but not in account
+
+// Step 4: Warn user
+console.warn(`⚠️ wrangler.toml references KV namespace 'CACHE' (id: old456) that doesn't exist in account`);
+console.log(`💡 Available KV namespaces: ${accountBindings.kv.map(kv => kv.title).join(', ')}`);
+```
+
 ## Analysis Steps
 
 ### 1. Locate wrangler.toml

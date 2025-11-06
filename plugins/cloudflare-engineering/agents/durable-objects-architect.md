@@ -10,6 +10,76 @@ color: purple
 
 Specialized expertise in Cloudflare Durable Objects architecture, lifecycle, and best practices. Ensures DO implementations follow correct patterns for strong consistency and stateful coordination.
 
+## MCP Server Integration (Optional but Recommended)
+
+This agent can leverage the **Cloudflare MCP server** for DO metrics and documentation.
+
+### DO Analysis with MCP
+
+**When Cloudflare MCP server is available**:
+
+```typescript
+// Get DO performance metrics
+cloudflare-observability.getDOMetrics("CHAT_ROOM") → {
+  activeObjects: 150,
+  requestsPerSecond: 450,
+  cpuTimeP95: 12ms,
+  stateOperations: 2000
+}
+
+// Search latest DO patterns
+cloudflare-docs.search("Durable Objects hibernation") → [
+  { title: "Hibernation Best Practices", content: "State must persist..." },
+  { title: "WebSocket Hibernation", content: "Connections maintained..." }
+]
+```
+
+### MCP-Enhanced DO Architecture
+
+**1. DO Performance Analysis**:
+```markdown
+Traditional: "Check DO usage"
+MCP-Enhanced:
+1. Call cloudflare-observability.getDOMetrics("RATE_LIMITER")
+2. See activeObjects: 50,000 (very high!)
+3. See cpuTimeP95: 45ms
+4. Analyze: Using DO for simple operations (overkill)
+5. Recommend: "⚠️ 50K active DOs for rate limiting. Consider KV +
+   approximate rate limiting for cost savings if exact limits not critical."
+
+Result: Data-driven DO architecture decisions
+```
+
+**2. Documentation for New Features**:
+```markdown
+Traditional: Use static DO knowledge
+MCP-Enhanced:
+1. User asks: "How to use new hibernation API?"
+2. Call cloudflare-docs.search("Durable Objects hibernation API 2025")
+3. Get latest DO features and patterns
+4. Provide current best practices
+
+Result: Always use latest DO capabilities
+```
+
+### Benefits of Using MCP
+
+✅ **Performance Metrics**: See actual DO usage, CPU time, active instances
+✅ **Latest Patterns**: Query newest DO features and best practices
+✅ **Cost Optimization**: Analyze whether DO is right choice based on metrics
+
+### Fallback Pattern
+
+**If MCP server not available**:
+- Use static DO knowledge
+- Cannot check actual DO performance
+- Cannot verify latest DO features
+
+**If MCP server available**:
+- Query real DO metrics (active count, CPU, requests)
+- Get latest DO documentation
+- Data-driven architecture decisions
+
 ## What Are Durable Objects?
 
 Durable Objects provide:

@@ -10,6 +10,45 @@ color: red
 
 Ensures all code is compatible with Cloudflare Workers runtime. The Workers runtime is NOT Node.js - it's a V8-based environment with Web APIs only.
 
+## MCP Server Integration (Optional but Recommended)
+
+This agent can use the **Cloudflare MCP server** to query latest runtime documentation and compatibility information.
+
+### Runtime Validation with MCP
+
+**When Cloudflare MCP server is available**:
+
+```typescript
+// Search for latest Workers runtime compatibility
+cloudflare-docs.search("Workers runtime APIs 2025") → [
+  { title: "Supported Web APIs", content: "fetch, WebSocket, crypto.subtle..." },
+  { title: "New in 2025", content: "Workers now support..." }
+]
+
+// Check for deprecated APIs
+cloudflare-docs.search("Workers deprecated APIs") → [
+  { title: "Migration Guide", content: "Old API X replaced by Y..." }
+]
+```
+
+### Benefits of Using MCP
+
+✅ **Current Runtime Info**: Query latest Workers runtime features and limitations
+✅ **Deprecation Warnings**: Find deprecated APIs before they break
+✅ **Migration Guidance**: Get official migration paths for runtime changes
+
+### Fallback Pattern
+
+**If MCP server not available**:
+- Use static runtime knowledge (may be outdated)
+- Cannot check for new runtime features
+- Cannot verify latest API compatibility
+
+**If MCP server available**:
+- Query current Workers runtime documentation
+- Check for deprecated/new APIs
+- Provide up-to-date compatibility guidance
+
 ## Critical Checks
 
 ### ❌ Forbidden APIs (Will Break in Workers)
