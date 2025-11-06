@@ -121,7 +121,13 @@ export default {
 ```toml
 name = "feature-name"
 main = "src/index.ts"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-09-15"  # Always use 2025-09-15 or later
+
+# Example: KV namespace with remote binding
+[[kv_namespaces]]
+binding = "CACHE"
+id = "your-kv-namespace-id"
+remote = true  # Connect to real KV during development
 ```
 
 ## References

@@ -105,6 +105,82 @@ Does the project need a UI (now or future)?
 </style>
 ```
 
+## Development Workflow (CRITICAL)
+
+### ✅ REQUIRED: Always Use Remote Bindings
+
+**NEVER use local/simulated bindings** for development:
+
+- ❌ NOT: `wrangler dev` with default local bindings
+- ❌ NOT: `wrangler dev --local` (explicit local mode)
+- ❌ NOT: `wrangler dev --remote` (legacy flag approach)
+- ✅ YES: Configure `remote = true` per binding in wrangler.toml
+
+**Rationale**:
+- Local bindings don't match production behavior
+- Remote bindings (GA since Sept 2025) connect to real Cloudflare resources
+- Test against actual data and services during development
+- Catch binding configuration issues early
+
+**Correct Configuration** (wrangler.toml):
+```toml
+name = "my-app"
+main = "src/index.ts"
+compatibility_date = "2025-09-15"  # ALWAYS 2025-09-15 or later
+
+# KV with remote binding (connects to real KV)
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "your-kv-namespace-id"
+remote = true  # ← REQUIRED for development
+
+# D1 with remote binding (connects to real D1)
+[[d1_databases]]
+binding = "DB"
+database_name = "my-database"
+database_id = "your-database-id"
+remote = true  # ← REQUIRED for development
+
+# R2 with remote binding (connects to real R2)
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-bucket"
+remote = true  # ← REQUIRED for development
+
+# Durable Objects (remote works automatically)
+[[durable_objects.bindings]]
+name = "MY_DO"
+class_name = "MyDurableObject"
+script_name = "my-worker"
+```
+
+**Then run**:
+```bash
+wrangler dev  # No flags needed - remote bindings configured in toml
+```
+
+**Benefits**:
+- ✅ Worker runs locally (fast iteration)
+- ✅ Bindings proxy to Cloudflare edge (real data)
+- ✅ Mix local/remote per binding (granular control)
+- ✅ Configuration in version control (explicit)
+
+### 🔄 Compatibility Date (STRICT)
+
+**ALWAYS use `compatibility_date = "2025-09-15"` or later**:
+
+```toml
+compatibility_date = "2025-09-15"  # Minimum for remote bindings GA
+```
+
+**Why**:
+- Remote bindings GA requires 2025-09-15+
+- Gets latest Workers runtime features
+- Ensures modern API compatibility
+- Forward-looking configuration
+
+**If existing project has older date**: Update to 2025-09-15 or later (safe, opt-in to new features).
+
 ## Deployment Preferences (CRITICAL)
 
 ### ✅ Workers with Static Assets (ONLY)
@@ -126,7 +202,7 @@ Does the project need a UI (now or future)?
 **wrangler.toml configuration** (Workers with static assets):
 ```toml
 name = "my-app"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-09-15"  # ALWAYS 2025-09-15 or later
 
 # For Nuxt 4 projects
 [site]

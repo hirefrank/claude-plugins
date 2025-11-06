@@ -54,7 +54,8 @@ First, validate the wrangler.toml configuration and ensure all required settings
    - Task binding-context-analyzer(deployment target)
      - Parse wrangler.toml
      - Verify all bindings have valid IDs
-     - Check compatibility_date is recent (within 6 months)
+     - Check compatibility_date is 2025-09-15 or later (required for remote bindings GA)
+     - Verify all bindings have `remote = true` configured for development
      - Validate name, main, and account_id fields
 
 3. **Check authentication**

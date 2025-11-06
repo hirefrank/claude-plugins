@@ -646,20 +646,23 @@ Only execute if user approves. Work through phases systematically.
    ```toml
    name = "my-app"
    main = "src/index.ts"
-   compatibility_date = "2024-01-01"
+   compatibility_date = "2025-09-15"  # Always 2025-09-15 or later
 
    [[kv_namespaces]]
    binding = "CACHE"
    id = "..."  # User must fill in after creating
+   remote = true  # Connect to real KV during development
 
    [[d1_databases]]
    binding = "DB"
    database_name = "my-database"
    database_id = "..."  # From wrangler d1 create
+   remote = true  # Connect to real D1 during development
 
    [[r2_buckets]]
    binding = "STORAGE"
    bucket_name = "my-bucket"
+   remote = true  # Connect to real R2 during development
    ```
 
 3. **Phase 2: Code Transformation**
@@ -689,7 +692,8 @@ Only execute if user approves. Work through phases systematically.
    ```bash
    npm run typecheck
    npm test
-   wrangler dev --local
+   wrangler dev  # Uses remote bindings configured in wrangler.toml
+   # Test all endpoints at http://localhost:8787
    ```
 
 5. **Phase 4: Deploy to Staging**
