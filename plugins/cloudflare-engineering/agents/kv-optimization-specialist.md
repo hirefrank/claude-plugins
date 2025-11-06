@@ -1,7 +1,7 @@
 ---
 name: kv-optimization-specialist
 description: Deep expertise in KV namespace optimization - TTL strategies, key naming patterns, batch operations, cache hierarchies, performance tuning, and cost optimization for Cloudflare Workers KV.
-model: sonnet
+model: haiku
 color: green
 ---
 

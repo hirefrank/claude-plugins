@@ -1,6 +1,6 @@
 ---
 name: workers-runtime-guardian
-model: sonnet
+model: haiku
 color: red
 ---
 

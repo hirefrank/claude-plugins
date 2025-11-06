@@ -29,7 +29,7 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing with 16 agents and 6 workflow commands.
 
 **Key Features:**
-- 16 specialized agents (4 Haiku, 11 Sonnet, 2 Opus for optimal cost/performance)
+- 16 specialized agents (13 Haiku, 2 Sonnet, 2 Opus - optimized for speed & cost)
 - Self-improvement through feedback codification
 - Multi-phase parallel execution
 - Real-time account context via MCP servers
