@@ -219,6 +219,74 @@ All agents MUST:
 4. Correct user if they mention forbidden approaches
 5. Explain WHY (Cloudflare best practices, Frank's workflow)
 
+## Recommended MCP Servers
+
+For best results, configure these official MCP servers in Claude Code settings:
+
+### 1. Cloudflare MCP (ESSENTIAL)
+
+**URL**: https://docs.mcp.cloudflare.com/mcp
+
+**Provides**:
+- Documentation search (query official Cloudflare docs)
+- Bindings management (real account state, not just wrangler.toml)
+- Observability (performance metrics, monitoring)
+- DNS Analytics (configuration and performance)
+
+**Why essential**:
+- ✅ Agents can check YOUR actual Cloudflare bindings
+- ✅ Prevents suggesting duplicate namespaces
+- ✅ Always uses latest Cloudflare documentation
+- ✅ Performance recommendations based on real data
+
+**Setup**:
+```json
+{
+  "mcpServers": {
+    "cloudflare-docs": {
+      "type": "remote",
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "enabled": true
+    }
+  }
+}
+```
+
+Requires Cloudflare OAuth authentication.
+
+### 2. Nuxt UI MCP (HIGHLY RECOMMENDED)
+
+**URL**: https://ui.nuxt.com/mcp
+
+**Provides**:
+- Component documentation (UButton, UCard, etc.)
+- Composables documentation
+- Code examples
+- Component implementation generator
+
+**Why essential** (given our preferences):
+- ✅ Ensures accurate Nuxt UI component props (no hallucination)
+- ✅ Generates correct component usage
+- ✅ Aligns with "no custom CSS" preference (uses Nuxt UI components)
+- ✅ Always up-to-date with latest Nuxt UI version
+
+**Setup**:
+```json
+{
+  "mcpServers": {
+    "nuxt-ui": {
+      "type": "remote",
+      "url": "https://ui.nuxt.com/mcp",
+      "enabled": true
+    }
+  }
+}
+```
+
+No authentication required (public server).
+
+**See MCP-INTEGRATION.md for complete integration strategy and agent workflows.**
+
 ## feedback-codifier Instructions
 
 When learning from user feedback:
