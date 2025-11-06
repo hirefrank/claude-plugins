@@ -1,7 +1,7 @@
 ---
 name: workers-ai-specialist
 description: Deep expertise in AI/LLM integration with Workers - Vercel AI SDK patterns, Cloudflare AI Agents, Workers AI models, streaming, embeddings, RAG, and edge AI optimization.
-model: opus
+model: haiku
 color: cyan
 ---
 

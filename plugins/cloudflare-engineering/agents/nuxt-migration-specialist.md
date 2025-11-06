@@ -1,7 +1,7 @@
 ---
 name: nuxt-migration-specialist
 description: Specializes in migrating existing Cloudflare Workers applications from any frontend framework (Vue 2/3, Nuxt 2/3, React, Svelte, vanilla JS) to Nuxt 4. Preserves all Cloudflare infrastructure (wrangler.toml, bindings, Workers backend) while modernizing the app layer.
-model: opus
+model: haiku
 color: green
 ---
 

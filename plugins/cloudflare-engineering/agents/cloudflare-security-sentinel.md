@@ -1,7 +1,7 @@
 ---
 name: cloudflare-security-sentinel
 description: Security audits for Cloudflare Workers applications. Focuses on Workers-specific security model including runtime isolation, env variable handling, secret management, CORS configuration, and edge security patterns.
-model: opus
+model: haiku
 color: red
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: r2-storage-architect
 description: Deep expertise in R2 object storage architecture - multipart uploads, streaming, presigned URLs, lifecycle policies, CDN integration, and cost-effective storage strategies for Cloudflare Workers R2.
-model: opus
+model: haiku
 color: blue
 ---
 

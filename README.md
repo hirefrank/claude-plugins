@@ -23,23 +23,25 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
 
-### ☁️ Cloudflare Code
-**Plugin ID**: `cloudflare-code`
+### ☁️ Cloudflare Engineering
+**Plugin ID**: `cloudflare-engineering`
 
-AI-tuned assistant for Cloudflare Workers development with specialized personas and guardrails. Inspired by vibesdk's AI-tuning techniques.
+AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing with 16 agents and 6 workflow commands.
 
 **Key Features:**
-- Persona-driven responses (Senior Software Architect)
-- Automatic wrangler.toml binding detection
-- Workers runtime compatibility enforcement
-- Architecture planning and code generation
-- Configuration protection guardrails
+- 16 specialized agents (13 Haiku, 2 Sonnet, 2 Opus - optimized for speed & cost)
+- Self-improvement through feedback codification
+- Multi-phase parallel execution
+- Real-time account context via MCP servers
+- Cloudflare-specific expertise baked in
 
 **Usage**:
-- `/cf-plan` - Plan Cloudflare Workers projects with architectural guidance
-- `/cf-worker` - Generate production-ready Workers code with proper bindings
+- `/review` - Comprehensive multi-agent code review
+- `/plan` - Create GitHub issues for features
+- `/work` - Execute work plans systematically
+- `/triage` - Manage code review findings
 
-[📖 Full Documentation](./plugins/cloudflare-code/README.md)
+[📖 Full Documentation](./plugins/cloudflare-engineering/README.md)
 
 ## Quick Start
 
@@ -50,10 +52,12 @@ Run Claude and add the marketplace:
 /plugin marketplace add hirefrank/hirefrank-marketplace
 ```
 
-Then install the plugin:
+Then install a plugin:
 
 ```bash
 /plugin install claude-skills-analyzer
+# or
+/plugin install cloudflare-engineering
 ```
 
 ### One-Command Installation
@@ -81,19 +85,22 @@ This automatically adds the marketplace and installs the plugin in a single step
 
 See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quick-start) for detailed instructions including export steps and skill installation.
 
-### For Cloudflare Code:
+### For Cloudflare Engineering:
 ```shell
 # 1. Install the plugin
-/plugin install cloudflare-code
+/plugin install cloudflare-engineering
 
-# 2. Plan your Cloudflare Workers project
-/cf-plan build a URL shortener
+# 2. Run comprehensive code review
+/review
 
-# 3. Generate Worker code
-/cf-worker create the URL shortener API
+# 3. Plan a new feature
+/plan Add real-time presence tracking with Durable Objects
+
+# 4. Execute the work plan
+/work .claude/todos/001-pending-p1-add-presence.md
 ```
 
-See the [full Quick Start guide](./plugins/cloudflare-code/README.md#quick-start-guide) for detailed instructions including architecture planning and code generation.
+See the [full documentation](./plugins/cloudflare-engineering/README.md) for detailed instructions including all 16 agents, 6 commands, and MCP integration.
 
 ## Plugin Categories
 
@@ -140,10 +147,11 @@ hirefrank-marketplace/
 │   │   ├── commands/
 │   │   ├── skills/
 │   │   └── README.md
-│   └── cloudflare-code/
+│   └── cloudflare-engineering/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
-│       ├── commands/
+│       ├── agents/        # 16 specialized agents
+│       ├── commands/      # 6 workflow commands
 │       └── README.md
 ├── docs/                    # Shared documentation
 ├── examples/               # Usage examples
