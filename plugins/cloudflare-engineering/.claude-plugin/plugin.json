@@ -1,0 +1,30 @@
+{
+  "name": "cloudflare-engineering",
+  "version": "1.0.0",
+  "description": "AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing. Includes 16 Cloudflare-focused agents and 6 commands. Architecture inspired by Every's compounding-engineering.",
+  "author": {
+    "name": "Frank Harris",
+    "email": "frank@hirefrank.com"
+  },
+  "contributors": [
+    {
+      "name": "Kieran Klaassen (original architecture)",
+      "email": "kieran@every.to",
+      "url": "https://github.com/kieranklaassen"
+    }
+  ],
+  "homepage": "https://github.com/hirefrank/hirefrank-marketplace",
+  "repository": "https://github.com/hirefrank/hirefrank-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "durable-objects",
+    "edge-computing",
+    "ai-powered",
+    "compounding-engineering",
+    "workflow-automation",
+    "code-review",
+    "cloudflare-workers"
+  ]
+}
