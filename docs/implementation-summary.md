@@ -134,6 +134,52 @@ Created 3,362 lines of Cloudflare-specific agent documentation:
 
 **Value**: 100% Cloudflare-focused advice, zero generic suggestions
 
+### 6. User Preferences Codification ✅
+
+Codified Frank's specific tool/framework preferences as STRICT requirements:
+
+**PREFERENCES.md** - Framework, UI, deployment, and SDK preferences:
+- ✅ **Frameworks**: Nuxt 4 (UI), Hono (backend), plain TS (simple)
+- ✅ **UI Stack**: Nuxt UI Library + Tailwind 4 CSS (no custom CSS)
+- ✅ **Deployment**: Workers with static assets (NOT Pages)
+- ✅ **AI SDKs**: Vercel AI SDK + Cloudflare AI Agents
+- ❌ **Forbidden**: Next.js/React, Express, LangChain, custom CSS, Pages
+
+**Updated agents to enforce**:
+- VIBESDK.md: Added 5th vibesdk technique (User Preferences)
+- feedback-codifier.md: Learning engine rejects non-compliant patterns
+- cloudflare-architecture-strategist.md: Framework decision tree
+
+**Value**: Agents enforce your workflow preferences with same rigor as Workers-only constraints
+
+### 7. MCP Server Integration Strategy ✅
+
+Created comprehensive strategy for integrating official MCP servers:
+
+**MCP-INTEGRATION.md** - Complete integration plan:
+- **Cloudflare MCP** (https://docs.mcp.cloudflare.com/mcp)
+  - Documentation search, bindings management, observability
+  - Real-time account context (not just wrangler.toml)
+- **Nuxt UI MCP** (https://ui.nuxt.com/mcp)
+  - Component docs, examples, implementation generator
+  - Accurate props (no hallucination)
+- **Code execution patterns** (from Anthropic)
+  - Progressive tool loading
+  - Context-efficient processing (98.7% token reduction)
+  - Security via PII tokenization
+- **Agent-specific workflows** for all 12 agents
+
+**PREFERENCES.md updated**:
+- Added "Recommended MCP Servers" section
+- Setup instructions with JSON configuration
+- Benefits explained
+
+**Value**:
+- Agents aware of actual Cloudflare state (not just abstract knowledge)
+- 98.7% token reduction via execution environment filtering
+- Always current documentation (live from Cloudflare)
+- Prevents duplicate binding suggestions
+
 ## What's Left to Do
 
 ### ✅ Priority 1: COMPLETED - Adapt Existing Agents
@@ -147,7 +193,28 @@ All 5 renamed agents now have complete vibesdk constraints applied:
 
 **Impact**: All 12 agents now enforce 100% Cloudflare-only thinking
 
-### Priority 2: Create Missing Agents (Est: 6-8 hours)
+### Priority 2: MCP Server Integration (Est: 6-10 hours)
+
+Integrate official Cloudflare and Nuxt UI MCP servers into agents:
+
+**Phase 1: Core Agent Updates** (4-6 hours):
+- [ ] Update binding-context-analyzer with MCP integration pattern
+- [ ] Add "MCP Server Integration" sections to all 12 agents
+- [ ] Create docs/mcp-setup-guide.md (step-by-step configuration)
+- [ ] Update README.md with MCP server benefits
+
+**Phase 2: Documentation & Examples** (2-4 hours):
+- [ ] Create docs/mcp-usage-examples.md (agent workflows with MCP)
+- [ ] Add MCP availability checks to agents
+- [ ] Document fallback patterns when MCP unavailable
+
+**Impact**:
+- ✅ Real-time Cloudflare account context (not just config files)
+- ✅ Accurate Nuxt UI component props (no hallucination)
+- ✅ 98.7% token reduction via execution environment filtering
+- ✅ Always current documentation from Cloudflare
+
+### Priority 3: Create Missing Agents (Est: 6-8 hours)
 
 Create 4 additional Cloudflare-specific agents:
 - kv-optimization-specialist
@@ -157,7 +224,7 @@ Create 4 additional Cloudflare-specific agents:
 
 **Impact**: Complete Cloudflare coverage
 
-### Priority 3: Update Commands (Est: 4-6 hours)
+### Priority 4: Update Commands (Est: 4-6 hours)
 
 Update all 6 commands with Cloudflare agent references:
 - /review → reference all Cloudflare agents
@@ -167,7 +234,7 @@ Update all 6 commands with Cloudflare agent references:
 
 **Impact**: Commands actually orchestrate Cloudflare agents
 
-### Priority 4: Add Cloudflare Commands (Est: 4-6 hours)
+### Priority 5: Add Cloudflare Commands (Est: 4-6 hours)
 
 Create new Cloudflare-specific commands:
 - /cf-deploy → Pre-flight checks + wrangler deploy
@@ -175,7 +242,7 @@ Create new Cloudflare-specific commands:
 
 **Impact**: Cloudflare-specific workflows
 
-### Priority 5: Testing & Refinement (Est: 8-12 hours)
+### Priority 6: Testing & Refinement (Est: 8-12 hours)
 
 - Test with real Cloudflare projects
 - Validate agent orchestration
@@ -185,7 +252,7 @@ Create new Cloudflare-specific commands:
 
 **Impact**: Production-ready plugin
 
-**Total Estimated Time to Complete**: 30-44 hours
+**Total Estimated Time to Complete**: 36-54 hours (including MCP integration)
 
 ## Decision Point: What to Do with cloudflare-code
 
