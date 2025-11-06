@@ -32,6 +32,8 @@ AI-powered Cloudflare development tools that get smarter with every use. Special
 - 16 specialized agents (13 Haiku, 2 Sonnet, 2 Opus - optimized for speed & cost)
 - Self-improvement through feedback codification
 - Multi-phase parallel execution
+- **Bundled MCP servers** (Cloudflare + Nuxt UI) - no manual setup required
+- **Bundled validation hooks** - automatic code quality checks
 - Real-time account context via MCP servers
 - Cloudflare-specific expertise baked in
 

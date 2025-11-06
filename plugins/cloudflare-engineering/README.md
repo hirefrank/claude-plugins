@@ -16,29 +16,14 @@ This plugin transforms Claude Code into a Cloudflare Workers expert through:
 - **Real-time account context** via MCP servers (optional but recommended)
 - **Cloudflare-specific expertise** baked in
 
-## 🚀 MCP Server Integration (Recommended)
+## 🚀 MCP Server Integration (Automatically Bundled)
 
-Enhance agents with real-time Cloudflare account context and accurate component documentation:
+**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, the following MCP servers are automatically configured:
 
-### Quick Setup
+- **Cloudflare MCP** (`https://docs.mcp.cloudflare.com/mcp`) - Documentation search, bindings management, and account context
+- **Nuxt UI MCP** (`https://ui.nuxt.com/mcp`) - Component documentation and implementation
 
-```json
-// Add to .config/claude/settings.json
-{
-  "mcpServers": {
-    "cloudflare-docs": {
-      "type": "remote",
-      "url": "https://docs.mcp.cloudflare.com/mcp",
-      "enabled": true
-    },
-    "nuxt-ui": {
-      "type": "remote",
-      "url": "https://ui.nuxt.com/mcp",
-      "enabled": true
-    }
-  }
-}
-```
+**No manual configuration needed!** Just install the plugin and the MCP servers will be available.
 
 ### What MCP Provides
 
@@ -73,15 +58,11 @@ Enhance agents with real-time Cloudflare account context and accurate component 
 # Restart Claude Code to activate
 ```
 
-## Stop Hooks (Optional but Recommended)
+## Stop Hooks (Automatically Bundled)
+
+**NEW**: Stop hooks are now bundled with the plugin! When you install this plugin, the Cloudflare validation hook is automatically configured.
 
 Automated validation and cleanup before ending sessions:
-
-```bash
-# Copy stop hook to Claude Code hooks directory
-cp plugins/cloudflare-engineering/hooks/stop-cloudflare-validation.sh ~/.claude/hooks/
-chmod +x ~/.claude/hooks/stop-cloudflare-validation.sh
-```
 
 **What it checks**:
 - ✅ wrangler.toml syntax and validity
@@ -90,9 +71,9 @@ chmod +x ~/.claude/hooks/stop-cloudflare-validation.sh
 - ✅ TypeScript errors (if applicable)
 - ✅ Bundle size estimation
 
-**Prompt-based stop hook** (for comprehensive cleanup):
+**Optional: Prompt-based stop hook** (for even more comprehensive cleanup):
 
-Add to `~/.claude/settings.json`:
+If you want additional cleanup checks, you can add this to `~/.claude/settings.json`:
 ```json
 {
   "hooks": {

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "cloudflare-docs": {
+      "type": "remote",
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "enabled": true,
+      "description": "Cloudflare documentation search, bindings management, observability, and account context"
+    },
+    "nuxt-ui": {
+      "type": "remote",
+      "url": "https://ui.nuxt.com/mcp",
+      "enabled": true,
+      "description": "Nuxt UI component documentation and implementation"
+    }
+  }
+}

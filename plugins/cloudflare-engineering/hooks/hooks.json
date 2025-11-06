@@ -1,0 +1,16 @@
+{
+  "description": "Cloudflare Workers validation hooks for code quality and configuration checks",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/stop-cloudflare-validation.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
