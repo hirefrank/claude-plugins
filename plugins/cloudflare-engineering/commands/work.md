@@ -107,15 +107,40 @@ This command helps you analyze a work document (plan, Markdown file, specificati
      - Select next task (priority + dependencies)
      - Mark as in_progress
      - Execute task completely
-     - Validate completion
+     - Validate with Cloudflare agents
      - Mark as completed
      - Update progress
    ```
 
-2. **Quality Assurance**
+2. **Cloudflare-Specific Validation**
 
-   - Run tests after each task
+   After implementing each task, validate with relevant agents:
+
+   - **Task workers-runtime-guardian** - Runtime compatibility check
+     - Verify no Node.js APIs (fs, process, Buffer)
+     - Ensure env parameter usage (not process.env)
+     - Validate Web APIs only
+
+   - **Task binding-context-analyzer** - Binding validation
+     - Verify bindings referenced in code exist in wrangler.toml
+     - Check TypeScript Env interface matches usage
+     - Validate binding names follow conventions
+
+   - **Task cloudflare-security-sentinel** - Security check
+     - Verify secrets use wrangler secret (not hardcoded)
+     - Check CORS configuration if API endpoints
+     - Validate input sanitization
+
+   - **Task edge-performance-oracle** - Performance check
+     - Verify bundle size stays under target
+     - Check for cold start optimization
+     - Validate caching strategies
+
+3. **Quality Assurance**
+
+   - Run tests after each task (npm test / wrangler dev)
    - Execute lint and typecheck commands
+   - Test locally with wrangler dev
    - Verify no regressions
    - Check against acceptance criteria
    - Document any issues found

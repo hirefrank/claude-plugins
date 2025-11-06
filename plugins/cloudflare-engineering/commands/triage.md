@@ -74,7 +74,7 @@ Do you want to add this to the todo list?
    status: pending
    priority: p1  # or p2, p3 based on severity
    issue_id: "042"
-   tags: [category, relevant-tags]
+   tags: [category, workers, durable-objects, kv, r2, etc.]
    dependencies: []
    ---
 
@@ -141,6 +141,18 @@ Do you want to add this to the todo list?
 - Update the information
 - Present revised version
 - Ask again: yes/next/custom
+
+**Cloudflare-Specific Tags to Use:**
+- `workers-runtime` - V8 runtime issues, Node.js API usage
+- `bindings` - KV/R2/D1/DO binding configuration or usage
+- `security` - Workers security model, secrets, CORS
+- `performance` - Cold starts, bundle size, edge optimization
+- `durable-objects` - DO patterns, state persistence, WebSockets
+- `kv` - KV usage patterns, TTL, consistency
+- `r2` - R2 storage patterns, uploads, streaming
+- `d1` - D1 database patterns, migrations, queries
+- `edge-caching` - Cache API patterns, invalidation
+- `workers-ai` - AI integration, Vercel AI SDK, RAG
 
 ### Step 3: Continue Until All Processed
 

@@ -24,8 +24,8 @@ Create a new slash command in `.claude/commands/` for the requested task.
 - Puppeteer - browser automation, screenshots
 
 **Integrations:**
-- AppSignal - logs and monitoring
-- Context7 - framework docs
+- Cloudflare MCP - account context and docs
+- Nuxt UI MCP - component documentation
 - Stripe, Todoist, Featurebase (if relevant)
 
 ## Best Practices
@@ -69,7 +69,8 @@ Create a new slash command in `.claude/commands/` for the requested task.
 ## Tips for Effective Commands
 
 - **Use $ARGUMENTS** placeholder for dynamic inputs
-- **Reference CLAUDE.md** patterns and conventions
+- **Reference PREFERENCES.md** for Cloudflare-specific patterns (Nuxt 4, Hono, Vercel AI SDK)
+- **Reference VIBESDK.md** for Cloudflare-only thinking patterns
 - **Include verification steps** - tests, linting, visual checks
 - **Be explicit about constraints** - don't modify X, use pattern Y
 - **Use XML tags** for structured prompts: `<task>`, `<requirements>`, `<constraints>`
@@ -94,9 +95,9 @@ Implement #$ARGUMENTS following these steps:
 
 4. Verify
    - Run tests:
-     - Rails: `bin/rails test` or `bundle exec rspec`
-     - TypeScript: `npm test` or `yarn test` (Jest/Vitest)
-     - Python: `pytest` or `python -m pytest`
+     - Cloudflare Workers: `npm test` or `wrangler dev` (local testing)
+     - TypeScript: `npm run typecheck` or `tsc --noEmit`
+     - Unit tests: `vitest` or `jest`
    - Run linter:
      - Rails: `bundle exec standardrb` or `bundle exec rubocop`
      - TypeScript: `npm run lint` or `eslint .`

@@ -10,24 +10,46 @@ Transform feature descriptions, bug reports, or improvement ideas into well-stru
 
 ## Main Tasks
 
-### 1. Repository Research & Context Gathering
+### 1. Cloudflare Context & Binding Analysis
 
 <thinking>
-First, I need to understand the project's conventions and existing patterns, leveraging all available resources and use paralel subagents to do this.
+First, I need to understand the Cloudflare Workers project structure, available bindings, and existing patterns. This informs architectural decisions and implementation approaches.
 </thinking>
 
-Runn these three agents in paralel at the same time:
+**CRITICAL FIRST STEP**: Verify this is a Cloudflare Workers project:
+- Check for `wrangler.toml` file
+- If not found, warn user and ask if they want to create a new Workers project
+
+Run these agents in parallel:
+
+**Phase 1: Cloudflare-Specific Context (Priority)**
+
+- Task binding-context-analyzer(feature_description)
+  - Parse wrangler.toml for existing bindings (KV, R2, D1, DO)
+  - Generate current Env interface
+  - Identify available resources for reuse
+  - Provide context to other agents
+
+- Task cloudflare-architecture-strategist(feature_description)
+  - Analyze Workers/DO/KV/R2 architecture patterns
+  - Recommend storage choices based on feature requirements
+  - Consider edge-first design principles
+
+**Phase 2: General Research (Parallel)**
 
 - Task repo-research-analyst(feature_description)
-- Task best-practices-researcher (feature_description)
-- Task framework-docs-researcher (feature_description)
+  - Research existing Workers patterns in codebase
+  - Identify Cloudflare-specific conventions
+  - Document Workers entry points and routing patterns
 
 **Reference Collection:**
 
-- [ ] Document all research findings with specific file paths (e.g., `app/services/example_service.rb:42`)
-- [ ] Include URLs to external documentation and best practices guides
-- [ ] Create a reference list of similar issues or PRs (e.g., `#123`, `#456`)
-- [ ] Note any team conventions discovered in `CLAUDE.md` or team documentation
+- [ ] Document all research findings with specific file paths (e.g., `src/index.ts:42`)
+- [ ] List existing bindings from wrangler.toml with IDs and types
+- [ ] Include URLs to Cloudflare documentation and best practices
+- [ ] Create a reference list of similar Workers implementations or PRs
+- [ ] Note any Cloudflare-specific conventions discovered in documentation
+- [ ] Document user preferences from PREFERENCES.md (Nuxt 4, Hono, Vercel AI SDK)
 
 ### 2. Issue Planning & Structure
 
@@ -83,20 +105,30 @@ Select how comprehensive you want the issue to be:
 
 ## MVP
 
-### test.rb
+### src/worker.ts
 
-```ruby
-class Test
-  def initialize
-    @name = "test"
-  end
-end
+```typescript
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    // Minimal implementation
+    return new Response('Hello World');
+  }
+};
+```
+
+### wrangler.toml
+
+```toml
+name = "feature-name"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
 ```
 
 ## References
 
 - Related issue: #[issue_number]
-- Documentation: [relevant_docs_url]
+- Cloudflare Docs: [relevant_docs_url]
+- Existing bindings: [from binding-context-analyzer]
 ````
 
 #### 📋 MORE (Standard Issue)

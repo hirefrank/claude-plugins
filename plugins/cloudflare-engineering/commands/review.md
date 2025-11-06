@@ -46,65 +46,120 @@ Ensure that the worktree is set up correctly and that the PR is checked out. ONL
 
 </task_list>
 
-#### Detect Project Type
+#### Verify Cloudflare Workers Project
 
 <thinking>
-Determine the project type by analyzing the codebase structure and files.
-This will inform which language-specific reviewers to use.
+Confirm this is a Cloudflare Workers project by checking for wrangler.toml.
+All Cloudflare-specific agents will be used regardless of language (TypeScript/JavaScript).
 </thinking>
 
-<project_type_detection>
+<project_verification>
 
-Check for these indicators to determine project type:
+Check for Cloudflare Workers indicators:
 
-**Rails Project**:
-- `Gemfile` with `rails` gem
-- `config/application.rb`
-- `app/` directory structure
+**Required**:
+- `wrangler.toml` - Cloudflare Workers configuration
 
-**TypeScript Project**:
-- `tsconfig.json`
-- `package.json` with TypeScript dependencies
-- `.ts` or `.tsx` files
+**Common**:
+- `package.json` with `wrangler` dependency
+- TypeScript/JavaScript files (`.ts`, `.js`)
+- Worker entry point (typically `src/index.ts` or `src/worker.ts`)
 
-**Python Project**:
-- `requirements.txt` or `pyproject.toml`
-- `.py` files
-- `setup.py` or `poetry.lock`
+If not a Cloudflare Workers project, warn user and ask to confirm.
 
-Based on detection, set appropriate reviewers for parallel execution.
-
-</project_type_detection>
+</project_verification>
 
 #### Parallel Agents to review the PR:
 
 <parallel_tasks>
 
-Run ALL or most of these agents at the same time, adjusting language-specific reviewers based on project type:
+Run ALL these agents in parallel. Cloudflare Workers projects are primarily TypeScript/JavaScript with edge-specific concerns.
 
-**Language-Specific Reviewers (choose based on project type)**:
+**Phase 1: Context Gathering (3 agents in parallel)**
 
-For Rails projects:
-1. Task kieran-rails-reviewer(PR content)
-2. Task dhh-rails-reviewer(PR title)
-3. If turbo is used: Task rails-turbo-expert(PR content)
+1. Task binding-context-analyzer(PR content)
+   - Parse wrangler.toml for bindings
+   - Generate TypeScript Env interface
+   - Provide context to other agents
 
-For TypeScript projects:
-1. Task kieran-typescript-reviewer(PR content)
+2. Task git-history-analyzer(PR content)
+   - Analyze commit history and patterns
+   - Identify code evolution
 
-For Python projects:
-1. Task kieran-python-reviewer(PR content)
+3. Task repo-research-analyst(PR content)
+   - Research codebase patterns
+   - Document conventions
 
-**Universal Reviewers (run for all project types)**:
-4. Task git-history-analyzer(PR content)
-5. Task dependency-detective(PR content)
-6. Task pattern-recognition-specialist(PR content)
-7. Task architecture-strategist(PR content)
-8. Task code-philosopher(PR content)
-9. Task security-sentinel(PR content)
-10. Task performance-oracle(PR content)
-11. Task devops-harmony-analyst(PR content)
-12. Task data-integrity-guardian(PR content)
+**Phase 2: Cloudflare-Specific Review (5 agents in parallel)**
+
+4. Task workers-runtime-guardian(PR content)
+   - Runtime compatibility (V8, not Node.js)
+   - Detect forbidden APIs (fs, process, Buffer)
+   - Validate env parameter patterns
+
+5. Task durable-objects-architect(PR content)
+   - DO lifecycle and state management
+   - Hibernation patterns
+   - WebSocket handling
+
+6. Task cloudflare-security-sentinel(PR content)
+   - Workers security model
+   - Secret management (wrangler secret)
+   - CORS, CSP, auth patterns
+
+7. Task edge-performance-oracle(PR content)
+   - Cold start optimization
+   - Bundle size analysis
+   - Edge caching strategies
+
+8. Task cloudflare-pattern-specialist(PR content)
+   - Cloudflare-specific patterns
+   - Anti-patterns (stateful Workers, KV for strong consistency)
+   - Idiomatic Cloudflare code
+
+**Phase 3: Architecture & Data (5 agents in parallel)**
+
+9. Task cloudflare-architecture-strategist(PR content)
+   - Workers/DO/KV/R2 architecture
+   - Service binding strategies
+   - Edge-first design
+
+10. Task cloudflare-data-guardian(PR content)
+    - KV/D1/R2 data integrity
+    - Consistency models
+    - Storage selection
+
+11. Task kv-optimization-specialist(PR content)
+    - TTL strategies
+    - Key naming patterns
+    - Batch operations
+
+12. Task r2-storage-architect(PR content)
+    - Upload patterns (multipart, streaming)
+    - CDN integration
+    - Lifecycle management
+
+13. Task edge-caching-optimizer(PR content)
+    - Cache hierarchies
+    - Invalidation strategies
+    - Performance optimization
+
+**Phase 4: Specialized (3 agents in parallel)**
+
+14. Task workers-ai-specialist(PR content)
+    - Vercel AI SDK patterns
+    - Cloudflare AI Agents
+    - RAG implementations
+
+15. Task code-simplicity-reviewer(PR content)
+    - YAGNI enforcement
+    - Complexity reduction
+    - Minimalism review
+
+16. Task feedback-codifier(PR content)
+    - Extract patterns from review
+    - Update agent knowledge
+    - Self-improvement loop
 
 </parallel_tasks>
 
