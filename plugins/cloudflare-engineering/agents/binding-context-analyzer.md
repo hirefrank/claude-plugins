@@ -1,6 +1,6 @@
 ---
 name: binding-context-analyzer
-model: sonnet
+model: haiku
 color: blue
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: workers-runtime-guardian
-model: opus
+model: sonnet
 color: red
 ---
 

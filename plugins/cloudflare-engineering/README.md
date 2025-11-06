@@ -198,6 +198,21 @@ Execute multiple todos concurrently:
 
 All 16 agents are complete with MCP integration for enhanced real-time context.
 
+### Model Assignments (Optimized for Cost/Performance)
+
+Based on the latest Anthropic models (2025), agents are assigned models matching their complexity:
+
+| Model | Count | Use Case | Agents |
+|-------|-------|----------|--------|
+| **Haiku 4.5** | 4 | Structured/rule-based tasks | `binding-context-analyzer`, `git-history-analyzer`, `repo-research-analyst`, `code-simplicity-reviewer` |
+| **Sonnet 4.5** | 11 | Technical analysis & coding | `workers-runtime-guardian`, `durable-objects-architect`, `kv-optimization-specialist`, `r2-storage-architect`, `edge-caching-optimizer`, `edge-performance-oracle`, `cloudflare-security-sentinel`, `cloudflare-data-guardian`, `cloudflare-pattern-specialist`, `workers-ai-specialist`, `nuxt-migration-specialist` |
+| **Opus 4.1** | 2 | Strategic/meta-learning | `cloudflare-architecture-strategist`, `feedback-codifier` |
+
+**Rationale:**
+- **Haiku 4.5**: 3x cheaper, 2x faster than Sonnet 4, perfect for config parsing, git commands, and rule application
+- **Sonnet 4.5**: "Best coding model in the world" (Anthropic 2025), ideal for technical reviews and pattern detection
+- **Opus 4.1**: Reserved for architecture decisions (creative/strategic) and feedback learning (meta-cognitive)
+
 ### Core Cloudflare Agents (3)
 
 **`workers-runtime-guardian`** ✅

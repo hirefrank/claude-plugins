@@ -1,7 +1,7 @@
 ---
 name: edge-performance-oracle
 description: Performance optimization for Cloudflare Workers focusing on edge computing concerns - cold starts, global distribution, edge caching, CPU time limits, and worldwide latency minimization.
-model: opus
+model: sonnet
 color: green
 ---
 
