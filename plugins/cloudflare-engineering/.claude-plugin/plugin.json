@@ -6,13 +6,7 @@
     "name": "Frank Harris",
     "email": "frank@hirefrank.com"
   },
-  "contributors": [
-    {
-      "name": "Kieran Klaassen (original architecture)",
-      "email": "kieran@every.to",
-      "url": "https://github.com/kieranklaassen"
-    }
-  ],
+
   "homepage": "https://github.com/hirefrank/hirefrank-marketplace",
   "repository": "https://github.com/hirefrank/hirefrank-marketplace",
   "license": "MIT",
