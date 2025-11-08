@@ -277,8 +277,37 @@ exit 0
 
 ---
 
+## Managing Hooks
+
+### Temporarily Disable Hooks
+
+If the validation hooks are too aggressive during development, you can temporarily disable them:
+
+```bash
+# Disable the stop hook
+mv hooks/stop-cloudflare-validation.sh hooks/stop-cloudflare-validation.sh.disabled
+```
+
+### Re-enable Hooks
+
+To re-enable the hooks:
+
+```bash
+# Re-enable the stop hook
+mv hooks/stop-cloudflare-validation.sh.disabled hooks/stop-cloudflare-validation.sh
+```
+
+### Current Status
+
+- **Active Hook**: `stop-cloudflare-validation.sh` (currently disabled as `.disabled`)
+- **Configuration**: `hooks.json` - references the script path
+- **Trigger**: Runs on "Stop" events in Claude Code sessions
+- **Scope**: Only runs in projects with `wrangler.toml`
+
+---
+
 ## Version
 
 Created: 2025-01-05
-Last updated: 2025-01-05
+Last updated: 2025-01-07
 Plugin: cloudflare-engineering
