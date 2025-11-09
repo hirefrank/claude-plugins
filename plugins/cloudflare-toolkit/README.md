@@ -53,7 +53,7 @@ This plugin transforms Claude Code into a Cloudflare Workers expert through:
 /plugin marketplace add hirefrank/hirefrank-marketplace
 
 # Install this plugin
-/plugin install cloudflare-engineering
+/plugin install cloudflare-toolkit
 
 # Restart Claude Code to activate
 ```
@@ -493,7 +493,7 @@ This plugin adopts Every's compounding-engineering philosophy:
 
 Issues and suggestions:
 - [GitHub Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
-- Label: `cloudflare-engineering`
+- Label: `cloudflare-toolkit`
 
 ### To Upstream (Every's Plugin)
 

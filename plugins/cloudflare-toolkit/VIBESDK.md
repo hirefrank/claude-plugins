@@ -397,4 +397,4 @@ After applying vibesdk constraints, users should:
 
 **Users get**: 100% actionable advice, zero filtering required, compound learning over time.
 
-This is what makes the plugin Cloudflare-engineering, not just generic engineering with Cloudflare examples.
+This is what makes the plugin cloudflare-toolkit, not just generic engineering with Cloudflare examples.

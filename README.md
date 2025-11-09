@@ -24,7 +24,7 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
 
 ### ☁️ Cloudflare Engineering
-**Plugin ID**: `cloudflare-engineering`
+**Plugin ID**: `cloudflare-toolkit`
 
 AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing with 16 agents and 6 workflow commands.
 
@@ -43,7 +43,7 @@ AI-powered Cloudflare development tools that get smarter with every use. Special
 - `/work` - Execute work plans systematically
 - `/triage` - Manage code review findings
 
-[📖 Full Documentation](./plugins/cloudflare-engineering/README.md)
+[📖 Full Documentation](./plugins/cloudflare-toolkit/README.md)
 
 ## Quick Start
 
@@ -59,7 +59,7 @@ Then install a plugin:
 ```bash
 /plugin install claude-skills-analyzer
 # or
-/plugin install cloudflare-engineering
+/plugin install cloudflare-toolkit
 ```
 
 ### One-Command Installation
@@ -90,7 +90,7 @@ See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quic
 ### For Cloudflare Engineering:
 ```shell
 # 1. Install the plugin
-/plugin install cloudflare-engineering
+/plugin install cloudflare-toolkit
 
 # 2. Run comprehensive code review
 /review
@@ -102,7 +102,7 @@ See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quic
 /work .claude/todos/001-pending-p1-add-presence.md
 ```
 
-See the [full documentation](./plugins/cloudflare-engineering/README.md) for detailed instructions including all 16 agents, 6 commands, and MCP integration.
+See the [full documentation](./plugins/cloudflare-toolkit/README.md) for detailed instructions including all 16 agents, 6 commands, and MCP integration.
 
 ## Plugin Categories
 
@@ -149,7 +149,7 @@ hirefrank-marketplace/
 │   │   ├── commands/
 │   │   ├── skills/
 │   │   └── README.md
-│   └── cloudflare-engineering/
+│   └── cloudflare-toolkit/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── agents/        # 16 specialized agents
