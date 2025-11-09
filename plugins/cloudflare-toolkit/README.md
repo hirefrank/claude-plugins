@@ -1,10 +1,10 @@
-# Cloudflare Engineering Plugin
+# Cloudflare Toolkit Plugin
 
 AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing.
 
 **Philosophy**: Self-improving through feedback codification, multi-agent parallel analysis, and structured workflow orchestration.
 
-**Architecture**: Inspired by [Every's Compounding Engineering Plugin](https://github.com/EveryInc/every-marketplace/tree/main/plugins/compounding-engineering) by Kieran Klaassen, adapted for Cloudflare-only development.
+**Architecture**: Inspired by [Every's Compounding Engineering Plugin](https://github.com/EveryInc/every-marketplace/tree/main/plugins/compounding-engineering) by Kieran Klaassen and [Cloudflare's VibeSDK](https://github.com/cloudflare/vibesdk) AI tuning techniques. Adapted for Cloudflare-only development with persona-based constraints and self-improving workflows.
 
 ## Overview
 
@@ -58,36 +58,45 @@ This plugin transforms Claude Code into a Cloudflare Workers expert through:
 # Restart Claude Code to activate
 ```
 
-## Stop Hooks (Automatically Bundled)
+## Code Quality Validation
 
-**NEW**: Stop hooks are now bundled with the plugin! When you install this plugin, the Cloudflare validation hook is automatically configured.
+This plugin includes comprehensive validation to ensure high-quality Cloudflare code:
 
-Automated validation and cleanup before ending sessions:
+### `/validate` Command
 
-**What it checks**:
-- ✅ wrangler.toml syntax and validity
-- ✅ compatibility_date is 2025-09-15+
-- ✅ Remote bindings configuration
-- ✅ TypeScript errors (if applicable)
-- ✅ Bundle size estimation
+Run validation checks anytime before committing:
 
-**Optional: Prompt-based stop hook** (for even more comprehensive cleanup):
-
-If you want additional cleanup checks, you can add this to `~/.claude/settings.json`:
-```json
-{
-  "hooks": {
-    "Stop": [
-      {
-        "type": "prompt",
-        "prompt": "Before ending: Run pnpm typecheck, pnpm lint, pnpm test. Validate wrangler.toml. Check compatibility_date >= 2025-09-15. Verify bindings have remote = true. Remove console.log and unused code. Ensure files < 500 LOC. Verify all changes committed and pushed. Provide summary of work completed."
-      }
-    ]
-  }
-}
+```bash
+/validate
 ```
 
-See `hooks/README.md` for detailed hook documentation and customization.
+**What it validates**:
+- ✅ Build verification (if build script exists)
+- ✅ Linting with warning threshold (≤5 warnings allowed)
+- ✅ TypeScript checks (zero errors required)
+- ✅ wrangler.toml syntax and validity
+- ✅ compatibility_date is 2025-09-15+
+- ✅ Bundle size analysis
+- ✅ Remote bindings configuration
+
+### Pre-commit Hook (Automatic)
+
+Automatic validation runs when you commit code:
+
+```bash
+git commit  # Validation runs automatically
+```
+
+**Quality Standards**:
+- **0 errors** - All errors must be fixed (zero tolerance)
+- **≤5 warnings** - More than 5 warnings must be addressed
+- **Fail-fast** - Stops on first error to save time
+
+**Exit Codes**:
+- **0**: All checks passed ✅
+- **1**: Validation failed ❌ (fix issues before committing)
+
+This prevents sloppy code and ensures consistent quality across all commits.
 
 ## Commands
 
