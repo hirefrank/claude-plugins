@@ -23,6 +23,10 @@ generated-skills/*
 secrets/
 private/
 
+# Claude Code Settings
+# Personal settings (web sandbox, local overrides)
+.claude/settings.local.json
+
 # System Files
 .DS_Store
 Thumbs.db
