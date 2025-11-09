@@ -1,7 +1,7 @@
 {
   "description": "Cloudflare Workers validation hooks for code quality and configuration checks",
   "hooks": {
-    "Command": [
+    "UserPromptSubmit": [
       {
         "matcher": "commit",
         "hooks": [
