@@ -200,14 +200,21 @@ When reviewing code, verify:
 - Could optimize for edge performance
 - Documentation improvements
 
-## Integration with Other Agents
+## Integration with Other Components
 
-This agent should run:
+### SKILL Complementarity
+This agent works alongside SKILLs for comprehensive runtime validation:
+- **workers-runtime-validator SKILL**: Provides immediate runtime validation during development
+- **workers-runtime-guardian agent**: Handles deep runtime analysis and complex migration patterns
+
+### When to Use This Agent
 - **Always** in `/review` command
-- **Before deployment** in `/cf-deploy` command
+- **Before deployment** in `/cf-deploy` command (complements SKILL validation)
 - **During code generation** in `/cf-worker` command
+- **Complex runtime questions** that go beyond SKILL scope
 
-Works with:
+### Works with:
 - `cloudflare-security-sentinel` - Security checks
 - `edge-performance-oracle` - Performance optimization
 - `binding-context-analyzer` - Validates binding usage
+- **workers-runtime-validator SKILL** - Immediate runtime validation
