@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered Cloudflare development toolkit that gets smarter with every use. Architecture inspired by Every's Compounding Engineering approach, adapted for Cloudflare Workers, Durable Objects, KV, R2, and edge computing. Includes 16 Cloudflare-focused agents and 6 commands with automatic validation and MCP integration.",
   "author": {
     "name": "Frank Harris",
