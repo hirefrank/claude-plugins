@@ -150,3 +150,119 @@ const user = await env.USER_DATA.get(id);
 4. **Document Patterns**: Maintain clear escalation guidelines
 
 This integration provides the best of both worlds: autonomous continuous validation through SKILLs and comprehensive expert analysis through agents, all orchestrated through explicit commands.
+
+## Hooks Integration (COMPLETED)
+
+### Hook Types and Triggers
+
+| Hook | Trigger | SKILL Integration | Purpose |
+|------|---------|-------------------|---------|
+| **SessionStart** | Development session start | `skill-session-init.sh` | Comprehensive project analysis |
+| **PreWrite** | Before code changes | `skill-pre-write-validation.sh` | Quick pre-change validation |
+| **PostWrite** | After code changes | `skill-post-write-validation.sh` | Immediate feedback on changes |
+| **PreOperation** | Before deploy/build/test | `skill-enhanced-pre-validation.sh` | Operation-specific validation |
+| **PreCommit** | Before git commit | `pre-commit-cloudflare-validation.sh` | Commit-time validation |
+
+### Hook Workflow Integration
+
+#### 1. Session Initialization (`skill-session-init.sh`)
+- **Triggers**: When starting development session
+- **SKILLs Used**: All 7 SKILLs for comprehensive analysis
+- **Output**: Project health report with issue summary
+- **Actions**: Provides overview and suggests specific commands
+
+#### 2. Pre-Write Validation (`skill-pre-write-validation.sh`)
+- **Triggers**: Before making code changes
+- **SKILLs Used**: Runtime, Security, Performance, Configuration
+- **Output**: Quick warnings about existing patterns
+- **Actions**: Prevents introducing new anti-patterns
+
+#### 3. Post-Write Validation (`skill-post-write-validation.sh`)
+- **Triggers**: After code changes are saved
+- **SKILLs Used**: All relevant SKILLs based on file type
+- **Output**: Immediate feedback on changed files
+- **Actions**: Real-time validation and suggestions
+
+#### 4. Enhanced Pre-Operation Validation (`skill-enhanced-pre-validation.sh`)
+- **Triggers**: Before deploy/build/test operations
+- **SKILLs Used**: Critical validation from all SKILLs
+- **Output**: Block critical issues, warn about others
+- **Actions**: Can block operations if critical issues found
+
+#### 5. Pre-Commit Validation (SKILL-based)
+- **Triggers**: Before git commit
+- **SKILLs Used**: All SKILLs for comprehensive validation
+- **Output**: Commit-time validation report
+- **Actions**: Ensures code quality before commits
+
+### Hook Configuration (hooks.json)
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {"matcher": "commit", "hooks": [/* pre-commit + enhanced validation */]},
+      {"matcher": "deploy", "hooks": [/* deploy-specific validation */]},
+      {"matcher": "build", "hooks": [/* build-specific validation */]},
+      {"matcher": "test", "hooks": [/* test-specific validation */]}
+    ],
+    "PreWrite": [{"hooks": [/* pre-write validation */]}],
+    "PostWrite": [{"hooks": [/* post-write validation */]}],
+    "SessionStart": [{"hooks": [/* session initialization */]}]
+  }
+}
+```
+
+### Benefits of Hook Integration
+
+1. **Continuous Validation**: SKILLs run automatically during development
+2. **Immediate Feedback**: Issues caught as soon as they're introduced
+3. **Operation Safety**: Critical issues can block deployments
+4. **Developer Experience**: Seamless validation without explicit commands
+5. **Comprehensive Coverage**: All development stages have appropriate validation
+
+### Hook Output Examples
+
+#### Session Start Output:
+```
+🚀 Initializing Cloudflare Workers SKILL environment...
+📊 Running comprehensive SKILL analysis...
+🔧 Runtime compatibility analysis: ✅ No runtime compatibility issues
+🔒 Security analysis: ✅ No security issues detected
+⚡ Performance analysis: ⚠️ moment.js detected (+68KB)
+🔗 Binding analysis: ✅ Found env parameter usage
+🌐 CORS analysis: ✅ Found CORS header configuration
+🎉 Excellent! Only 1 warning found
+```
+
+#### Post-Write Output:
+```
+🔍 Running post-write SKILL validation...
+📁 Analyzing: src/index.ts
+🔧 Checking runtime compatibility... ✅
+🔒 Checking security patterns... ✅
+⚡ Checking performance patterns... ✅
+✅ No issues found by SKILLs
+```
+
+#### Enhanced Pre-Operation Output:
+```
+🔍 Running enhanced pre-operation SKILL validation...
+🎯 Validating for operation: deploy
+🔧 Critical runtime checks: ✅
+🔒 Critical security checks: ✅
+⚙️ Configuration checks: ✅
+🚀 Deployment-specific checks: ⚠️ console.log statements found
+📊 Validation Summary: Critical Issues: 0, Warnings: 1
+✅ All checks passed - operation ready to proceed
+```
+
+## Implementation Status
+
+✅ **COMPLETED**: All 7 SKILLs implemented and integrated
+✅ **COMPLETED**: Hook system fully implemented with 5 hook types
+✅ **COMPLETED**: Enhanced command workflows with SKILL integration
+✅ **COMPLETED**: Agent complementarity documentation updated
+✅ **COMPLETED**: Comprehensive integration guide completed
+
+The cloudflare-toolkit now provides autonomous development assistance through SKILLs that activate continuously during development, complemented by expert agents for complex scenarios, all orchestrated through enhanced commands and hooks.

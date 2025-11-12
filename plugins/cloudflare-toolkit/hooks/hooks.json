@@ -1,5 +1,5 @@
 {
-  "description": "Cloudflare Workers validation hooks for code quality and configuration checks",
+  "description": "Cloudflare Workers SKILL-enabled hooks for autonomous development assistance",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -7,7 +7,64 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pre-commit-cloudflare-validation.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-enhanced-pre-validation.sh deploy"
+          }
+        ]
+      },
+      {
+        "matcher": "deploy",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-enhanced-pre-validation.sh deploy"
+          }
+        ]
+      },
+      {
+        "matcher": "build",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-enhanced-pre-validation.sh build"
+          }
+        ]
+      },
+      {
+        "matcher": "test",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-enhanced-pre-validation.sh test"
+          }
+        ]
+      }
+    ],
+    "PreWrite": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-pre-write-validation.sh"
+          }
+        ]
+      }
+    ],
+    "PostWrite": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-post-write-validation.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/skill-session-init.sh"
           }
         ]
       }
