@@ -70,42 +70,55 @@ First, validate the wrangler.toml configuration and ensure all required settings
 
 #### Phase 2: Code Quality Checks
 
-Run these agents in parallel for comprehensive validation:
+**SKILL-based Continuous Validation** (Already Active During Development):
+- **workers-runtime-validator SKILL**: Runtime compatibility validation
+- **cloudflare-security-checker SKILL**: Security pattern validation
+- **workers-binding-validator SKILL**: Binding configuration validation
+- **edge-performance-optimizer SKILL**: Performance optimization guidance
+- **kv-optimization-advisor SKILL**: KV storage optimization
+- **durable-objects-pattern-checker SKILL**: DO best practices validation
+- **cors-configuration-validator SKILL**: CORS setup validation
+
+**Agent-based Comprehensive Analysis** (Run for deployment validation):
 
 **Critical Checks (Must Pass)**:
 
 1. Task workers-runtime-guardian(current code)
-   - Verify no Node.js APIs (fs, process, Buffer)
-   - Ensure env parameter usage
-   - Validate Web APIs only
+   - Deep runtime compatibility analysis
+   - Complex Node.js API migration patterns
+   - Package dependency analysis
    - **Status**: Must be CRITICAL-free (P1 issues block deployment)
+   - **Note**: Complements workers-runtime-validator SKILL
 
 2. Task cloudflare-security-sentinel(current code)
-   - Check no hardcoded secrets
-   - Verify secrets configured via wrangler secret
-   - Validate CORS configuration
-   - Ensure input validation present
+   - Comprehensive security audit
+   - Advanced threat analysis
+   - Security architecture review
    - **Status**: Must be CRITICAL-free (P1 security issues block deployment)
+   - **Note**: Complements cloudflare-security-checker SKILL
 
 3. Task binding-context-analyzer(current code)
-   - Verify all code bindings match wrangler.toml
-   - Check no references to undefined bindings
-   - Validate TypeScript Env interface accuracy
+   - Complex binding configuration analysis
+   - Cross-service binding validation
+   - Advanced binding patterns
    - **Status**: Must have no mismatches
+   - **Note**: Complements workers-binding-validator SKILL
 
 **Important Checks (Warnings)**:
 
 4. Task edge-performance-oracle(current code)
-   - Check bundle size (target < 50KB, warn if > 100KB)
-   - Verify no heavy dependencies
-   - Analyze cold start implications
+   - Comprehensive performance analysis
+   - Global latency optimization
+   - Advanced bundle optimization
    - **Status**: P2 issues generate warnings
+   - **Note**: Complements edge-performance-optimizer SKILL
 
 5. Task cloudflare-pattern-specialist(current code)
-   - Verify Cloudflare best practices
-   - Check for anti-patterns (stateful Workers, KV for strong consistency)
-   - Validate DO state persistence patterns
+   - Advanced Cloudflare architecture patterns
+   - Complex anti-pattern detection
+   - Multi-service optimization
    - **Status**: P2 issues generate warnings
+   - **Note**: Complements all storage SKILLs
 
 #### Phase 3: Build & Test
 

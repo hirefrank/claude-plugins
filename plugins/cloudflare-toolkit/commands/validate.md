@@ -8,6 +8,16 @@ Run comprehensive validation checks for Cloudflare Workers projects:
 
 ## Validation Checks
 
+### Continuous SKILL-based Validation (Already Active During Development)
+- **workers-runtime-validator**: Runtime compatibility validation
+- **cloudflare-security-checker**: Security pattern validation
+- **workers-binding-validator**: Binding configuration validation
+- **edge-performance-optimizer**: Performance optimization guidance
+- **kv-optimization-advisor**: KV storage optimization
+- **durable-objects-pattern-checker**: DO best practices validation
+- **cors-configuration-validator**: CORS setup validation
+
+### Explicit Command Validation (Run by /validate)
 1. **wrangler.toml syntax** - Validates configuration file
 2. **compatibility_date** - Ensures current runtime version
 3. **TypeScript checks** - Runs typecheck if available
@@ -44,10 +54,13 @@ Run this command before committing code:
 ## Build Requirements
 
 The validation will:
+- **SKILL Summary**: Report any P1/P2 issues found by active SKILLs during development
 - Run `pnpm build` if build script exists (fails on any build errors)
 - Run `pnpm typecheck` if typecheck script exists (fails on any TypeScript errors)
 - Run `pnpm lint` if lint script exists (counts warnings toward threshold)
 - Fail fast on first error to save time
 - Enforce code quality: no errors, max 5 warnings
+
+**Integration Note**: SKILLs provide continuous validation during development, catching issues early. The /validate command provides explicit validation and summarizes any SKILL findings alongside traditional build/lint checks.
 
 This helps catch issues early and ensures code quality before committing to repository.

@@ -688,3 +688,23 @@ du -h ./dist
 - Think globally distributed, not single-server
 
 You are optimizing for edge, not traditional servers. Microseconds matter. Global users matter. Cold starts are the enemy.
+
+## Integration with Other Components
+
+### SKILL Complementarity
+This agent works alongside SKILLs for comprehensive performance optimization:
+- **edge-performance-optimizer SKILL**: Provides immediate performance validation during development
+- **edge-performance-oracle agent**: Handles deep performance analysis and complex optimization strategies
+
+### When to Use This Agent
+- **Always** in `/review` command
+- **Before deployment** in `/cf-deploy` command (complements SKILL validation)
+- **Performance troubleshooting** and analysis
+- **Complex performance architecture** questions
+- **Global optimization strategy** development
+
+### Works with:
+- `workers-runtime-guardian` - Runtime compatibility
+- `cloudflare-security-sentinel` - Security optimization
+- `binding-context-analyzer` - Binding performance
+- **edge-performance-optimizer SKILL** - Immediate performance validation

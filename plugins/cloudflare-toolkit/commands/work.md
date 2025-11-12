@@ -111,12 +111,12 @@ This command helps you analyze a work document (plan, Markdown file, specificati
      - Select next task (priority + dependencies)
      - Mark as in_progress
      - Execute task completely
-     - Validate with Cloudflare agents
+      - Validate with platform-specific agents
      - Mark as completed
      - Update progress
    ```
 
-2. **Cloudflare-Specific Validation**
+2. **Platform-Specific Validation**
 
    After implementing each task, validate with relevant agents:
 
@@ -125,7 +125,7 @@ This command helps you analyze a work document (plan, Markdown file, specificati
      - Ensure env parameter usage (not process.env)
      - Validate Web APIs only
 
-   - **Task binding-context-analyzer** - Binding validation
+    - **Task platform-specific binding analyzer** - Binding validation
      - Verify bindings referenced in code exist in wrangler.toml
      - Check TypeScript Env interface matches usage
      - Validate binding names follow conventions
