@@ -262,13 +262,15 @@ Meta-command for creating custom commands:
 - Includes agent orchestration patterns
 - Creates documentation
 
-### `/resolve_todo_parallel` - Parallel Todo Execution
+### `/es-resolve-parallel` - Parallel Task Resolution
 
-Execute multiple todos concurrently:
-- Identifies independent todos
-- Runs in parallel worktrees
+Execute multiple todos and GitHub issues concurrently:
+- Resolves TODO files from `/todos/*.md` directory
+- Fetches and resolves open GitHub issues
+- Identifies independent tasks and runs them in parallel
+- Analyzes dependencies and creates execution flow diagrams
 - Validates each completion
-- Merges results
+- Closes GitHub issues with commit references
 
 ### `/es-design-review` - Frontend Design Review
 

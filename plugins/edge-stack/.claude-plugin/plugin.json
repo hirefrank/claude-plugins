@@ -1,6 +1,6 @@
 {
   "name": "edge-stack",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system. Features 22 specialized agents, 12 autonomous SKILLs, 18 workflow commands, and 4 bundled MCP servers.",
   "author": {
     "name": "Frank Harris",
