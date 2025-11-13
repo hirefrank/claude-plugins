@@ -22,10 +22,12 @@ This plugin transforms Claude Code into a complete edge-first full-stack develop
 
 ## 🚀 MCP Server Integration (Automatically Bundled)
 
-**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, the following MCP servers are automatically configured:
+**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, the following 4 MCP servers are automatically configured:
 
 - **Cloudflare MCP** (`https://docs.mcp.cloudflare.com/mcp`) - Documentation search, bindings management, and account context
 - **Nuxt UI MCP** (`https://ui.nuxt.com/mcp`) - Component documentation and implementation
+- **better-auth MCP** (`https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp`) - Authentication patterns and OAuth provider setup
+- **Polar MCP** (`https://mcp.polar.sh/mcp/polar-mcp`) - Billing integration and subscription management
 
 **No manual configuration needed!** Just install the plugin and the MCP servers will be available.
 
@@ -685,10 +687,12 @@ See [LICENSE](./LICENSE) for full details.
 
 ## Resources
 
-**MCP Servers**:
+**MCP Servers** (4 bundled with plugin):
 - [Cloudflare MCP](https://docs.mcp.cloudflare.com/mcp) - Account context + documentation
 - [Nuxt UI MCP](https://ui.nuxt.com/mcp) - Component documentation
-- [MCP Setup Guide](./docs/mcp-setup-guide.md) - Configuration instructions
+- [better-auth MCP](https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp) - Authentication patterns
+- [Polar MCP](https://mcp.polar.sh/mcp/polar-mcp) - Billing integration
+- [MCP Usage Examples](./docs/mcp-usage-examples.md) - Query patterns and workflows
 - [MCP Protocol](https://modelcontextprotocol.io) - Official MCP specification
 
 **Cloudflare Docs**:
