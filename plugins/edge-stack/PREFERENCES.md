@@ -1,4 +1,4 @@
-# User Preferences - Frank's Cloudflare Development Standards
+# User Preferences - Edge Stack Development Standards
 
 This document codifies strong preferences for all agents in this plugin. These are **NOT suggestions** - they are **requirements** that agents MUST follow.
 

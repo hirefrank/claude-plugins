@@ -180,7 +180,7 @@
 ## 🚀 File Structure (Final)
 
 ```
-plugins/cloudflare-toolkit/
+plugins/edge-stack/
 ├── agents/
 │   ├── polar-billing-specialist.md          ✅ NEW (650 lines)
 │   ├── better-auth-specialist.md            ✅ NEW (700 lines)

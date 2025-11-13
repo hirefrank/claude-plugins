@@ -1,14 +1,16 @@
-# Cloudflare Toolkit Plugin
+# Edge Stack Plugin
 
-AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing.
+**Complete full-stack development toolkit optimized for edge computing.**
+
+Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system. Features AI-powered development assistance, autonomous validation, and expert guidance that gets smarter with every use.
 
 **Philosophy**: Self-improving through feedback codification, multi-agent parallel analysis, and structured workflow orchestration.
 
-**Architecture**: Inspired by [Every's Compounding Engineering Plugin](https://github.com/EveryInc/every-marketplace/tree/main/plugins/compounding-engineering) by Kieran Klaassen and [Cloudflare's VibeSDK](https://github.com/cloudflare/vibesdk) AI tuning techniques. Adapted for Cloudflare-only development with persona-based constraints and self-improving workflows.
+**Architecture**: Inspired by [Every's Compounding Engineering Plugin](https://github.com/EveryInc/every-marketplace/tree/main/plugins/compounding-engineering) by Kieran Klaassen and [Cloudflare's VibeSDK](https://github.com/cloudflare/vibesdk) AI tuning techniques. Adapted for edge-first full-stack development with persona-based constraints and self-improving workflows.
 
 ## Overview
 
-This plugin transforms Claude Code into a Cloudflare Workers expert through:
+This plugin transforms Claude Code into a complete edge-first full-stack development platform through:
 - **19 specialized agents** (16 Cloudflare + 3 Frontend Design, all with MCP integration)
 - **10 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design)
 - **12 workflow commands** (6 core + 3 Cloudflare + 3 Frontend Design)
@@ -124,7 +126,7 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 /plugin marketplace add hirefrank/hirefrank-marketplace
 
 # Install this plugin
-/plugin install cloudflare-toolkit
+/plugin install edge-stack
 
 # Restart Claude Code to activate
 ```
@@ -641,7 +643,7 @@ This plugin adopts Every's compounding-engineering philosophy:
 
 Issues and suggestions:
 - [GitHub Issues](https://github.com/hirefrank/hirefrank-marketplace/issues)
-- Label: `cloudflare-toolkit`
+- Label: `edge-stack`
 
 ### To Upstream (Every's Plugin)
 
