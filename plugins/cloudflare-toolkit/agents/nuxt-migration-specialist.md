@@ -1133,3 +1133,62 @@ This agent works in tandem with:
 
 Agent created: 2025-01-05
 Last updated: 2025-01-05
+
+## Migrating Authentication (Lucia → better-auth + nuxt-auth-utils)
+
+### Context
+
+Lucia is deprecated. Modern Nuxt authentication stack:
+- **Primary**: `nuxt-auth-utils` (session management)
+- **Advanced**: `better-auth` (OAuth, passkeys, magic links)
+
+### Migration Steps
+
+1. **Install new packages**:
+```bash
+npm uninstall lucia
+npm install nuxt-auth-utils better-auth @node-rs/argon2
+```
+
+2. **Migrate session management**:
+- Lucia sessions → nuxt-auth-utils
+- Use `setUserSession()`, `getUserSession()`, `clearUserSession()`
+
+3. **Migrate OAuth (if used)**:
+- Lucia OAuth → better-auth OAuth
+- Query better-auth MCP for provider config
+- Migrate sessions to nuxt-auth-utils in callback
+
+4. **Update database schema**:
+- Keep existing `users` table
+- Add better-auth tables if using OAuth: `accounts`, `sessions`
+
+5. **Update auth handlers**:
+- Replace Lucia API calls with nuxt-auth-utils/better-auth
+- Preserve existing password hashing if using Argon2
+
+### Code Changes
+
+**Before (Lucia)**:
+```typescript
+import { auth } from '~/server/utils/auth';
+
+export default defineEventHandler(async (event) => {
+  const session = await auth.validateSession(sessionId);
+  // ...
+});
+```
+
+**After (nuxt-auth-utils)**:
+```typescript
+export default defineEventHandler(async (event) => {
+  const session = await getUserSession(event);
+  // ...
+});
+```
+
+### Quick Start
+
+Use `/cf-auth-setup` command for guided migration with code generation.
+
+---

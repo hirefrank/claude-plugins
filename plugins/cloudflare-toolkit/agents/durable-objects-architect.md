@@ -479,3 +479,80 @@ Works with:
 - `cloudflare-architecture-strategist` - Reviews DO usage patterns
 - `cloudflare-security-sentinel` - Checks DO access controls
 - `edge-performance-oracle` - Optimizes DO request patterns
+
+## Polar Webhooks + Durable Objects for Reliability
+
+### Pattern: Webhook Queue with Durable Objects
+
+**Problem**: Webhook delivery failures can lose critical billing events
+
+**Solution**: Durable Object as reliable webhook processor queue
+
+```typescript
+// Webhook handler stores event in DO
+export async function handlePolarWebhook(request: Request, env: Env) {
+  const webhookDO = env.WEBHOOK_PROCESSOR.get(
+    env.WEBHOOK_PROCESSOR.idFromName('polar-webhooks')
+  );
+
+  // Store event in DO (reliable, durable storage)
+  await webhookDO.fetch(request.clone());
+
+  return new Response('Queued', { status: 202 });
+}
+
+// Durable Object processes events with retries
+export class WebhookProcessor implements DurableObject {
+  async fetch(request: Request) {
+    const event = await request.json();
+    
+    // Process with automatic retries
+    await this.processWithRetry(event, 3);
+  }
+
+  async processWithRetry(event: any, maxRetries: number) {
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        await this.processEvent(event);
+        return;
+      } catch (err) {
+        if (i === maxRetries - 1) throw err;
+        await this.sleep(1000 * Math.pow(2, i)); // Exponential backoff
+      }
+    }
+  }
+
+  async processEvent(event: any) {
+    // Handle subscription events with retry logic
+    switch (event.type) {
+      case 'subscription.created':
+        // Update D1 with confidence
+        break;
+      case 'subscription.canceled':
+        // Handle cancellation reliably
+        break;
+    }
+  }
+
+  sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+}
+```
+
+**Benefits**:
+- ✅ No lost webhook events (durable storage)
+- ✅ Automatic retries with exponential backoff
+- ✅ In-order processing per customer
+- ✅ Survives Worker restarts
+- ✅ Audit trail in Durable Object storage
+
+**When to Use**:
+- Mission-critical billing events
+- High-value transactions
+- Compliance requirements
+- Complex webhook processing
+
+See `agents/polar-billing-specialist` for webhook implementation details.
+
+---

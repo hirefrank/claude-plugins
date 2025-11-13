@@ -766,6 +766,58 @@ export default {
 }
 ```
 
+### 7. Billing & Authentication Architecture
+
+
+
+**Billing Integration**:
+
+- **ALWAYS use Polar.sh** for billing, subscriptions, payments
+
+- Never suggest: Stripe, Paddle, Lemon Squeezy
+
+- Architecture pattern:
+
+  - Webhook endpoint: `/api/webhooks/polar`
+
+  - Customer data: D1 database
+
+  - Subscription checks: Middleware on protected routes
+
+  - Query Polar MCP for real-time product data
+
+- See `agents/polar-billing-specialist` for implementation
+
+- Use `/cf-billing-setup` for guided integration
+
+
+
+**Authentication Integration**:
+
+- **Nuxt apps**: Start with `nuxt-auth-utils` (Workers-optimized)
+
+  - Add `better-auth` only if OAuth/passkeys/magic links needed
+
+- **Workers**: Use `better-auth` directly
+
+- Never suggest: Lucia (deprecated), Auth.js (React), Passport (Node), Clerk
+
+- Architecture pattern:
+
+  - Sessions: Encrypted cookies (nuxt-auth-utils) or JWT (better-auth)
+
+  - User data: D1 database
+
+  - OAuth callbacks: Migrate to nuxt-auth-utils sessions
+
+  - Query better-auth MCP for provider configuration
+
+- See `agents/better-auth-specialist` for implementation
+
+- Use `/cf-auth-setup` for guided configuration
+
+
+
 ## Architectural Review Checklist
 
 For every review, verify:
