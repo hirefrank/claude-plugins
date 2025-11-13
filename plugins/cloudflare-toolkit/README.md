@@ -46,7 +46,48 @@ This plugin transforms Claude Code into a Cloudflare Workers expert through:
 - ✅ **No hallucinations** (Nuxt UI component props validated)
 - ✅ **Data-driven recommendations** (based on your actual usage)
 
-**Setup Guide**: See [docs/mcp-setup-guide.md](./docs/mcp-setup-guide.md)
+### MCP Setup (Automatic)
+
+The plugin includes a `.mcp.json` file that automatically configures these servers:
+
+```json
+{
+  "mcpServers": {
+    "cloudflare-docs": {
+      "type": "http",
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "enabled": true
+    },
+    "nuxt-ui": {
+      "type": "http",
+      "url": "https://ui.nuxt.com/mcp",
+      "enabled": true
+    }
+  }
+}
+```
+
+**Verification**: Check that MCP servers are active:
+```bash
+# In Claude Code, run:
+/mcp list
+
+# You should see:
+# ✓ cloudflare-docs (active)
+# ✓ nuxt-ui (active)
+```
+
+**For Frontend Design Features**: The `nuxt-ui` MCP server is critical for:
+- `frontend-design-specialist` agent - Validates component customizations
+- `nuxt-ui-architect` agent - Prevents prop hallucination
+- `/cf-component` command - Scaffolds components with correct props
+- `/cf-design-review` command - Validates component usage
+
+**Troubleshooting**: If MCP servers don't appear:
+1. Ensure plugin is installed: `/plugin list`
+2. Restart Claude Code
+3. Check `.mcp.json` is in plugin directory
+4. Verify internet connectivity (MCP servers are HTTP-based)
 
 ## Installation
 

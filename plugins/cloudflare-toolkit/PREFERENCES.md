@@ -619,10 +619,50 @@ All designs MUST be accessible:
 ### Distinctiveness Score
 
 Projects should aim for 85/100+ on distinctiveness:
-- **Typography**: 25 points (custom fonts, hierarchy)
-- **Colors**: 25 points (brand palette, contrast)
-- **Animations**: 25 points (transitions, micro-interactions)
-- **Components**: 25 points (customization depth, consistency)
+
+#### Scoring Methodology
+
+**Typography (25 points)**:
+- Custom font pairing (not Inter/Roboto/Helvetica): **15 pts**
+  - 15 pts: 2+ custom fonts (heading + body)
+  - 10 pts: 1 custom font
+  - 5 pts: System fonts only (not Inter/Roboto)
+  - 0 pts: Inter/Roboto fonts
+- Proper heading hierarchy (h1-h6, no skips): **5 pts**
+- Custom tracking/leading/sizing: **5 pts**
+
+**Colors (25 points)**:
+- Custom brand palette (defined in tailwind.config): **15 pts**
+  - 15 pts: 3+ custom brand colors
+  - 10 pts: 2 custom colors
+  - 5 pts: 1 custom color
+  - 0 pts: Default Tailwind colors only
+- WCAG 2.1 AA contrast compliance (4.5:1 text, 3:1 UI): **5 pts**
+- No purple gradients or overused patterns: **5 pts**
+
+**Animations (25 points)**:
+- Interactive element transitions (buttons, links, cards): **10 pts**
+  - 10 pts: All interactive elements have hover/focus states
+  - 5 pts: 50%+ have transitions
+  - 0 pts: Minimal or no transitions
+- Micro-interactions (loading states, form feedback): **10 pts**
+- Respects `prefers-reduced-motion`: **5 pts**
+
+**Components (25 points)**:
+- Nuxt UI customization depth (ui prop usage): **15 pts**
+  - 15 pts: 80%+ components use ui prop
+  - 10 pts: 50-79% use ui prop
+  - 5 pts: 20-49% use ui prop
+  - 0 pts: Default props only
+- Consistent design system (reusable variants): **5 pts**
+- Loading/error states on async components: **5 pts**
+
+**Total: 100 points**
+- **90-100**: Outstanding (highly distinctive, polished)
+- **85-89**: Excellent (distinctive, minor improvements possible)
+- **70-84**: Good (some distinctive elements, needs work)
+- **50-69**: Fair (generic with some customization)
+- **0-49**: Poor (generic AI aesthetic)
 
 ### When User Requests Generic Patterns
 
