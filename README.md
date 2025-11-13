@@ -23,27 +23,28 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 
 [📖 Full Documentation](./plugins/claude-skills-analyzer/README.md)
 
-### ☁️ Cloudflare Engineering
-**Plugin ID**: `cloudflare-toolkit`
+### ⚡ Edge Stack
+**Plugin ID**: `edge-stack`
 
-AI-powered Cloudflare development tools that get smarter with every use. Specialized for Workers, Durable Objects, KV, R2, and edge computing with 16 agents and 6 workflow commands.
+Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system.
 
 **Key Features:**
-- 16 specialized agents (13 Haiku, 2 Sonnet, 2 Opus - optimized for speed & cost)
-- Self-improvement through feedback codification
-- Multi-phase parallel execution
-- **Bundled MCP servers** (Cloudflare + Nuxt UI) - no manual setup required
-- **Bundled validation hooks** - automatic code quality checks
-- Real-time account context via MCP servers
-- Cloudflare-specific expertise baked in
+- 22 specialized agents (all with MCP integration)
+- 12 autonomous SKILLs (continuous validation)
+- 18 workflow commands (including setup wizards)
+- **4 bundled MCP servers** (Cloudflare, Nuxt UI, better-auth, Polar) - no manual setup required
+- **Bundled statusline** - at-a-glance development context
+- **Documentation validation** - keeps docs in sync with code
+- Distinctive design system preventing generic "AI aesthetics"
 
 **Usage**:
-- `/review` - Comprehensive multi-agent code review
-- `/plan` - Create GitHub issues for features
-- `/work` - Execute work plans systematically
-- `/triage` - Manage code review findings
+- `/es-billing-setup` - Interactive Polar.sh billing integration
+- `/es-auth-setup` - Interactive authentication configuration
+- `/es-component` - Generate distinctive UI components
+- `/es-commit` - Auto-commit with generated messages
+- `/es-validate` - Comprehensive validation before commit
 
-[📖 Full Documentation](./plugins/cloudflare-toolkit/README.md)
+[📖 Full Documentation](./plugins/edge-stack/README.md)
 
 ## Quick Start
 
@@ -59,7 +60,7 @@ Then install a plugin:
 ```bash
 /plugin install claude-skills-analyzer
 # or
-/plugin install cloudflare-toolkit
+/plugin install edge-stack
 ```
 
 ### One-Command Installation
@@ -87,22 +88,26 @@ This automatically adds the marketplace and installs the plugin in a single step
 
 See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quick-start) for detailed instructions including export steps and skill installation.
 
-### For Cloudflare Engineering:
+### For Edge Stack:
 ```shell
 # 1. Install the plugin
-/plugin install cloudflare-toolkit
+/plugin install edge-stack
 
-# 2. Run comprehensive code review
-/review
+# 2. Setup billing integration
+/es-billing-setup
 
-# 3. Plan a new feature
-/plan Add real-time presence tracking with Durable Objects
+# 3. Setup authentication
+/es-auth-setup
 
-# 4. Execute the work plan
-/work .claude/todos/001-pending-p1-add-presence.md
+# 4. Generate a component
+/es-component button PrimaryButton --animations rich
+
+# 5. Validate and commit
+/es-validate
+/es-commit
 ```
 
-See the [full documentation](./plugins/cloudflare-toolkit/README.md) for detailed instructions including all 16 agents, 6 commands, and MCP integration.
+See the [full documentation](./plugins/edge-stack/README.md) for detailed instructions including all 22 agents, 18 commands, 12 SKILLs, and 4 MCP servers.
 
 ## Plugin Categories
 
@@ -149,11 +154,14 @@ hirefrank-marketplace/
 │   │   ├── commands/
 │   │   ├── skills/
 │   │   └── README.md
-│   └── cloudflare-toolkit/
+│   └── edge-stack/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
-│       ├── agents/        # 16 specialized agents
-│       ├── commands/      # 6 workflow commands
+│       ├── .claude-code/
+│       │   └── statusline.json
+│       ├── agents/        # 22 specialized agents
+│       ├── commands/      # 18 workflow commands
+│       ├── skills/        # 12 autonomous SKILLs
 │       └── README.md
 ├── docs/                    # Shared documentation
 ├── examples/               # Usage examples
