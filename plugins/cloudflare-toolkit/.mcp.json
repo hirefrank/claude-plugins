@@ -11,6 +11,18 @@
       "url": "https://ui.nuxt.com/mcp",
       "enabled": true,
       "description": "Nuxt UI component documentation and implementation"
+    },
+    "better-auth": {
+      "type": "http",
+      "url": "https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp",
+      "enabled": true,
+      "description": "Better Auth documentation and implementation"
+    },
+    "polar": {
+      "type": "http",
+      "url": "https://mcp.polar.sh/mcp/polar-mcp",
+      "enabled": true,
+      "description": "Polar documentation and implementation"
     }
   }
 }

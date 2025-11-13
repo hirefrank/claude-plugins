@@ -62,6 +62,16 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
       "type": "http",
       "url": "https://ui.nuxt.com/mcp",
       "enabled": true
+    },
+    "better-auth": {
+      "type": "http",
+      "url": "https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp",
+      "enabled": true
+    },
+    "polar": {
+      "type": "http",
+      "url": "https://mcp.polar.sh/mcp/polar-mcp",
+      "enabled": true
     }
   }
 }
@@ -75,13 +85,31 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 # You should see:
 # ✓ cloudflare-docs (active)
 # ✓ nuxt-ui (active)
+# ✓ better-auth (active)
+# ✓ polar (active)
 ```
 
-**For Frontend Design Features**: The `nuxt-ui` MCP server is critical for:
+**MCP Server Features**:
+
+**Frontend Design** - `nuxt-ui` MCP provides:
 - `frontend-design-specialist` agent - Validates component customizations
 - `nuxt-ui-architect` agent - Prevents prop hallucination
 - `/cf-component` command - Scaffolds components with correct props
 - `/cf-design-review` command - Validates component usage
+
+**Authentication** - `better-auth` MCP provides:
+- Complete authentication setup guidance
+- Provider configuration (OAuth, passkeys, magic links)
+- Session management patterns
+- Security best practices for Cloudflare Workers
+- Integration with Nuxt (via nuxt-auth-utils when appropriate)
+
+**Billing** - `polar` MCP provides:
+- Product and subscription setup
+- Webhook handling for payment events
+- Customer management integration
+- Cloudflare Workers billing patterns
+- **Default billing solution** for all new projects
 
 **Troubleshooting**: If MCP servers don't appear:
 1. Ensure plugin is installed: `/plugin list`

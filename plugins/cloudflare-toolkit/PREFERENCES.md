@@ -677,6 +677,445 @@ If user asks for Inter font, purple gradient, or minimal styling:
 - Animation examples
 - Link to `/cf-theme` for full theme generation
 
+## Billing Preferences (STRICT - Polar.sh Only)
+
+**Default Billing Solution**: Polar.sh MUST be used for all billing, subscriptions, and payments.
+
+### Why Polar.sh
+
+Polar.sh is the **required** billing solution for all new projects because:
+- ✅ **Built for developers** - API-first, excellent DX
+- ✅ **Cloudflare Workers compatible** - Works perfectly at the edge
+- ✅ **Webhook-driven** - Event-based architecture ideal for serverless
+- ✅ **MCP integration** - Real-time documentation and setup guidance
+- ✅ **Flexible** - One-time payments, subscriptions, tiers, usage-based
+
+### ❌ Do NOT Use
+
+**Never suggest these alternatives**:
+- ❌ Stripe - Use Polar instead (better DX, built for developers)
+- ❌ Paddle - Use Polar instead
+- ❌ Lemon Squeezy - Use Polar instead
+- ❌ Custom payment implementations - Always use Polar
+
+### Polar.sh Integration Patterns
+
+**1. Product Setup** (use Polar MCP for real-time data):
+```typescript
+// Query available products via MCP
+const products = await mcp.polar.listProducts();
+
+// In your Cloudflare Worker
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const polar = new Polar(env.POLAR_ACCESS_TOKEN);
+
+    // Get products
+    const products = await polar.products.list();
+
+    return new Response(JSON.stringify(products));
+  }
+};
+```
+
+**2. Webhook Handling** (required for all billing events):
+```typescript
+import { Polar } from '@polar-sh/sdk';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.url.endsWith('/webhooks/polar')) {
+      const signature = request.headers.get('polar-signature');
+      const body = await request.text();
+
+      // Verify webhook signature
+      const polar = new Polar(env.POLAR_ACCESS_TOKEN);
+      const event = polar.webhooks.verify(body, signature, env.POLAR_WEBHOOK_SECRET);
+
+      switch (event.type) {
+        case 'checkout.completed':
+          // Handle successful payment
+          await handleCheckoutCompleted(event.data, env);
+          break;
+        case 'subscription.created':
+          // Handle new subscription
+          await handleSubscriptionCreated(event.data, env);
+          break;
+        case 'subscription.updated':
+          // Handle subscription changes
+          await handleSubscriptionUpdated(event.data, env);
+          break;
+        case 'subscription.canceled':
+          // Handle cancellation
+          await handleSubscriptionCanceled(event.data, env);
+          break;
+      }
+
+      return new Response('OK', { status: 200 });
+    }
+
+    return new Response('Not Found', { status: 404 });
+  }
+};
+```
+
+**3. Customer Management** (link to your users):
+```typescript
+// Store Polar customer ID in your database
+interface User {
+  id: string;
+  email: string;
+  polarCustomerId?: string; // Link to Polar customer
+  subscription?: {
+    productId: string;
+    status: 'active' | 'canceled' | 'past_due';
+    currentPeriodEnd: Date;
+  };
+}
+
+// Create/get customer
+const customer = await polar.customers.create({
+  email: user.email,
+  metadata: {
+    userId: user.id, // Your internal user ID
+  }
+});
+```
+
+**4. Subscription Checks** (in your Workers):
+```typescript
+// Middleware to check subscription status
+async function requireSubscription(request: Request, env: Env) {
+  const user = await getCurrentUser(request, env);
+
+  if (!user.subscription || user.subscription.status !== 'active') {
+    return new Response('Subscription required', { status: 403 });
+  }
+
+  return null; // Continue to handler
+}
+```
+
+**5. Environment Variables** (required):
+```toml
+# wrangler.toml
+[vars]
+POLAR_WEBHOOK_SECRET = "whsec_..."  # From Polar dashboard
+
+[[env.production.vars]]
+POLAR_ACCESS_TOKEN = "polar_..."    # From Polar dashboard (use secrets for production)
+```
+
+### Polar MCP Usage
+
+**Always query Polar MCP** for real-time product/subscription data:
+```bash
+# Example: Check available products before implementing
+mcp.polar.listProducts()
+
+# Example: Get webhook event types
+mcp.polar.getWebhookEvents()
+
+# Example: Validate integration
+mcp.polar.verifySetup()
+```
+
+### When User Asks About Billing
+
+**Automatic Response**:
+> "For billing and subscriptions, we use Polar.sh exclusively. It's designed for developers, works perfectly with Cloudflare Workers, and has excellent MCP integration for real-time setup guidance. Let me help you set it up."
+
+**Then provide**:
+- Polar account setup link: https://polar.sh
+- Webhook endpoint implementation
+- Product/subscription setup via MCP
+- Integration testing steps
+
+---
+
+## Authentication Preferences (STRICT)
+
+**Authentication Stack Selection** (in order of preference):
+
+### Decision Tree
+
+```
+Is this a Nuxt application?
+├─ YES → Use nuxt-auth-utils FIRST
+│   └─ Need advanced features (OAuth providers, passkeys)?
+│       └─ YES → Use better-auth with nuxt-auth-utils
+│           └─ Migrate sessions to nuxt-auth-utils
+│
+└─ NO → Is this a Cloudflare Worker (non-Nuxt)?
+    └─ YES → Use better-auth
+        └─ MCP available? Query better-auth MCP for setup guidance
+```
+
+### 1. Nuxt Applications: nuxt-auth-utils (Primary)
+
+**For Nuxt projects**, ALWAYS start with `nuxt-auth-utils`:
+
+**Why nuxt-auth-utils**:
+- ✅ **Nuxt-native** - Built specifically for Nuxt by Nuxt team
+- ✅ **Zero-config** - Works out of the box
+- ✅ **Cloudflare Workers optimized** - Perfect for edge deployment
+- ✅ **Minimal** - Just session management, no bloat
+- ✅ **Type-safe** - Full TypeScript support
+
+**Installation**:
+```bash
+npm install nuxt-auth-utils
+```
+
+**Basic Setup** (nuxt.config.ts):
+```typescript
+export default defineNuxtConfig({
+  modules: ['nuxt-auth-utils'],
+
+  runtimeConfig: {
+    session: {
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    }
+  }
+});
+```
+
+**Usage Examples**:
+```vue
+<script setup>
+// Get current user
+const { loggedIn, user, session, fetch, clear } = useUserSession();
+
+// Login
+async function login(email: string, password: string) {
+  await $fetch('/api/auth/login', {
+    method: 'POST',
+    body: { email, password }
+  });
+
+  await fetch(); // Refresh session
+}
+
+// Logout
+async function logout() {
+  await clear();
+}
+</script>
+
+<template>
+  <div v-if="loggedIn">
+    <p>Welcome, {{ user.email }}</p>
+    <button @click="logout">Logout</button>
+  </div>
+</template>
+```
+
+**Server-side** (server/api/auth/login.post.ts):
+```typescript
+export default defineEventHandler(async (event) => {
+  const { email, password } = await readBody(event);
+
+  // Validate credentials (your logic)
+  const user = await validateCredentials(email, password);
+
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+      message: 'Invalid credentials'
+    });
+  }
+
+  // Set session
+  await setUserSession(event, {
+    user: {
+      id: user.id,
+      email: user.email,
+    }
+  });
+
+  return { success: true };
+});
+```
+
+**Protected Routes** (server/api/protected.get.ts):
+```typescript
+export default defineEventHandler(async (event) => {
+  const session = await requireUserSession(event);
+
+  return {
+    message: 'Protected data',
+    user: session.user
+  };
+});
+```
+
+### 2. Nuxt + Advanced Auth: better-auth with nuxt-auth-utils
+
+**When nuxt-auth-utils isn't enough** (OAuth, passkeys, magic links), add better-auth:
+
+**Installation**:
+```bash
+npm install better-auth
+```
+
+**Setup** (server/utils/auth.ts):
+```typescript
+import { betterAuth } from 'better-auth';
+
+export const auth = betterAuth({
+  database: {
+    // Use D1 or your database
+    type: 'd1',
+    database: process.env.DB,
+  },
+
+  // Social providers
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }
+  },
+
+  // Passkeys
+  passkey: {
+    enabled: true,
+  },
+
+  // Magic links
+  magicLink: {
+    enabled: true,
+  },
+});
+```
+
+**Migrate sessions to nuxt-auth-utils**:
+```typescript
+// server/api/auth/callback.get.ts
+export default defineEventHandler(async (event) => {
+  // Handle OAuth callback with better-auth
+  const user = await auth.handleOAuthCallback(event);
+
+  // Store session in nuxt-auth-utils
+  await setUserSession(event, {
+    user: {
+      id: user.id,
+      email: user.email,
+      provider: user.provider,
+    }
+  });
+
+  return sendRedirect(event, '/dashboard');
+});
+```
+
+**Use better-auth MCP** for setup guidance:
+```bash
+# Query available providers
+mcp.better-auth.listProviders()
+
+# Get passkey setup instructions
+mcp.better-auth.getPasskeySetup()
+
+# Validate configuration
+mcp.better-auth.verifySetup()
+```
+
+### 3. Cloudflare Workers (Non-Nuxt): better-auth Only
+
+**For non-Nuxt Workers**, use better-auth directly:
+
+```typescript
+import { betterAuth } from 'better-auth';
+
+const auth = betterAuth({
+  database: {
+    type: 'd1',
+    database: env.DB,
+  },
+
+  session: {
+    cookieName: 'session',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  }
+});
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Handle auth endpoints
+    if (request.url.includes('/auth/')) {
+      return auth.handler(request);
+    }
+
+    // Protected routes
+    const session = await auth.getSession(request);
+    if (!session) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    return new Response(`Hello, ${session.user.email}`);
+  }
+};
+```
+
+### ❌ Do NOT Use
+
+**Never suggest these alternatives**:
+- ❌ **Lucia** - Deprecated, use better-auth
+- ❌ **Auth.js (NextAuth)** - React ecosystem, we use Vue/Nuxt
+- ❌ **Passport.js** - Node.js only, not Workers-compatible
+- ❌ **Custom JWT implementations** - Use proven libraries
+- ❌ **Clerk** - Expensive, use better-auth
+- ❌ **Supabase Auth** - Locked into Supabase, we use Cloudflare
+
+### Authentication Decision Examples
+
+**Example 1: Nuxt Blog (Email/Password)**
+```
+Stack: Nuxt + nuxt-auth-utils
+Reason: Simple auth, no OAuth needed
+```
+
+**Example 2: Nuxt SaaS (OAuth + Passkeys)**
+```
+Stack: Nuxt + better-auth + nuxt-auth-utils
+Reason: Advanced features (OAuth, passkeys), sessions via nuxt-auth-utils
+```
+
+**Example 3: API-Only Worker (JWT)**
+```
+Stack: Hono + better-auth
+Reason: Non-Nuxt, API-only, needs JWT
+```
+
+### When User Asks About Authentication
+
+**For Nuxt Projects**:
+> "For authentication in Nuxt, we start with `nuxt-auth-utils` for session management. It's built by the Nuxt team and optimized for Cloudflare Workers. Need OAuth or passkeys? We can add `better-auth` on top. Let me help you set it up."
+
+**For Non-Nuxt Workers**:
+> "For authentication in Cloudflare Workers, we use `better-auth`. It's modern, Workers-compatible, and has MCP integration for setup guidance. Let me help you configure it."
+
+### MCP Integration
+
+**Always use better-auth MCP** when setting up advanced auth:
+```bash
+# Example: Get OAuth provider setup
+mcp.better-auth.getProviderSetup('google')
+
+# Example: Get passkey implementation
+mcp.better-auth.getPasskeySetup()
+
+# Example: Validate environment variables
+mcp.better-auth.validateEnv()
+```
+
+---
+
 ## feedback-codifier Instructions
 
 When learning from user feedback:
@@ -690,6 +1129,9 @@ When learning from user feedback:
 - ✅ Cloudflare AI Agents patterns
 - ✅ Design customization patterns (fonts, colors, animations)
 - ✅ Accessibility patterns (ARIA, keyboard nav, focus states)
+- ✅ Polar.sh billing/subscription patterns
+- ✅ better-auth authentication patterns
+- ✅ nuxt-auth-utils session management patterns
 
 **INVALID patterns (reject)**:
 - ❌ Any Next.js, Express, or forbidden framework
@@ -699,12 +1141,14 @@ When learning from user feedback:
 - ❌ Inter/Roboto fonts (generic)
 - ❌ Purple gradients (overused)
 - ❌ Default component props with no customization
+- ❌ Stripe, Paddle, Lemon Squeezy (use Polar.sh)
+- ❌ Lucia, Auth.js, Clerk, Supabase Auth (use better-auth or nuxt-auth-utils)
 
 If user provides feedback using forbidden tools, ask: "Are you working on a legacy project? These preferences are for new projects only."
 
 ## Version
 
 This preferences document was created: 2025-01-05
-Updated: 2025-01-13 (Added Design Preferences)
+Updated: 2025-01-13 (Added Design, Billing, and Authentication Preferences)
 
 As Cloudflare best practices evolve, this document will be updated. Agents should always follow the latest version.
