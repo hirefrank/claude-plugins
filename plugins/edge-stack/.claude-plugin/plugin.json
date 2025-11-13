@@ -1,7 +1,7 @@
 {
-  "name": "cloudflare-toolkit",
-  "version": "1.0.1",
-  "description": "AI-powered Cloudflare development toolkit that gets smarter with every use. Architecture inspired by Every's Compounding Engineering approach, adapted for Cloudflare Workers, Durable Objects, KV, R2, and edge computing. Includes 16 Cloudflare-focused agents and 6 commands with automatic validation and MCP integration.",
+  "name": "edge-stack",
+  "version": "2.0.0",
+  "description": "Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system. Features 22 specialized agents, 12 autonomous SKILLs, 18 workflow commands, and 4 bundled MCP servers.",
   "author": {
     "name": "Frank Harris",
     "email": "frank@hirefrank.com"
@@ -11,15 +11,19 @@
   "repository": "https://github.com/hirefrank/hirefrank-marketplace",
   "license": "MIT",
   "keywords": [
+    "edge-stack",
     "cloudflare",
     "workers",
-    "durable-objects",
+    "nuxt",
+    "full-stack",
     "edge-computing",
+    "polar",
+    "better-auth",
+    "nuxt-ui",
+    "billing",
+    "authentication",
+    "mcp",
     "ai-powered",
-    "cloudflare-toolkit",
-    "workflow-automation",
-    "workflow-automation",
-    "code-review",
-    "cloudflare-workers"
+    "workflow-automation"
   ]
 }

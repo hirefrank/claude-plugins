@@ -2,7 +2,7 @@
 
 ## Overview
 
-The cloudflare-toolkit now includes **7 autonomous SKILLs** that provide continuous validation during development, complementing existing agents and commands.
+The edge-stack plugin now includes **12 autonomous SKILLs** that provide continuous validation during development, complementing existing agents and commands.
 
 ## Integration Architecture
 
@@ -265,4 +265,4 @@ This integration provides the best of both worlds: autonomous continuous validat
 ✅ **COMPLETED**: Agent complementarity documentation updated
 ✅ **COMPLETED**: Comprehensive integration guide completed
 
-The cloudflare-toolkit now provides autonomous development assistance through SKILLs that activate continuously during development, complemented by expert agents for complex scenarios, all orchestrated through enhanced commands and hooks.
+The edge-stack plugin now provides autonomous development assistance through SKILLs that activate continuously during development, complemented by expert agents for complex scenarios, all orchestrated through enhanced commands and hooks.

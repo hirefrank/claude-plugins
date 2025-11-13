@@ -51,7 +51,7 @@
 
 ## 🚀 **Ready for Production**
 
-The cloudflare-toolkit now has:
+The edge-stack plugin now has:
 - **7 autonomous SKILLs** providing continuous validation
 - **5 hook types** for comprehensive development workflow integration
 - **Clean architecture** with no redundancy

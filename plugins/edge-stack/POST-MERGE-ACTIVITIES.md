@@ -262,7 +262,7 @@ examples/distinctive-project/
         heading: ['Archivo Black', 'system-ui']
       }
     `,
-    docs: 'https://github.com/hirefrank/hirefrank-marketplace/blob/main/plugins/cloudflare-toolkit/PREFERENCES.md#typography'
+    docs: 'https://github.com/hirefrank/hirefrank-marketplace/blob/main/plugins/edge-stack/PREFERENCES.md#typography'
   }
 }
 ```
