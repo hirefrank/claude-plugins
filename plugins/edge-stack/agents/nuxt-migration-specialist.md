@@ -644,9 +644,9 @@ colors: {
 - [ ] Respect prefers-reduced-motion for animations
 
 **Tooling Support**:
-- Use `/cf-theme` to generate distinctive theme
-- Use `/cf-component` to scaffold customized components
-- Use `/cf-design-review` to validate design patterns
+- Use `/es-theme` to generate distinctive theme
+- Use `/es-component` to scaffold customized components
+- Use `/es-design-review` to validate design patterns
 - Design SKILLs will validate automatically during development
 
 **Result**: Migration improves both functionality AND aesthetics, creating distinctive branded experience from day one.
@@ -1189,6 +1189,6 @@ export default defineEventHandler(async (event) => {
 
 ### Quick Start
 
-Use `/cf-auth-setup` command for guided migration with code generation.
+Use `/es-auth-setup` command for guided migration with code generation.
 
 ---

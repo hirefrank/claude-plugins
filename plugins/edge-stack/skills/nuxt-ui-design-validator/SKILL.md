@@ -71,13 +71,13 @@ This SKILL automatically activates when:
 ### Complementary to Existing Components
 - **frontend-design-specialist agent**: Handles deep design analysis, SKILL provides immediate validation
 - **nuxt-ui-architect agent**: Component expertise, SKILL validates implementation
-- **cf-design-review command**: SKILL provides continuous validation between explicit reviews
+- **es-design-review command**: SKILL provides continuous validation between explicit reviews
 
 ### Escalation Triggers
 - Complex design system questions → `frontend-design-specialist` agent
 - Component customization help → `nuxt-ui-architect` agent
 - Accessibility concerns → `accessibility-guardian` agent
-- Full design review → `/cf-design-review` command
+- Full design review → `/es-design-review` command
 
 ## Validation Rules
 

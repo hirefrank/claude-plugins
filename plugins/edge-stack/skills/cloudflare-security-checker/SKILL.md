@@ -48,7 +48,7 @@ const result = await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(use
 ### Complementary to Existing Components
 - **cloudflare-security-sentinel agent**: Handles comprehensive security audits, SKILL provides immediate validation
 - **workers-runtime-validator SKILL**: Complements runtime checks with security-specific validation
-- **cf-deploy command**: SKILL prevents deployment of insecure code
+- **es-deploy command**: SKILL prevents deployment of insecure code
 
 ### Escalation Triggers
 - Complex security architecture questions → `cloudflare-security-sentinel` agent

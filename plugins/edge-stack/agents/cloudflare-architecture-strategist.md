@@ -788,7 +788,7 @@ export default {
 
 - See `agents/polar-billing-specialist` for implementation
 
-- Use `/cf-billing-setup` for guided integration
+- Use `/es-billing-setup` for guided integration
 
 
 
@@ -814,7 +814,7 @@ export default {
 
 - See `agents/better-auth-specialist` for implementation
 
-- Use `/cf-auth-setup` for guided configuration
+- Use `/es-auth-setup` for guided configuration
 
 
 

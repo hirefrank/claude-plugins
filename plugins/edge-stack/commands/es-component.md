@@ -25,7 +25,7 @@ description: Scaffold Nuxt UI components with distinctive design, accessibility,
 ## Command Usage
 
 ```bash
-/cf-component <type> <name> [options]
+/es-component <type> <name> [options]
 ```
 
 ### Arguments:
@@ -42,16 +42,16 @@ description: Scaffold Nuxt UI components with distinctive design, accessibility,
 
 ```bash
 # Generate primary button component
-/cf-component button PrimaryButton
+/es-component button PrimaryButton
 
 # Generate feature card with rich animations
-/cf-component card FeatureCard --animations rich
+/es-component card FeatureCard --animations rich
 
 # Generate hero section with custom theme
-/cf-component hero LandingHero --theme custom
+/es-component hero LandingHero --theme custom
 
 # Generate modal with custom output path
-/cf-component modal ConfirmDialog --output components/dialogs/
+/es-component modal ConfirmDialog --output components/dialogs/
 ```
 
 ## Main Tasks
@@ -932,7 +932,7 @@ import { <ComponentName> } from '#components';
 2. Customize props/styles as needed
 3. Test accessibility with keyboard navigation
 4. Test animations with reduced motion preference
-5. Run `/cf-design-review` to validate design patterns
+5. Run `/es-design-review` to validate design patterns
 ```
 
 </output_format>
@@ -953,7 +953,7 @@ import { <ComponentName> } from '#components';
 After generating component:
 1. **Review code**: Open generated file and review
 2. **Test component**: Add to a page and test interactions
-3. **Validate design**: Run `/cf-design-review` if needed
+3. **Validate design**: Run `/es-design-review` if needed
 4. **Document**: Add to component library docs/Storybook
 
 ## Notes

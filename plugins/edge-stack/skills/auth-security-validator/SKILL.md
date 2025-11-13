@@ -78,7 +78,7 @@ This SKILL automatically activates when:
    ℹ️ Consider 2FA for sensitive operations
 
 📋 Summary: 1 warning found
-💡 Run /cf-auth-setup to fix issues
+💡 Run /es-auth-setup to fix issues
 ```
 
 ## Security Patterns Detected
@@ -130,5 +130,5 @@ Complex scenarios escalate to `better-auth-specialist` agent:
 - Runs automatically on auth-related file changes
 - Can block deployments with P1 security issues
 - Follows OWASP Top 10 guidelines
-- Integrates with `/validate` and `/cf-deploy` commands
+- Integrates with `/validate` and `/es-deploy` commands
 - Queries better-auth MCP for provider security requirements

@@ -13,7 +13,7 @@
 **Goal**: Gather early feedback on design validation features
 
 **Actions**:
-- [ ] Monitor `/cf-design-review` command usage in projects
+- [ ] Monitor `/es-design-review` command usage in projects
 - [ ] Track distinctiveness scores across different projects
 - [ ] Collect feedback on false positives (generic patterns incorrectly flagged)
 - [ ] Identify commonly missed patterns not yet in validator
@@ -25,7 +25,7 @@
 - User satisfaction with recommendations
 
 **Success Criteria**:
-- 5+ projects using `/cf-design-review`
+- 5+ projects using `/es-design-review`
 - Average score improvement: 30+ points after fixes
 - < 5% false positive rate
 
@@ -83,12 +83,12 @@ mkdir -p tests/scoring
 **Test Cases**:
 ```bash
 # 1. MCP Available - Should use real props
-/cf-component button TestButton
+/es-component button TestButton
 # Expected: Uses validated UButton props from MCP
 
 # 2. MCP Unavailable - Should fall back gracefully
 # (Disable MCP in .mcp.json)
-/cf-component button TestButton
+/es-component button TestButton
 # Expected: Uses documented props, adds disclaimer
 
 # 3. Invalid Prop Detection
@@ -209,19 +209,19 @@ examples/distinctive-project/
 
 **Videos to Create**:
 1. **"Fixing Generic Design in 5 Minutes"** (3-5 min)
-   - Run `/cf-design-review`
+   - Run `/es-design-review`
    - Show P1 findings
    - Fix Inter font and purple gradient
    - Re-run review showing improved score
 
 2. **"Generating Custom Themes"** (5-7 min)
-   - Run `/cf-theme --interactive`
+   - Run `/es-theme --interactive`
    - Walk through palette selection
    - Show generated config files
    - Preview theme in components
 
 3. **"Scaffolding Accessible Components"** (3-5 min)
-   - Run `/cf-component button PrimaryButton`
+   - Run `/es-component button PrimaryButton`
    - Show generated component code
    - Highlight accessibility features
    - Test keyboard navigation
@@ -238,7 +238,7 @@ examples/distinctive-project/
 
 **Current Issues**:
 - Generic: "Inter font detected"
-- Better: "Inter font detected in tailwind.config.ts:12. Replace with distinctive fonts like Space Grotesk or Archivo Black. Run `/cf-theme` to generate a custom theme."
+- Better: "Inter font detected in tailwind.config.ts:12. Replace with distinctive fonts like Space Grotesk or Archivo Black. Run `/es-theme` to generate a custom theme."
 
 **Actions**:
 - [ ] Add file locations to all findings
@@ -254,7 +254,7 @@ examples/distinctive-project/
   location: 'tailwind.config.ts:12',
   impact: 'Site indistinguishable from 80%+ of modern websites',
   fix: {
-    command: '/cf-theme --fonts modern',
+    command: '/es-theme --fonts modern',
     manual: `
       // Replace in tailwind.config.ts:
       fontFamily: {
@@ -370,9 +370,9 @@ examples/distinctive-project/
 ## 📈 Success Metrics (3 Months Post-Merge)
 
 ### Adoption Metrics
-- [ ] **50+ projects** using `/cf-design-review`
-- [ ] **100+ components** scaffolded with `/cf-component`
-- [ ] **30+ themes** generated with `/cf-theme`
+- [ ] **50+ projects** using `/es-design-review`
+- [ ] **100+ components** scaffolded with `/es-component`
+- [ ] **30+ themes** generated with `/es-theme`
 
 ### Quality Metrics
 - [ ] **Average distinctiveness score improvement**: 35+ points

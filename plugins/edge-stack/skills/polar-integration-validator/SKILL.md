@@ -74,7 +74,7 @@ This SKILL automatically activates when:
    ℹ️ Add rate limiting to webhook endpoint
 
 📋 Summary: 1 warning found
-💡 Run /cf-billing-setup to fix issues
+💡 Run /es-billing-setup to fix issues
 ```
 
 ## Escalation
@@ -90,4 +90,4 @@ Complex scenarios escalate to `polar-billing-specialist` agent:
 - Runs automatically on relevant file changes
 - Can block deployments with P1 issues
 - Queries Polar MCP for product validation
-- Integrates with `/validate` and `/cf-deploy` commands
+- Integrates with `/validate` and `/es-deploy` commands

@@ -61,7 +61,7 @@ const [user, settings, prefs] = await Promise.all([
 ### Complementary to Existing Components
 - **edge-performance-oracle agent**: Handles comprehensive performance analysis, SKILL provides immediate optimization
 - **workers-runtime-validator SKILL**: Complements runtime checks with performance optimization
-- **cf-deploy command**: SKILL ensures performance standards before deployment
+- **es-deploy command**: SKILL ensures performance standards before deployment
 
 ### Escalation Triggers
 - Complex performance architecture questions → `edge-performance-oracle` agent

@@ -526,10 +526,10 @@ wrangler tail --env staging
 
 **Deployment**:
 
-Use the `/cf-deploy` command:
+Use the `/es-deploy` command:
 
 ```bash
-/cf-deploy
+/es-deploy
 # Runs all pre-flight checks
 # Deploys to production
 # Validates deployment

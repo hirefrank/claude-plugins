@@ -13,13 +13,13 @@ The cloudflare-toolkit now includes **7 autonomous SKILLs** that provide continu
 - **User Action**: None (autonomous)
 
 ### Agents (On-Demand, Comprehensive)
-- **Trigger**: Explicit invocation (/review, /cf-deploy)
+- **Trigger**: Explicit invocation (/review, /es-deploy)
 - **Purpose**: Deep analysis and complex scenarios
 - **Scope**: Comprehensive audits and architecture
 - **User Action**: Explicit command
 
 ### Commands (Explicit Actions)
-- **Trigger**: User invocation (/validate, /cf-deploy)
+- **Trigger**: User invocation (/validate, /es-deploy)
 - **Purpose**: Specific workflows and operations
 - **Scope**: Complete processes (deployment, validation)
 - **User Action**: Explicit command with parameters
@@ -38,7 +38,7 @@ The cloudflare-toolkit now includes **7 autonomous SKILLs** that provide continu
 
 ## Updated Command Workflows
 
-### /cf-deploy Command
+### /es-deploy Command
 **Before**: Only agent-based validation
 **After**: SKILL summary + agent validation
 
@@ -76,9 +76,9 @@ const user = await env.USER_DATA.get(id);
 # Status: READY TO COMMIT
 ```
 
-### Before Deployment (/cf-deploy)
+### Before Deployment (/es-deploy)
 ```bash
-/cf-deploy
+/es-deploy
 # Reports:
 # ✅ SKILL Summary: 0 P1 issues, 1 P2 warning (bundle size 85KB)
 # ✅ Agent Validation: All critical checks passed
@@ -140,7 +140,7 @@ const user = await env.USER_DATA.get(id);
 ### For Developers
 1. **Trust SKILL Feedback**: Act on SKILL suggestions immediately
 2. **Use Agents for Complexity**: Invoke agents for architecture questions
-3. **Run Commands for Safety**: Use /validate and /cf-deploy for comprehensive checks
+3. **Run Commands for Safety**: Use /validate and /es-deploy for comprehensive checks
 4. **Provide Feedback**: Report SKILL false positives/negatives
 
 ### For Plugin Maintenance

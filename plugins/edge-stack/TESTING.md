@@ -9,7 +9,7 @@ This document outlines the testing strategy for the frontend design features add
 ### New Features to Test
 - **3 SKILLs**: `nuxt-ui-design-validator`, `component-aesthetic-checker`, `animation-interaction-validator`
 - **3 Agents**: `frontend-design-specialist`, `nuxt-ui-architect`, `accessibility-guardian`
-- **3 Commands**: `/cf-design-review`, `/cf-component`, `/cf-theme`
+- **3 Commands**: `/es-design-review`, `/es-component`, `/es-theme`
 - **Distinctiveness Scoring**: Calculation methodology and accuracy
 - **MCP Integration**: Nuxt UI MCP server interaction
 
@@ -257,13 +257,13 @@ describe('SKILL Activation', () => {
 
 ### Command Integration Tests
 
-#### Test: /cf-design-review Command
-**File**: `tests/integration/test-cf-design-review.spec.ts`
+#### Test: /es-design-review Command
+**File**: `tests/integration/test-es-design-review.spec.ts`
 
 ```typescript
-describe('/cf-design-review Command', () => {
+describe('/es-design-review Command', () => {
   it('should analyze project and generate report', async () => {
-    const result = await runCommand('/cf-design-review');
+    const result = await runCommand('/es-design-review');
 
     expect(result).toHaveProperty('findings');
     expect(result).toHaveProperty('distinctivenessScore');
@@ -279,7 +279,7 @@ describe('/cf-design-review Command', () => {
       }
     });
 
-    const result = await runCommand('/cf-design-review');
+    const result = await runCommand('/es-design-review');
     const interFinding = result.findings.find(f =>
       f.issue.includes('Inter font')
     );
@@ -290,13 +290,13 @@ describe('/cf-design-review Command', () => {
 });
 ```
 
-#### Test: /cf-theme Command
-**File**: `tests/integration/test-cf-theme.spec.ts`
+#### Test: /es-theme Command
+**File**: `tests/integration/test-es-theme.spec.ts`
 
 ```typescript
-describe('/cf-theme Command', () => {
+describe('/es-theme Command', () => {
   it('should generate custom theme configuration', async () => {
-    const result = await runCommand('/cf-theme --palette coral-ocean --fonts modern');
+    const result = await runCommand('/es-theme --palette coral-ocean --fonts modern');
 
     expect(result.files).toContain('tailwind.config.ts');
     expect(result.files).toContain('app.config.ts');
@@ -308,13 +308,13 @@ describe('/cf-theme Command', () => {
 });
 ```
 
-#### Test: /cf-component Command
-**File**: `tests/integration/test-cf-component.spec.ts`
+#### Test: /es-component Command
+**File**: `tests/integration/test-es-component.spec.ts`
 
 ```typescript
-describe('/cf-component Command', () => {
+describe('/es-component Command', () => {
   it('should scaffold component with customizations', async () => {
-    const result = await runCommand('/cf-component button PrimaryButton');
+    const result = await runCommand('/es-component button PrimaryButton');
 
     expect(result.file).toBe('components/PrimaryButton.vue');
 
@@ -396,18 +396,18 @@ describe('Design Review Workflow', () => {
     });
 
     // Step 2: Run design review
-    const review = await runCommand('/cf-design-review');
+    const review = await runCommand('/es-design-review');
     expect(review.distinctivenessScore).toBeLessThan(50);
     expect(review.findings).toHaveLength(2); // Inter + purple gradient
 
     // Step 3: Generate theme
-    await runCommand('/cf-theme --palette coral-ocean --fonts modern');
+    await runCommand('/es-theme --palette coral-ocean --fonts modern');
 
     // Step 4: Update component
-    await runCommand('/cf-component hero Hero --theme custom');
+    await runCommand('/es-component hero Hero --theme custom');
 
     // Step 5: Re-run review
-    const review2 = await runCommand('/cf-design-review');
+    const review2 = await runCommand('/es-design-review');
     expect(review2.distinctivenessScore).toBeGreaterThanOrEqual(85);
     expect(review2.findings).toHaveLength(0);
   });
@@ -425,10 +425,10 @@ describe('Design Review Workflow', () => {
 - [ ] Modify tailwind.config.ts → SKILL validates
 
 ### Command Validation
-- [ ] Run `/cf-design-review` on project with generic patterns
+- [ ] Run `/es-design-review` on project with generic patterns
 - [ ] Verify distinctiveness score calculation
-- [ ] Generate theme with `/cf-theme` → verify no Inter/purple
-- [ ] Scaffold component with `/cf-component` → verify customization
+- [ ] Generate theme with `/es-theme` → verify no Inter/purple
+- [ ] Scaffold component with `/es-component` → verify customization
 - [ ] Run `/validate` → SKILLs included in checks
 
 ### Agent Validation
@@ -454,7 +454,7 @@ describe('Design Review Workflow', () => {
 describe('Performance', () => {
   it('should complete design review in reasonable time', async () => {
     const start = Date.now();
-    await runCommand('/cf-design-review');
+    await runCommand('/es-design-review');
     const duration = Date.now() - start;
 
     expect(duration).toBeLessThan(30000); // 30 seconds
@@ -468,7 +468,7 @@ describe('Performance', () => {
 ```typescript
 describe('Token Efficiency', () => {
   it('should use tokens efficiently', async () => {
-    const usage = await runWithTokenTracking('/cf-design-review');
+    const usage = await runWithTokenTracking('/es-design-review');
 
     expect(usage.inputTokens).toBeLessThan(30000);
     expect(usage.outputTokens).toBeLessThan(20000);

@@ -73,7 +73,7 @@ const productId = products[0].id; // polar_prod_abc123
 
 **Example**:
 ```typescript
-// In /cf-billing-setup command
+// In /es-billing-setup command
 const events = await mcp.polar.getWebhookEvents();
 
 // Generate switch statement with all events
@@ -134,7 +134,7 @@ if (validation.status !== 'valid') {
 
 **Example**:
 ```typescript
-// In /cf-auth-setup command
+// In /es-auth-setup command
 const providers = await mcp.betterAuth.listProviders();
 
 console.log("Available OAuth providers:");
@@ -227,7 +227,7 @@ const config = {
 
 **Example**:
 ```typescript
-// In /cf-component command
+// In /es-component command
 const components = await mcp.nuxtUI.listComponents();
 
 if (!components.includes(requestedComponent)) {
@@ -394,7 +394,7 @@ if (products.length === 0) {
 - **Commands**: Use MCP for validation and code generation
 - **SKILLs**: Use MCP for autonomous validation checks
 - **/validate**: Aggregate MCP validation results
-- **/cf-deploy**: Pre-flight MCP checks
+- **/es-deploy**: Pre-flight MCP checks
 
 ---
 

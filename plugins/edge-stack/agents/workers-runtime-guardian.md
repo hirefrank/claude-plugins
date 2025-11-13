@@ -209,8 +209,8 @@ This agent works alongside SKILLs for comprehensive runtime validation:
 
 ### When to Use This Agent
 - **Always** in `/review` command
-- **Before deployment** in `/cf-deploy` command (complements SKILL validation)
-- **During code generation** in `/cf-worker` command
+- **Before deployment** in `/es-deploy` command (complements SKILL validation)
+- **During code generation** in `/es-worker` command
 - **Complex runtime questions** that go beyond SKILL scope
 
 ### Works with:

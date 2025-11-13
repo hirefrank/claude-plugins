@@ -114,8 +114,8 @@ This SKILL automatically activates when:
 ### Escalation Triggers
 - Component API questions → `nuxt-ui-architect` agent (with MCP lookup)
 - Design consistency issues → `frontend-design-specialist` agent
-- Complex component composition → `/cf-component` command
-- Full component audit → `/cf-design-review` command
+- Complex component composition → `/es-component` command
+- Full component audit → `/es-design-review` command
 
 ## Validation Rules
 

@@ -47,7 +47,7 @@ const hash = await crypto.subtle.digest(); // Web Crypto API
 
 ### Complementary to Existing Components
 - **workers-runtime-guardian agent**: Handles deep runtime analysis, SKILL provides immediate validation
-- **cf-deploy command**: SKILL prevents deployment failures by catching issues early
+- **es-deploy command**: SKILL prevents deployment failures by catching issues early
 - **validate command**: SKILL provides continuous validation between explicit checks
 
 ### Escalation Triggers

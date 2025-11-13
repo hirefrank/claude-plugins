@@ -26,7 +26,7 @@
 ✅ **hooks.json** - Complete hook configuration for all triggers  
 
 ### 3. Integration Updates
-✅ **commands/cf-deploy.md** - Enhanced with SKILL pre-flight validation  
+✅ **commands/es-deploy.md** - Enhanced with SKILL pre-flight validation  
 ✅ **commands/validate.md** - Updated with SKILL reporting integration  
 ✅ **agents/workers-runtime-guardian.md** - Updated with SKILL complementarity  
 ✅ **agents/edge-performance-oracle.md** - Added SKILL integration sections  
@@ -61,7 +61,7 @@
 npm run build  # Fails at build time
 npm run test   # Fails at test time  
 /validate      # Manual validation required
-/cf-deploy     # Deployment-time issues
+/es-deploy     # Deployment-time issues
 ```
 
 ### After (Proactive Validation)
@@ -76,7 +76,7 @@ npm run test   # Fails at test time
 
 # Operations proceed smoothly
 npm run build   # ✅ Passes (issues already caught)
-/cf-deploy      # ✅ Passes (pre-flight validation complete)
+/es-deploy      # ✅ Passes (pre-flight validation complete)
 ```
 
 ## 🔧 Technical Architecture
@@ -118,7 +118,7 @@ plugins/cloudflare-toolkit/
 │   ├── skill-enhanced-pre-validation.sh      # Enhanced pre-operation
 │   └── pre-commit-cloudflare-validation.sh   # Original pre-commit
 ├── commands/                                  # Enhanced Commands
-│   ├── cf-deploy.md                          # With SKILL integration
+│   ├── es-deploy.md                          # With SKILL integration
 │   └── validate.md                           # With SKILL reporting
 ├── agents/                                    # Updated Agents
 │   ├── workers-runtime-guardian.md           # With SKILL complementarity
@@ -132,7 +132,7 @@ plugins/cloudflare-toolkit/
 1. **Start Development**: SKILLs automatically activate
 2. **Watch Feedback**: Real-time validation in terminal
 3. **Follow Suggestions**: Act on SKILL recommendations
-4. **Use Commands**: /validate and /cf-deploy for comprehensive checks
+4. **Use Commands**: /validate and /es-deploy for comprehensive checks
 
 ### For Plugin Maintainers
 1. **Monitor Performance**: Track SKILL accuracy and usefulness

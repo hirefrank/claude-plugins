@@ -602,9 +602,9 @@ All designs MUST be accessible:
 ### Tools for Design Enforcement
 
 **Commands**:
-- `/cf-theme` - Generate distinctive theme (fonts, colors, animations)
-- `/cf-component` - Scaffold components with best practices
-- `/cf-design-review` - Validate design patterns, detect generic aesthetics
+- `/es-theme` - Generate distinctive theme (fonts, colors, animations)
+- `/es-component` - Scaffold components with best practices
+- `/es-design-review` - Validate design patterns, detect generic aesthetics
 
 **SKILLs** (Autonomous Validation):
 - `nuxt-ui-design-validator` - Catches Inter fonts, purple gradients, missing animations
@@ -675,7 +675,7 @@ If user asks for Inter font, purple gradient, or minimal styling:
 - Custom font pairing recommendation
 - Brand color palette suggestion
 - Animation examples
-- Link to `/cf-theme` for full theme generation
+- Link to `/es-theme` for full theme generation
 
 ## Billing Preferences (STRICT - Polar.sh Only)
 

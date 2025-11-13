@@ -459,7 +459,7 @@ const { button } = useDesignSystem();
 2. **Prioritize Work**: Decide which issues to address
 3. **Use `/triage`**: Create todos for approved findings
 4. **Implement Changes**: Follow code examples provided
-5. **Re-run Review**: Verify improvements with `/cf-design-review`
+5. **Re-run Review**: Verify improvements with `/es-design-review`
 
 ## Distinctiveness Score Projection
 
@@ -521,7 +521,7 @@ Ask user: "Would you like me to create todos for these findings? You can then us
 ## Post-Review Actions
 
 After implementing fixes:
-1. **Re-run review**: `/cf-design-review` to verify improvements
+1. **Re-run review**: `/es-design-review` to verify improvements
 2. **Validate code**: `/validate` to ensure no build/lint errors
 3. **Test manually**: Check hover states, animations, keyboard navigation
 4. **Deploy preview**: Test on actual Cloudflare Workers environment
@@ -538,5 +538,5 @@ After implementing fixes:
 
 - This command focuses on **frontend design**, not Cloudflare Workers runtime
 - Use `/review` for comprehensive code review (includes runtime, security, performance)
-- Use `/cf-component` to scaffold new components with best practices
-- Use `/cf-theme` to generate custom design themes
+- Use `/es-component` to scaffold new components with best practices
+- Use `/es-theme` to generate custom design themes

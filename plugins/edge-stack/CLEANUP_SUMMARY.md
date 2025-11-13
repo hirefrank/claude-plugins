@@ -14,7 +14,7 @@
 
 ### **What Was Kept (Intentionally)**
 - ✅ `commands/plan.md` - Cloudflare-specific (appropriate for this plugin)
-- ✅ `commands/cf-*.md` - Cloudflare-specific commands (core functionality)
+- ✅ `commands/es-*.md` - Cloudflare-specific commands (core functionality)
 - ✅ `UPSTREAM.md` - Historical tracking (valuable context)
 - ✅ All SKILL files - Core new functionality
 - ✅ All agents - Core functionality

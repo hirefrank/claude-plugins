@@ -502,7 +502,7 @@ console.log("\n📋 Next Steps:");
 console.log("1. Configure webhook in Polar dashboard");
 console.log("2. Test webhook with Polar's 'Send Test Event'");
 console.log("3. Implement subscription checks on protected routes");
-console.log("4. Deploy to production with: /cf-deploy");
+console.log("4. Deploy to production with: /es-deploy");
 ```
 
 ## Success Criteria
@@ -532,7 +532,7 @@ console.log("4. Deploy to production with: /cf-deploy");
 2. Configure webhook in Polar dashboard
 3. Test webhook with Polar simulator
 4. Add subscription checks to protected routes
-5. Deploy with `/cf-deploy`
+5. Deploy with `/es-deploy`
 
 ## Notes
 

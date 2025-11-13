@@ -698,7 +698,7 @@ This agent works alongside SKILLs for comprehensive performance optimization:
 
 ### When to Use This Agent
 - **Always** in `/review` command
-- **Before deployment** in `/cf-deploy` command (complements SKILL validation)
+- **Before deployment** in `/es-deploy` command (complements SKILL validation)
 - **Performance troubleshooting** and analysis
 - **Complex performance architecture** questions
 - **Global optimization strategy** development

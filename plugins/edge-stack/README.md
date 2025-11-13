@@ -96,8 +96,8 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 **Frontend Design** - `nuxt-ui` MCP provides:
 - `frontend-design-specialist` agent - Validates component customizations
 - `nuxt-ui-architect` agent - Prevents prop hallucination
-- `/cf-component` command - Scaffolds components with correct props
-- `/cf-design-review` command - Validates component usage
+- `/es-component` command - Scaffolds components with correct props
+- `/es-design-review` command - Validates component usage
 
 **Authentication** - `better-auth` MCP provides:
 - Complete authentication setup guidance
@@ -257,7 +257,7 @@ Execute multiple todos concurrently:
 - Validates each completion
 - Merges results
 
-### `/cf-design-review` - Frontend Design Review
+### `/es-design-review` - Frontend Design Review
 
 Comprehensive design review preventing generic aesthetics:
 - Detects Inter fonts, purple gradients, minimal animations
@@ -268,7 +268,7 @@ Comprehensive design review preventing generic aesthetics:
 
 **Example**:
 ```bash
-/cf-design-review
+/es-design-review
 
 # Output: Design review report with P1/P2/P3 findings
 # - Typography issues (generic fonts)
@@ -278,7 +278,7 @@ Comprehensive design review preventing generic aesthetics:
 # - Accessibility violations
 ```
 
-### `/cf-component` - Generate Distinctive Components
+### `/es-component` - Generate Distinctive Components
 
 Scaffold Nuxt UI components with design best practices built-in:
 - Custom fonts, colors, animations from the start
@@ -288,12 +288,12 @@ Scaffold Nuxt UI components with design best practices built-in:
 
 **Example**:
 ```bash
-/cf-component button PrimaryButton --animations rich
-/cf-component card FeatureCard
-/cf-component hero LandingHero --theme custom
+/es-component button PrimaryButton --animations rich
+/es-component card FeatureCard
+/es-component hero LandingHero --theme custom
 ```
 
-### `/cf-theme` - Generate Custom Design Theme
+### `/es-theme` - Generate Custom Design Theme
 
 Create distinctive Tailwind + Nuxt UI theme configuration:
 - Custom color palettes (not default purple)
@@ -304,7 +304,7 @@ Create distinctive Tailwind + Nuxt UI theme configuration:
 
 **Example**:
 ```bash
-/cf-theme --palette coral-ocean --fonts modern --animations rich
+/es-theme --palette coral-ocean --fonts modern --animations rich
 
 # Generates: tailwind.config.ts, app.config.ts, nuxt.config.ts
 # Result: Distinctive theme (90/100 distinctiveness score)
@@ -491,7 +491,7 @@ Based on the latest Anthropic models (2025), agents are assigned models matching
 ### Self-Improvement Loop
 
 ```markdown
-1. User runs /cf-worker generate API endpoint
+1. User runs /es-worker generate API endpoint
 2. Claude generates code using Workers runtime patterns
 3. User corrects: "Use Durable Objects for rate limiting"
 4. feedback-codifier agent analyzes the correction
@@ -537,8 +537,8 @@ Based on the latest Anthropic models (2025), agents are assigned models matching
 - [x] /resolve_todo_parallel → no changes needed (already generic)
 
 **Priority 5: Cloudflare Commands** ✅
-- [x] Create /cf-deploy command (pre-flight + deployment)
-- [x] Create /cf-migrate command (platform → Workers migration)
+- [x] Create /es-deploy command (pre-flight + deployment)
+- [x] Create /es-migrate command (platform → Workers migration)
 
 ### 📋 Remaining Priorities
 

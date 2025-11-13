@@ -24,7 +24,7 @@ description: Generate or update custom design themes for Tailwind CSS and Nuxt U
 ## Command Usage
 
 ```bash
-/cf-theme [options]
+/es-theme [options]
 ```
 
 ### Options:
@@ -39,13 +39,13 @@ description: Generate or update custom design themes for Tailwind CSS and Nuxt U
 
 ```bash
 # Generate theme with coral-ocean palette and modern fonts
-/cf-theme --palette coral-ocean --fonts modern --animations rich
+/es-theme --palette coral-ocean --fonts modern --animations rich
 
 # Interactive theme builder
-/cf-theme --interactive
+/es-theme --interactive
 
 # Update existing theme
-/cf-theme --mode update
+/es-theme --mode update
 ```
 
 ## Main Tasks
@@ -777,8 +777,8 @@ export default defineNuxtConfig({
 
 🔍 Next Steps:
 1. ✅ Review `tailwind.config.ts` for customizations
-2. ✅ Test theme with `/cf-component button TestButton`
-3. ✅ Run `/cf-design-review` to validate distinctiveness
+2. ✅ Test theme with `/es-component button TestButton`
+3. ✅ Run `/es-design-review` to validate distinctiveness
 4. ✅ Update existing components to use new theme
 5. ✅ Test dark mode support
 6. ✅ Verify WCAG contrast ratios
@@ -806,8 +806,8 @@ Your project now has a distinctive visual identity! 🎨
 ## Post-Generation Actions
 
 After generating theme:
-1. **Test theme**: Create test component with `/cf-component`
-2. **Validate design**: Run `/cf-design-review`
+1. **Test theme**: Create test component with `/es-component`
+2. **Validate design**: Run `/es-design-review`
 3. **Check accessibility**: Verify contrast ratios
 4. **Update components**: Apply theme to existing components
 5. **Document**: Add theme documentation to project

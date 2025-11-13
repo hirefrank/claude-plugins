@@ -53,7 +53,7 @@
 
 ### ✅ Setup Commands (100%)
 
-7. **/cf-billing-setup** ✅ (420 lines)
+7. **/es-billing-setup** ✅ (420 lines)
    - Interactive Polar.sh integration wizard
    - Queries Polar MCP for products
    - Generates webhook handler
@@ -61,7 +61,7 @@
    - Generates subscription middleware
    - Environment configuration
 
-8. **/cf-auth-setup** ✅ (421 lines)
+8. **/es-auth-setup** ✅ (421 lines)
    - Interactive auth configuration wizard
    - Detects framework (Nuxt vs Worker)
    - Configures nuxt-auth-utils or better-auth
@@ -154,8 +154,8 @@
 ### High-Priority Items ✅
 
 **Commands (User-Facing)**:
-- ✅ `/cf-billing-setup` - Complete Polar.sh integration wizard
-- ✅ `/cf-auth-setup` - Complete authentication configuration wizard
+- ✅ `/es-billing-setup` - Complete Polar.sh integration wizard
+- ✅ `/es-auth-setup` - Complete authentication configuration wizard
 
 **Agent Updates (Ecosystem Completion)**:
 - ✅ cloudflare-architecture-strategist - Billing/auth recommendations
@@ -188,14 +188,14 @@ plugins/edge-stack/
 │   ├── nuxt-migration-specialist.md         ✅ UPDATED
 │   └── durable-objects-architect.md         ✅ UPDATED
 ├── commands/
-│   ├── cf-billing-setup.md                  ✅ NEW (420 lines)
-│   ├── cf-auth-setup.md                     ✅ NEW (421 lines)
-│   ├── cf-review.md                         ✅ RENAMED
-│   ├── cf-triage.md                         ✅ RENAMED
-│   ├── cf-validate.md                       ✅ RENAMED
-│   ├── cf-work.md                           ✅ RENAMED
-│   ├── cf-issue.md                          ✅ RENAMED
-│   └── cf-resolve-parallel.md               ✅ RENAMED
+│   ├── es-billing-setup.md                  ✅ NEW (420 lines)
+│   ├── es-auth-setup.md                     ✅ NEW (421 lines)
+│   ├── es-review.md                         ✅ RENAMED
+│   ├── es-triage.md                         ✅ RENAMED
+│   ├── es-validate.md                       ✅ RENAMED
+│   ├── es-work.md                           ✅ RENAMED
+│   ├── es-issue.md                          ✅ RENAMED
+│   └── es-resolve-parallel.md               ✅ RENAMED
 ├── skills/
 │   ├── polar-integration-validator/SKILL.md ✅ NEW (150 lines)
 │   └── auth-security-validator/SKILL.md     ✅ NEW (160 lines)
@@ -223,8 +223,8 @@ plugins/edge-stack/
 ### Bonus Implementations ✅
 6. ✅ Create billing specialist agent → 650 lines
 7. ✅ Create auth specialist agent → 700 lines
-8. ✅ Create /cf-billing-setup command → 420 lines
-9. ✅ Create /cf-auth-setup command → 421 lines
+8. ✅ Create /es-billing-setup command → 420 lines
+9. ✅ Create /es-auth-setup command → 421 lines
 10. ✅ Update 3 existing agents → Billing/auth context
 11. ✅ Create 2 validator SKILLs → Autonomous validation
 12. ✅ Create MCP documentation → Complete reference
@@ -236,7 +236,7 @@ plugins/edge-stack/
 ### Billing Integration (Polar.sh)
 - ✅ Complete PREFERENCES.md integration patterns
 - ✅ polar-billing-specialist agent (MCP-driven)
-- ✅ /cf-billing-setup wizard (code generation)
+- ✅ /es-billing-setup wizard (code generation)
 - ✅ polar-integration-validator SKILL (autonomous)
 - ✅ Webhook handling with signature verification
 - ✅ Subscription middleware patterns
@@ -247,7 +247,7 @@ plugins/edge-stack/
 ### Authentication Integration
 - ✅ Complete PREFERENCES.md decision tree
 - ✅ better-auth-specialist agent (MCP-driven)
-- ✅ /cf-auth-setup wizard (code generation)
+- ✅ /es-auth-setup wizard (code generation)
 - ✅ auth-security-validator SKILL (OWASP compliance)
 - ✅ nuxt-auth-utils patterns (Nuxt primary)
 - ✅ better-auth OAuth/passkeys (advanced)
@@ -262,7 +262,7 @@ plugins/edge-stack/
 - ✅ Common workflows documented
 
 ### Developer Experience
-- ✅ Interactive wizards (/cf-billing-setup, /cf-auth-setup)
+- ✅ Interactive wizards (/es-billing-setup, /es-auth-setup)
 - ✅ Autonomous validation (SKILLs)
 - ✅ Expert guidance (specialist agents)
 - ✅ Consistent patterns throughout
@@ -276,7 +276,7 @@ plugins/edge-stack/
 1. Pre-merge improvements (scoring, testing, post-merge planning)
 2. Billing/auth preferences + command naming + MCP integration
 3. Specialist agents (polar-billing-specialist, better-auth-specialist)
-4. Setup commands (cf-billing-setup, cf-auth-setup)
+4. Setup commands (es-billing-setup, es-auth-setup)
 5. High-priority implementations (agent updates, SKILLs, MCP docs)
 
 **Total Commits**: 5
@@ -340,7 +340,7 @@ Before merging PR #7:
 ### Impact:
 - Developers get complete billing/auth toolkit
 - Zero decision paralysis (Polar.sh only, nuxt-auth-utils primary)
-- Interactive setup wizards (/cf-billing-setup, /cf-auth-setup)
+- Interactive setup wizards (/es-billing-setup, /es-auth-setup)
 - Autonomous validation prevents errors
 - Expert agents for complex scenarios
 - MCP integration eliminates hallucination

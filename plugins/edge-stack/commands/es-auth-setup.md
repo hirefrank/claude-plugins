@@ -286,7 +286,7 @@ export default defineEventHandler(async (event) => {
 3. Configure OAuth providers (if applicable)
 4. Test authentication flow
 5. Add rate limiting to auth endpoints
-6. Deploy with `/cf-deploy`
+6. Deploy with `/es-deploy`
 
 ## Notes
 
