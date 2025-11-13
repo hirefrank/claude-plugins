@@ -9,6 +9,8 @@ Run comprehensive validation checks for Cloudflare Workers projects:
 ## Validation Checks
 
 ### Continuous SKILL-based Validation (Already Active During Development)
+
+**Cloudflare Workers SKILLs**:
 - **workers-runtime-validator**: Runtime compatibility validation
 - **cloudflare-security-checker**: Security pattern validation
 - **workers-binding-validator**: Binding configuration validation
@@ -16,6 +18,11 @@ Run comprehensive validation checks for Cloudflare Workers projects:
 - **kv-optimization-advisor**: KV storage optimization
 - **durable-objects-pattern-checker**: DO best practices validation
 - **cors-configuration-validator**: CORS setup validation
+
+**Frontend Design SKILLs** (if Nuxt UI components detected):
+- **nuxt-ui-design-validator**: Prevents generic aesthetics (Inter fonts, purple gradients, minimal animations)
+- **component-aesthetic-checker**: Validates Nuxt UI component customization depth and consistency
+- **animation-interaction-validator**: Ensures engaging animations, hover states, and loading feedback
 
 ### Explicit Command Validation (Run by /validate)
 1. **wrangler.toml syntax** - Validates configuration file

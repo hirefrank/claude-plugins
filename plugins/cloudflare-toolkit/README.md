@@ -9,12 +9,14 @@ AI-powered Cloudflare development tools that get smarter with every use. Special
 ## Overview
 
 This plugin transforms Claude Code into a Cloudflare Workers expert through:
-- **16 specialized agents** (all with MCP integration)
-- **6 workflow commands**
+- **19 specialized agents** (16 Cloudflare + 3 Frontend Design, all with MCP integration)
+- **10 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design)
+- **12 workflow commands** (6 core + 3 Cloudflare + 3 Frontend Design)
 - **Self-improvement** through feedback codification
 - **Multi-phase parallel execution**
 - **Real-time account context** via MCP servers (optional but recommended)
 - **Cloudflare-specific expertise** baked in
+- **Distinctive frontend design** preventing generic "AI aesthetics"
 
 ## 🚀 MCP Server Integration (Automatically Bundled)
 
@@ -184,9 +186,62 @@ Execute multiple todos concurrently:
 - Validates each completion
 - Merges results
 
+### `/cf-design-review` - Frontend Design Review
+
+Comprehensive design review preventing generic aesthetics:
+- Detects Inter fonts, purple gradients, minimal animations
+- Maps aesthetic improvements to Tailwind/Nuxt UI code
+- Validates WCAG 2.1 AA accessibility compliance
+- Ensures brand distinctiveness vs "AI aesthetic"
+- Provides implementation-ready code examples
+
+**Example**:
+```bash
+/cf-design-review
+
+# Output: Design review report with P1/P2/P3 findings
+# - Typography issues (generic fonts)
+# - Color palette opportunities (custom brand colors)
+# - Animation gaps (missing micro-interactions)
+# - Component customization depth
+# - Accessibility violations
+```
+
+### `/cf-component` - Generate Distinctive Components
+
+Scaffold Nuxt UI components with design best practices built-in:
+- Custom fonts, colors, animations from the start
+- Deep Nuxt UI customization (ui prop + utilities)
+- Accessibility features (ARIA, keyboard, focus)
+- TypeScript types and usage examples included
+
+**Example**:
+```bash
+/cf-component button PrimaryButton --animations rich
+/cf-component card FeatureCard
+/cf-component hero LandingHero --theme custom
+```
+
+### `/cf-theme` - Generate Custom Design Theme
+
+Create distinctive Tailwind + Nuxt UI theme configuration:
+- Custom color palettes (not default purple)
+- Distinctive font pairings (not Inter/Roboto)
+- Animation presets (15+ micro-interactions)
+- WCAG 2.1 AA contrast-validated
+- Nuxt UI global customization
+
+**Example**:
+```bash
+/cf-theme --palette coral-ocean --fonts modern --animations rich
+
+# Generates: tailwind.config.ts, app.config.ts, nuxt.config.ts
+# Result: Distinctive theme (90/100 distinctiveness score)
+```
+
 ## Agents
 
-All 16 agents are complete with MCP integration for enhanced real-time context.
+All 19 agents are complete with MCP integration for enhanced real-time context.
 
 ### Model Assignments (Optimized for Cost/Performance)
 
@@ -194,9 +249,9 @@ Based on the latest Anthropic models (2025), agents are assigned models matching
 
 | Model | Count | Use Case | Agents |
 |-------|-------|----------|--------|
-| **Haiku 4.5** | 13 | Pattern matching & rule enforcement | `binding-context-analyzer`, `git-history-analyzer`, `repo-research-analyst`, `code-simplicity-reviewer`, `workers-runtime-guardian`, `kv-optimization-specialist`, `r2-storage-architect`, `edge-caching-optimizer`, `cloudflare-security-sentinel`, `cloudflare-data-guardian`, `cloudflare-pattern-specialist`, `workers-ai-specialist`, `nuxt-migration-specialist` |
-| **Sonnet 4.5** | 2 | Complex reasoning | `durable-objects-architect`, `edge-performance-oracle` |
-| **Opus 4.1** | 2 | Strategic/creative | `cloudflare-architecture-strategist`, `feedback-codifier` |
+| **Haiku 4.5** | 15 | Pattern matching & rule enforcement | `binding-context-analyzer`, `git-history-analyzer`, `repo-research-analyst`, `code-simplicity-reviewer`, `workers-runtime-guardian`, `kv-optimization-specialist`, `r2-storage-architect`, `edge-caching-optimizer`, `cloudflare-security-sentinel`, `cloudflare-data-guardian`, `cloudflare-pattern-specialist`, `workers-ai-specialist`, `nuxt-migration-specialist`, `nuxt-ui-architect`, `accessibility-guardian` |
+| **Sonnet 4.5** | 3 | Complex reasoning & aesthetics | `durable-objects-architect`, `edge-performance-oracle`, `frontend-design-specialist` |
+| **Opus 4.1** | 1 | Strategic/creative | `cloudflare-architecture-strategist`, `feedback-codifier` |
 
 **Rationale:**
 - **Haiku 4.5**: 3x cheaper, 2x faster than Sonnet 4, similar coding performance. Perfect for well-defined tasks: checking forbidden APIs, validating patterns, enforcing rules, security checklists. The workhorse for executing defined review tasks.
@@ -280,6 +335,30 @@ Based on the latest Anthropic models (2025), agents are assigned models matching
 - Cache API patterns (stale-while-revalidate)
 - Cache invalidation strategies
 - **MCP**: Cache hit rates + performance metrics
+
+### Frontend Design Agents (3) - NEW
+
+**`frontend-design-specialist`** ✅ (Sonnet 4.5)
+- Analyzes UI/UX for generic patterns (Inter fonts, purple gradients, minimal animations)
+- Maps aesthetic improvements to Tailwind/Nuxt UI code
+- Prioritizes by distinctiveness impact (P1/P2/P3)
+- Implements Claude Skills Blog methodology: "think like a frontend engineer"
+- **MCP**: Uses Nuxt UI MCP for accurate component guidance
+
+**`nuxt-ui-architect`** ✅ (Haiku 4.5)
+- Deep expertise in Nuxt UI component library
+- Validates component selection and prop usage (prevents hallucination via MCP)
+- Ensures `ui` prop deep customization
+- Enforces consistent design system patterns
+- **MCP**: ALWAYS queries Nuxt UI MCP before suggesting components
+
+**`accessibility-guardian`** ✅ (Haiku 4.5)
+- WCAG 2.1 AA compliance validation
+- Color contrast checking (4.5:1 text, 3:1 UI)
+- Keyboard navigation validation
+- Screen reader support (ARIA, semantic HTML)
+- Ensures distinctive designs remain accessible
+- Validates reduced motion support
 
 ### Generic (4 agents - unchanged)
 

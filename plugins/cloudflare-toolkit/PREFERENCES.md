@@ -513,6 +513,130 @@ No authentication required (public server).
 
 **See MCP-INTEGRATION.md for complete integration strategy and agent workflows.**
 
+## Design Preferences (STRICT - Prevent Generic "AI Aesthetics")
+
+**Design Philosophy** (from Claude Skills Blog):
+> "Think about frontend design the way a frontend engineer would. The more you can map aesthetic improvements to implementable frontend code, the better Claude can execute."
+
+### ❌ Generic Patterns to AVOID
+
+These patterns signal "AI-generated" design and should NEVER be used in new projects:
+
+1. **Inter/Roboto Fonts** - Used in 80%+ of websites, immediately recognizable
+2. **Purple Gradients** - `from-purple-500 to-purple-600` appears in 60%+ of AI-generated sites
+3. **Minimal Animations** - Static buttons/links without hover states
+4. **Default Component Props** - Using Nuxt UI components with no customization
+5. **Gray Backgrounds** - Solid `bg-gray-50` or `bg-white` (safe but generic)
+
+### ✅ Distinctive Patterns to USE
+
+1. **Custom Font Pairings**:
+   - Body: Space Grotesk, DM Sans, Crimson Pro (NOT Inter)
+   - Headings: Archivo Black, Playfair Display, Fredoka (NOT Roboto)
+   - Example: `font-heading text-6xl tracking-tight`
+
+2. **Brand Color Palettes**:
+   - Define custom colors in `tailwind.config.ts`
+   - Use 3-5 brand colors (coral, ocean, sunset, midnight, cream)
+   - Example: `bg-brand-coral`, `text-brand-ocean`
+
+3. **Rich Animations**:
+   - Hover states: `hover:scale-105 hover:shadow-xl hover:-rotate-1`
+   - Transitions: `transition-all duration-300 ease-out`
+   - Micro-interactions: Icons that move on hover
+   - Respect reduced motion: `motion-safe:hover:scale-105`
+
+4. **Deep Component Customization**:
+   - ALWAYS use `ui` prop on Nuxt UI components
+   - Customize fonts, rounded, padding, shadow
+   - Example: `:ui="{ font: 'font-heading', rounded: 'rounded-full', padding: { lg: 'px-8 py-4' } }"`
+
+5. **Atmospheric Backgrounds**:
+   - Multi-layer gradients with animated orbs
+   - Subtle patterns or noise textures
+   - Example: `bg-gradient-to-br from-brand-cream via-white to-brand-ocean/10`
+
+### Design System Guidelines
+
+**Create Reusable Variants** (in `composables/useDesignSystem.ts`):
+```typescript
+export const useDesignSystem = () => {
+  const button = {
+    primary: {
+      color: 'primary',
+      size: 'lg',
+      ui: {
+        font: 'font-heading tracking-wide',
+        rounded: 'rounded-full',
+        padding: { lg: 'px-8 py-4' }
+      },
+      class: 'transition-all duration-300 hover:scale-105'
+    }
+  };
+
+  return { button };
+};
+```
+
+**Usage**:
+```vue
+<script setup>
+const { button } = useDesignSystem();
+</script>
+
+<template>
+  <UButton v-bind="button.primary">Click me</UButton>
+</template>
+```
+
+### Accessibility Requirements (WCAG 2.1 AA)
+
+All designs MUST be accessible:
+- ✅ Color contrast: 4.5:1 for text, 3:1 for UI components
+- ✅ Keyboard navigation: Tab/Shift+Tab to all interactive elements
+- ✅ Focus indicators: Visible `focus-visible:ring-2` on all focusable elements
+- ✅ Screen reader support: ARIA labels, semantic HTML, landmarks
+- ✅ Reduced motion: `motion-safe`/`motion-reduce` utilities
+- ✅ Touch targets: Minimum 44x44px for mobile
+
+### Tools for Design Enforcement
+
+**Commands**:
+- `/cf-theme` - Generate distinctive theme (fonts, colors, animations)
+- `/cf-component` - Scaffold components with best practices
+- `/cf-design-review` - Validate design patterns, detect generic aesthetics
+
+**SKILLs** (Autonomous Validation):
+- `nuxt-ui-design-validator` - Catches Inter fonts, purple gradients, missing animations
+- `component-aesthetic-checker` - Validates customization depth
+- `animation-interaction-validator` - Ensures hover states, loading feedback
+
+**Agents**:
+- `frontend-design-specialist` - Maps aesthetic goals to code
+- `nuxt-ui-architect` - Validates Nuxt UI component usage (prevents prop hallucination)
+- `accessibility-guardian` - WCAG 2.1 AA compliance
+
+### Distinctiveness Score
+
+Projects should aim for 85/100+ on distinctiveness:
+- **Typography**: 25 points (custom fonts, hierarchy)
+- **Colors**: 25 points (brand palette, contrast)
+- **Animations**: 25 points (transitions, micro-interactions)
+- **Components**: 25 points (customization depth, consistency)
+
+### When User Requests Generic Patterns
+
+If user asks for Inter font, purple gradient, or minimal styling:
+
+**STOP and ask**:
+> "These are generic patterns common in AI-generated sites. Would you like me to suggest distinctive alternatives that create a unique brand identity?"
+
+**Then provide**:
+- Custom font pairing recommendation
+- Brand color palette suggestion
+- Animation examples
+- Link to `/cf-theme` for full theme generation
+
 ## feedback-codifier Instructions
 
 When learning from user feedback:
@@ -524,17 +648,23 @@ When learning from user feedback:
 - ✅ Tailwind utility combinations
 - ✅ Vercel AI SDK patterns
 - ✅ Cloudflare AI Agents patterns
+- ✅ Design customization patterns (fonts, colors, animations)
+- ✅ Accessibility patterns (ARIA, keyboard nav, focus states)
 
 **INVALID patterns (reject)**:
 - ❌ Any Next.js, Express, or forbidden framework
 - ❌ Any custom CSS writing
 - ❌ Any Cloudflare Pages deployment
 - ❌ Any LangChain or forbidden SDK usage
+- ❌ Inter/Roboto fonts (generic)
+- ❌ Purple gradients (overused)
+- ❌ Default component props with no customization
 
 If user provides feedback using forbidden tools, ask: "Are you working on a legacy project? These preferences are for new projects only."
 
 ## Version
 
 This preferences document was created: 2025-01-05
+Updated: 2025-01-13 (Added Design Preferences)
 
 As Cloudflare best practices evolve, this document will be updated. Agents should always follow the latest version.

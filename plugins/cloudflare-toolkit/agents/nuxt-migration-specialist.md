@@ -484,6 +484,173 @@ export const useCounterStore = defineStore('counter', {
 | `<dropdown>` | `<UDropdown>` |
 | `<tabs>` | `<UTabs>` |
 
+#### Design Pattern Migration (CRITICAL - Prevent Generic Aesthetics)
+
+**Migration Philosophy**: Don't just migrate components—**improve design** during migration.
+
+**Generic Patterns to Detect and Fix** (from Claude Skills Blog):
+
+❌ **Inter/Roboto fonts** (default in 80%+ of sites)
+❌ **Purple gradients on white** (overused AI-generated pattern)
+❌ **Minimal animations** (flat, unengaging UI)
+❌ **Default component props** (no customization)
+❌ **Gray backgrounds** (generic, safe choices)
+
+**Migration Opportunities**:
+
+1. **Typography: Replace Generic Fonts**
+```vue
+<!-- ❌ OLD: Generic Inter font -->
+<template>
+  <div>
+    <h1 class="font-sans text-4xl">Title</h1>
+  </div>
+</template>
+
+<!-- ✅ NEW: Distinctive custom fonts -->
+<template>
+  <div>
+    <h1 class="font-heading text-6xl tracking-tight">Title</h1>
+  </div>
+</template>
+
+<!-- tailwind.config.ts -->
+<script>
+fontFamily: {
+  sans: ['Space Grotesk', 'system-ui'],      // NOT Inter
+  heading: ['Archivo Black', 'system-ui']     // NOT Roboto
+}
+</script>
+```
+
+2. **Colors: Replace Generic Palettes**
+```vue
+<!-- ❌ OLD: Purple gradient (overused) -->
+<template>
+  <div class="bg-gradient-to-r from-purple-500 to-purple-600">
+    Hero
+  </div>
+</template>
+
+<!-- ✅ NEW: Custom brand colors -->
+<template>
+  <div class="bg-gradient-to-br from-brand-coral via-brand-ocean to-brand-sunset">
+    Hero
+  </div>
+</template>
+
+<!-- tailwind.config.ts -->
+<script>
+colors: {
+  brand: {
+    coral: '#FF6B6B',
+    ocean: '#4ECDC4',
+    sunset: '#FFE66D'
+  }
+}
+</script>
+```
+
+3. **Animations: Add Engagement**
+```vue
+<!-- ❌ OLD: No animations -->
+<template>
+  <button class="btn">Click me</button>
+</template>
+
+<!-- ✅ NEW: Rich micro-interactions -->
+<template>
+  <UButton
+    class="
+      transition-all duration-300
+      hover:scale-105 hover:shadow-xl hover:-rotate-1
+      active:scale-95
+    "
+  >
+    <span class="inline-flex items-center gap-2">
+      Click me
+      <UIcon
+        name="i-heroicons-sparkles"
+        class="transition-transform duration-300 group-hover:rotate-12"
+      />
+    </span>
+  </UButton>
+</template>
+```
+
+4. **Component Customization: Deep Tailoring**
+```vue
+<!-- ❌ OLD: Default props (generic) -->
+<template>
+  <UCard>
+    <p>Content</p>
+  </UCard>
+</template>
+
+<!-- ✅ NEW: Deep customization -->
+<template>
+  <UCard
+    :ui="{
+      background: 'bg-white dark:bg-brand-midnight',
+      ring: 'ring-1 ring-brand-coral/20',
+      rounded: 'rounded-2xl',
+      shadow: 'shadow-xl hover:shadow-2xl',
+      body: { padding: 'p-8' }
+    }"
+    class="transition-all duration-300 hover:-translate-y-1"
+  >
+    <p>Content</p>
+  </UCard>
+</template>
+```
+
+5. **Backgrounds: Atmospheric vs Solid**
+```vue
+<!-- ❌ OLD: Solid white/gray -->
+<template>
+  <div class="bg-white">
+    Content
+  </div>
+</template>
+
+<!-- ✅ NEW: Atmospheric multi-layer -->
+<template>
+  <div class="relative overflow-hidden">
+    <!-- Base gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-cream via-white to-brand-ocean/10" />
+
+    <!-- Animated orbs -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-brand-coral/20 rounded-full blur-3xl animate-pulse" />
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-ocean/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;" />
+
+    <!-- Content -->
+    <div class="relative z-10">
+      Content
+    </div>
+  </div>
+</template>
+```
+
+**Migration Checklist for Design**:
+- [ ] Replace Inter/Roboto with distinctive fonts
+- [ ] Replace purple/default colors with brand palette
+- [ ] Add hover states to all interactive elements
+- [ ] Add loading states to async actions
+- [ ] Customize Nuxt UI components with `ui` prop
+- [ ] Add micro-interactions and animations
+- [ ] Replace solid backgrounds with atmospheric gradients
+- [ ] Ensure WCAG 2.1 AA color contrast (4.5:1 minimum)
+- [ ] Add focus states for keyboard navigation
+- [ ] Respect prefers-reduced-motion for animations
+
+**Tooling Support**:
+- Use `/cf-theme` to generate distinctive theme
+- Use `/cf-component` to scaffold customized components
+- Use `/cf-design-review` to validate design patterns
+- Design SKILLs will validate automatically during development
+
+**Result**: Migration improves both functionality AND aesthetics, creating distinctive branded experience from day one.
+
 ### 6. API Routes & Server Functions
 
 #### Express/Hono Backend → Nuxt Server Routes

@@ -121,6 +121,29 @@ Run ALL these agents in parallel. Cloudflare Workers projects are primarily Type
    - Anti-patterns (stateful Workers, KV for strong consistency)
    - Idiomatic Cloudflare code
 
+**Phase 2.5: Frontend Design Review (3 agents in parallel - if Nuxt UI components detected)**
+
+If the PR includes Vue/Nuxt components with Nuxt UI:
+
+9a. Task frontend-design-specialist(PR content)
+    - Identify generic patterns (Inter fonts, purple gradients, minimal animations)
+    - Map aesthetic improvements to Tailwind/Nuxt UI code
+    - Prioritize distinctiveness opportunities
+    - Ensure brand identity vs generic "AI aesthetic"
+
+9b. Task nuxt-ui-architect(PR content)
+    - Validate Nuxt UI component usage and props (via MCP if available)
+    - Check customization depth (`ui` prop usage)
+    - Ensure consistent component patterns
+    - Prevent prop hallucination
+
+9c. Task accessibility-guardian(PR content)
+    - WCAG 2.1 AA compliance validation
+    - Color contrast checking
+    - Keyboard navigation validation
+    - Screen reader support
+    - Ensure distinctive design remains accessible
+
 **Phase 3: Architecture & Data (5 agents in parallel)**
 
 9. Task cloudflare-architecture-strategist(PR content)
