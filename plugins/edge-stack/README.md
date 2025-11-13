@@ -11,9 +11,9 @@ Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing,
 ## Overview
 
 This plugin transforms Claude Code into a complete edge-first full-stack development platform through:
-- **19 specialized agents** (16 Cloudflare + 3 Frontend Design, all with MCP integration)
-- **10 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design)
-- **12 workflow commands** (6 core + 3 Cloudflare + 3 Frontend Design)
+- **22 specialized agents** (16 Cloudflare + 3 Frontend Design + 3 Billing/Auth, all with MCP integration)
+- **12 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design + 2 Security)
+- **18 workflow commands** (including setup wizards, migration tools, and automation)
 - **Self-improvement** through feedback codification
 - **Multi-phase parallel execution**
 - **Real-time account context** via MCP servers (optional but recommended)
@@ -310,9 +310,27 @@ Create distinctive Tailwind + Nuxt UI theme configuration:
 # Result: Distinctive theme (90/100 distinctiveness score)
 ```
 
+### `/es-commit` - Automated Commit and Push
+
+Automatically stage all changes, generate conventional commit message, and push to current branch:
+- Auto-generates commit messages from diff analysis
+- Supports custom messages via arguments
+- Branch-aware (works with PR branches, feature branches, main)
+- Sets upstream automatically if not configured
+- Includes Claude Code attribution
+
+**Example**:
+```bash
+/es-commit
+# Auto-generates message and pushes to current branch
+
+/es-commit "fix: Resolve authentication timeout issue"
+# Uses custom message
+```
+
 ## Agents
 
-All 19 agents are complete with MCP integration for enhanced real-time context.
+All 22 agents are complete with MCP integration for enhanced real-time context.
 
 ### Model Assignments (Optimized for Cost/Performance)
 
