@@ -21,8 +21,8 @@
     "polar": {
       "type": "http",
       "url": "https://mcp.polar.sh/mcp/polar-mcp",
-      "enabled": true,
-      "description": "Polar documentation and implementation"
+      "enabled": false,
+      "description": "Polar documentation and implementation (requires authentication - enable when needed)"
     }
   }
 }

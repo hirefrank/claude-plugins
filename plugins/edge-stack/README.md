@@ -22,14 +22,17 @@ This plugin transforms Claude Code into a complete edge-first full-stack develop
 
 ## 🚀 MCP Server Integration (Automatically Bundled)
 
-**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, the following 4 MCP servers are automatically configured:
+**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, 4 MCP servers are automatically configured (3 active by default, 1 optional):
 
+**Active by default**:
 - **Cloudflare MCP** (`https://docs.mcp.cloudflare.com/mcp`) - Documentation search, bindings management, and account context
 - **Nuxt UI MCP** (`https://ui.nuxt.com/mcp`) - Component documentation and implementation
 - **better-auth MCP** (`https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp`) - Authentication patterns and OAuth provider setup
-- **Polar MCP** (`https://mcp.polar.sh/mcp/polar-mcp`) - Billing integration and subscription management
 
-**No manual configuration needed!** Just install the plugin and the MCP servers will be available.
+**Optional (requires authentication)**:
+- **Polar MCP** (`https://mcp.polar.sh/mcp/polar-mcp`) - Billing integration and subscription management (disabled by default, enable via `/mcp` when needed)
+
+**No manual configuration needed!** Just install the plugin and the 3 core MCP servers work immediately.
 
 ### What MCP Provides
 
@@ -84,14 +87,20 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 **Verification**: Check that MCP servers are active:
 ```bash
 # In Claude Code, run:
-/mcp list
+/mcp
 
 # You should see:
 # ✓ cloudflare-docs (active)
 # ✓ nuxt-ui (active)
 # ✓ better-auth (active)
-# ✓ polar (active)
+# ⚠ polar (disabled - requires authentication)
 ```
+
+**Note**: The Polar MCP is disabled by default because it requires authentication with your Polar.sh account. Enable it when you need billing features:
+
+1. **Enable Polar MCP**: Run `/mcp` and authenticate with Polar.sh
+2. **Or enable in config**: Edit `.mcp.json` and set `polar.enabled: true`
+3. **Use billing features**: Run `/es-billing-setup` for guided integration
 
 **MCP Server Features**:
 
@@ -108,18 +117,20 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 - Security best practices for Cloudflare Workers
 - Integration with Nuxt (via nuxt-auth-utils when appropriate)
 
-**Billing** - `polar` MCP provides:
+**Billing** - `polar` MCP provides (optional, requires authentication):
 - Product and subscription setup
 - Webhook handling for payment events
 - Customer management integration
 - Cloudflare Workers billing patterns
 - **Default billing solution** for all new projects
+- **Enable when needed**: The `/es-billing-setup` command will prompt you to authenticate
 
 **Troubleshooting**: If MCP servers don't appear:
 1. Ensure plugin is installed: `/plugin list`
 2. Restart Claude Code
 3. Check `.mcp.json` is in plugin directory
 4. Verify internet connectivity (MCP servers are HTTP-based)
+5. **For Polar authentication errors**: This is expected - Polar MCP requires authentication. Enable it via `/mcp` when you need billing features.
 
 ## Installation
 
