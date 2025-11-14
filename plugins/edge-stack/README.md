@@ -2,7 +2,9 @@
 
 **Complete full-stack development toolkit optimized for edge computing.**
 
-Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system. Features AI-powered development assistance, autonomous validation, and expert guidance that gets smarter with every use.
+Build modern web applications with **Tanstack Start** (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, and shadcn/ui design system. Features AI-powered development assistance, autonomous validation, and expert guidance that gets smarter with every use.
+
+**Note**: For Nuxt 4 projects, use the separate `nuxt-stack` local plugin.
 
 **Philosophy**: Self-improving through feedback codification, multi-agent parallel analysis, and structured workflow orchestration.
 
@@ -11,9 +13,9 @@ Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing,
 ## Overview
 
 This plugin transforms Claude Code into a complete edge-first full-stack development platform through:
-- **22 specialized agents** (16 Cloudflare + 3 Frontend Design + 3 Billing/Auth, all with MCP integration)
+- **23 specialized agents** (16 Cloudflare + 4 Frontend + 3 Billing/Auth, all with MCP integration)
 - **12 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design + 2 Security)
-- **18 workflow commands** (including setup wizards, migration tools, and automation)
+- **20 workflow commands** (including setup wizards, migration tools, test generation, and automation)
 - **Self-improvement** through feedback codification
 - **Multi-phase parallel execution**
 - **Real-time account context** via MCP servers (optional but recommended)
@@ -22,35 +24,41 @@ This plugin transforms Claude Code into a complete edge-first full-stack develop
 
 ## 🚀 MCP Server Integration (Automatically Bundled)
 
-**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, 4 MCP servers are automatically configured (3 active by default, 1 optional):
+**NEW**: MCP servers are now bundled with the plugin! When you install this plugin, 8 MCP servers are automatically configured (7 active by default, 1 optional):
 
 **Active by default**:
 - **Cloudflare MCP** (`https://docs.mcp.cloudflare.com/mcp`) - Documentation search, bindings management, and account context
-- **Nuxt UI MCP** (`https://ui.nuxt.com/mcp`) - Component documentation and implementation
+- **shadcn/ui MCP** (`npx shadcn@latest mcp`) - Component documentation for Tanstack Start projects
 - **better-auth MCP** (`https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp`) - Authentication patterns and OAuth provider setup
+- **Playwright MCP** (`npx @playwright/mcp@latest`) - Official Microsoft browser automation for E2E test generation
+- **Package Registry MCP** (`npx -y package-registry-mcp`) - Search NPM, Cargo, PyPI, and NuGet for up-to-date package information
+- **TanStack Router MCP** (`https://gitmcp.io/TanStack/router`) - TanStack Router documentation for type-safe routing patterns
+- **Tailwind CSS MCP** (`npx -y tailwindcss-mcp-server`) - Tailwind utilities, CSS-to-Tailwind conversion, and component templates
 
 **Optional (requires authentication)**:
 - **Polar MCP** (`https://mcp.polar.sh/mcp/polar-mcp`) - Billing integration and subscription management (disabled by default, enable via `/mcp` when needed)
 
-**No manual configuration needed!** Just install the plugin and the 3 core MCP servers work immediately.
+**No manual configuration needed!** Just install the plugin and the 7 core MCP servers work immediately.
 
 ### What MCP Provides
 
 **Without MCP**: Agents use static knowledge
 - "Consider adding a KV namespace"
-- "Bundle size should be < 50KB"
-- "UButton probably has these props..."
+- "Install @tanstack/react-router package"
+- "Button component probably has these props..."
+- "Use bg-blue-500 for blue background"
 
-**With MCP**: Agents use your real Cloudflare account
+**With MCP**: Agents use your real account and validated docs
 - "You already have a CACHE KV namespace (ID: abc123). Reuse it?"
-- "Your bundle is 850KB causing 250ms cold starts. Target: < 50KB"
-- "UButton props (validated): `color`, `size`, `variant`, `icon`, `loading`"
+- "Package @tanstack/react-router@1.75.2 is available (published 2 days ago, 500K weekly downloads)"
+- "shadcn/ui Button props (validated): `variant`, `size`, `asChild`, `className`"
+- "Tailwind utility: `bg-blue-500` → Use `bg-sky-500` for better accessibility (WCAG AA compliant)"
 
 **Benefits**:
 - ✅ **98.7% token reduction** (via execution environment filtering)
 - ✅ **Real-time account data** (bindings, metrics, security events)
-- ✅ **Accurate documentation** (always latest from Cloudflare)
-- ✅ **No hallucinations** (Nuxt UI component props validated)
+- ✅ **Accurate documentation** (always latest from Cloudflare, shadcn/ui, Nuxt UI)
+- ✅ **No hallucinations** (component props validated from official sources)
 - ✅ **Data-driven recommendations** (based on your actual usage)
 
 ### MCP Setup (Automatic)
@@ -63,6 +71,12 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
     "cloudflare-docs": {
       "type": "http",
       "url": "https://docs.mcp.cloudflare.com/mcp",
+      "enabled": true
+    },
+    "shadcn-ui": {
+      "type": "sse",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://www.shadcn.io/api/mcp"],
       "enabled": true
     },
     "nuxt-ui": {
@@ -78,7 +92,7 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
     "polar": {
       "type": "http",
       "url": "https://mcp.polar.sh/mcp/polar-mcp",
-      "enabled": true
+      "enabled": false
     }
   }
 }

@@ -6,17 +6,42 @@
       "enabled": true,
       "description": "Cloudflare documentation search, bindings management, observability, and account context"
     },
-    "nuxt-ui": {
-      "type": "http",
-      "url": "https://ui.nuxt.com/mcp",
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"],
       "enabled": true,
-      "description": "Nuxt UI component documentation and implementation"
+      "description": "shadcn/ui component documentation and implementation for Tanstack Start projects"
     },
     "better-auth": {
       "type": "http",
       "url": "https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp",
       "enabled": true,
-      "description": "Better Auth documentation and implementation"
+      "description": "Better Auth documentation and implementation for Tanstack Start projects"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "enabled": true,
+      "description": "Official Microsoft Playwright MCP server for browser automation and E2E test generation"
+    },
+    "package-registry": {
+      "command": "npx",
+      "args": ["-y", "package-registry-mcp"],
+      "enabled": true,
+      "description": "Search NPM, Cargo, PyPI, and NuGet package registries for up-to-date package information"
+    },
+    "tanstack-router": {
+      "type": "sse",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://gitmcp.io/TanStack/router"],
+      "enabled": true,
+      "description": "TanStack Router documentation for type-safe routing patterns and loaders"
+    },
+    "tailwindcss": {
+      "command": "npx",
+      "args": ["-y", "tailwindcss-mcp-server"],
+      "enabled": true,
+      "description": "Tailwind CSS utilities, documentation, CSS-to-Tailwind conversion, and component templates"
     },
     "polar": {
       "type": "http",

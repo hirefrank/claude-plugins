@@ -26,13 +26,15 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 ### ⚡ Edge Stack
 **Plugin ID**: `edge-stack`
 
-Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Nuxt 4, Cloudflare Workers, Polar.sh billing, better-auth authentication, and Nuxt UI design system.
+Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Tanstack Start (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, Resend email, and shadcn/ui design system.
 
 **Key Features:**
-- 22 specialized agents (all with MCP integration)
+- 23 specialized agents (all with MCP integration)
 - 12 autonomous SKILLs (continuous validation)
-- 18 workflow commands (including setup wizards)
-- **4 bundled MCP servers** (Cloudflare, Nuxt UI, better-auth, Polar) - no manual setup required
+- 20 workflow commands (including setup wizards and test generation)
+- **8 bundled MCP servers** (Cloudflare, shadcn/ui, better-auth, Playwright, Package Registry, TanStack Router, Tailwind CSS, Polar) - no manual setup required
+- **E2E testing** with Playwright and automated test generation
+- **Email integration** with Resend for transactional and marketing emails
 - **Bundled statusline** - at-a-glance development context
 - **Documentation validation** - keeps docs in sync with code
 - Distinctive design system preventing generic "AI aesthetics"
@@ -40,7 +42,10 @@ Complete full-stack development toolkit optimized for edge computing. Build mode
 **Usage**:
 - `/es-billing-setup` - Interactive Polar.sh billing integration
 - `/es-auth-setup` - Interactive authentication configuration
-- `/es-component` - Generate distinctive UI components
+- `/es-test-setup` - Initialize Playwright E2E testing
+- `/es-test-gen` - Generate tests for routes/components/server functions
+- `/es-tanstack-component` - Generate shadcn/ui components
+- `/es-tanstack-route` - Create TanStack Router routes
 - `/es-commit` - Auto-commit with generated messages
 - `/es-validate` - Comprehensive validation before commit
 
@@ -99,15 +104,21 @@ See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quic
 # 3. Setup authentication
 /es-auth-setup
 
-# 4. Generate a component
-/es-component button PrimaryButton --animations rich
+# 4. Initialize E2E testing
+/es-test-setup
 
-# 5. Validate and commit
+# 5. Generate a TanStack Router route
+/es-tanstack-route /dashboard
+
+# 6. Generate a shadcn/ui component
+/es-tanstack-component button PrimaryButton
+
+# 7. Validate and commit
 /es-validate
 /es-commit
 ```
 
-See the [full documentation](./plugins/edge-stack/README.md) for detailed instructions including all 22 agents, 18 commands, 12 SKILLs, and 4 MCP servers.
+See the [full documentation](./plugins/edge-stack/README.md) for detailed instructions including all 23 agents, 20 commands, 12 SKILLs, and 8 MCP servers.
 
 ## Plugin Categories
 

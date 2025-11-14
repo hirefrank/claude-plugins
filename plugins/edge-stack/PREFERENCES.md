@@ -8,40 +8,52 @@ This document codifies strong preferences for all agents in this plugin. These a
 
 **Decision Tree**:
 ```
-Does the project need a UI (now or future)?
-├─ YES → Use Nuxt 4
-└─ NO → Is it backend-only?
-    ├─ YES → Use Hono
-    └─ NO → Is it simple/minimal?
-        └─ YES → Plain JavaScript/TypeScript (no framework)
+Does the project need a UI?
+├─ YES → Use Tanstack Start (React + TanStack Router)
+│   - Modern React 19 patterns
+│   - Type-safe server functions
+│   - Full-stack with Cloudflare Workers
+│   - Official Cloudflare partnership
+│
+└─ NO (Backend-only) → Use Hono
+    - Lightweight, edge-native
+    - Perfect for API-only projects
 ```
+
+**IMPORTANT**: All projects grow over time. Even "simple" projects should use a framework from the start.
+
+**Note**: For existing Nuxt projects, use the separate `nuxt-stack` local plugin.
 
 ### ✅ Approved Frameworks ONLY
 
-1. **Nuxt 4** - For any project with UI or potential UI
-   - Full-stack framework built on Vue 3
-   - Works with Cloudflare Workers (not Pages - see below)
-   - Official docs: https://nuxt.com
+1. **Tanstack Start** - For UI projects
+   - React 19 + TanStack Router + Vite
+   - Full-stack with type-safe server functions
+   - Official Cloudflare Workers support
+   - Official docs: https://tanstack.com/start/latest
+   - MCP server: shadcn/ui (official) - `npx -y mcp-remote https://www.shadcn.io/api/mcp`
 
 2. **Hono** - For backend-only Workers
    - Lightweight, fast, built for edge
    - Perfect for API-only projects
    - Official docs: https://hono.dev
+   - Documentation: https://hono.dev/docs
 
-3. **Plain TypeScript/JavaScript** - For simple projects
-   - No framework overhead
+3. **Plain TypeScript/JavaScript** - For minimal Workers
    - Direct Workers fetch handler
-   - Minimal dependencies
+   - No framework overhead
+   - Documentation: https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/
 
 ### ❌ FORBIDDEN Frameworks & Libraries
 
 **NEVER suggest these**:
 
-**Full-Stack Frameworks** (use Nuxt 4 instead):
-- ❌ Next.js - React-based, we use Vue/Nuxt
-- ❌ SvelteKit - Svelte-based, we use Vue/Nuxt
-- ❌ Remix - React-based, we use Vue/Nuxt
-- ❌ Astro - Multi-framework, we standardize on Nuxt
+**Full-Stack Frameworks** (use Tanstack Start instead):
+- ❌ Next.js - Use Tanstack Start instead (both React, but Tanstack is our standard)
+- ❌ Remix - Use Tanstack Start instead (better Cloudflare integration)
+- ❌ SvelteKit - Migrate to Tanstack Start
+- ❌ Astro - Use Tanstack Start instead
+- ❌ Nuxt - Use nuxt-stack local plugin for existing Nuxt projects
 
 **Backend Frameworks** (use Hono instead):
 - ❌ Express - Node.js only, NOT Workers-compatible
@@ -49,29 +61,39 @@ Does the project need a UI (now or future)?
 - ❌ Koa - Node.js only, NOT Workers-compatible
 - ❌ NestJS - Node.js only, NOT Workers-compatible
 
-**UI Libraries** (use Vue 3/Nuxt instead):
-- ❌ React - We use Vue 3 (via Nuxt)
-- ❌ Preact - We use Vue 3 (via Nuxt)
-- ❌ Svelte - We use Vue 3 (via Nuxt)
-- ❌ Solid.js - We use Vue 3 (via Nuxt)
+**Standalone UI Libraries** (must use within approved frameworks):
+- ❌ Standalone React - Use via Tanstack Start ONLY
+- ❌ Standalone Vue - Not supported (use nuxt-stack plugin if needed)
+- ❌ Preact - Not supported
+- ❌ Svelte - Not supported
+- ❌ Solid.js - Not supported
 
 **Reasoning**:
-- Nuxt 4 (Vue) and Hono are the ONLY frameworks/libraries that fit Frank's workflow
+- Tanstack Start is the ONLY full-stack framework for UI projects
+- React is allowed ONLY via Tanstack Start (maintains consistency)
 - Express/Fastify/Koa are Node.js frameworks - they DON'T work in Workers runtime
-- Next.js/React are different ecosystems - we standardize on Vue/Nuxt
+- Tanstack Start works excellently with Cloudflare Workers (official partnership)
 - Do not suggest alternatives, ever
 
 ## UI/CSS Preferences (STRICT)
 
 ### ✅ Approved UI Stack ONLY
 
-1. **Nuxt UI Library** - Component library (REQUIRED for UI projects)
-   - Built on Headless UI and Tailwind CSS
-   - Official docs: https://ui.nuxt.com
+1. **shadcn/ui** - Component library (REQUIRED)
+   - Built on Radix UI primitives + Tailwind CSS
+   - Copy-paste components (full control)
+   - Official docs: https://ui.shadcn.com
+   - MCP server: `npx -y mcp-remote https://www.shadcn.io/api/mcp`
 
-2. **Tailwind 4 CSS** - Utility-first CSS (REQUIRED for styling)
+2. **Radix UI** - Low-level primitives (when shadcn/ui isn't enough)
+   - Unstyled, accessible components
+   - Official docs: https://www.radix-ui.com
+   - Documentation: https://www.radix-ui.com/primitives/docs/overview/introduction
+
+3. **Tailwind 4 CSS** - Utility-first CSS (REQUIRED for styling)
    - Latest version with CSS variables
    - Official docs: https://tailwindcss.com/docs/v4-beta
+   - Documentation: https://tailwindcss.com/docs
 
 ### ❌ FORBIDDEN CSS Approaches
 
@@ -80,29 +102,90 @@ Does the project need a UI (now or future)?
 - ❌ CSS modules
 - ❌ Styled-components or CSS-in-JS
 - ❌ SASS/SCSS
-- ❌ Other UI libraries (Material UI, Ant Design, Chakra, etc.)
+- ❌ Other UI libraries (Material UI, Ant Design, Chakra, Park UI, etc.)
 
-**Reasoning**: Frank does NOT want to write custom CSS. Tailwind utilities + Nuxt UI components only.
+**Reasoning**: Frank does NOT want to write custom CSS. Tailwind utilities + shadcn/ui components only.
 
 ### Correct UI Pattern
 
-```vue
-<!-- ✅ CORRECT: Nuxt UI + Tailwind utilities -->
-<template>
-  <UCard class="max-w-md mx-auto">
-    <UButton color="primary" size="lg">
-      Click me
-    </UButton>
-  </UCard>
-</template>
+```tsx
+// ✅ CORRECT: shadcn/ui + Tailwind utilities
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
-<!-- ❌ WRONG: Custom CSS -->
-<style>
-.custom-button {
-  background: blue;
-  padding: 1rem;
+export function MyComponent() {
+  return (
+    <Card className="max-w-md mx-auto">
+      <CardContent>
+        <Button size="lg" variant="default">
+          Click me
+        </Button>
+      </CardContent>
+    </Card>
+  )
 }
-</style>
+
+// ❌ WRONG: Custom CSS
+const styles = {
+  customButton: {
+    background: 'blue',
+    padding: '1rem'
+  }
+}
+```
+
+## State Management Preferences (STRICT)
+
+### ✅ Approved State Management Libraries
+
+**Server State** (data fetching, caching, synchronization):
+1. **TanStack Query** - REQUIRED for server state
+   - Handles data fetching, caching, deduplication, invalidation
+   - Built-in support for Tanstack Start
+   - Official Cloudflare Workers integration
+   - Official docs: https://tanstack.com/query/latest
+   - Documentation: https://tanstack.com/query/latest/docs/framework/react/overview
+
+**Client State** (UI state, preferences, form data):
+1. **Zustand** - REQUIRED for client state
+   - Lightweight, zero boilerplate
+   - Simple state management without ceremony
+   - Official docs: https://zustand-demo.pmnd.rs
+   - Documentation: https://docs.pmnd.rs/zustand/getting-started/introduction
+
+**URL State** (query parameters):
+1. **TanStack Router** - Built-in search params (use router features)
+   - Type-safe URL state management
+   - Documentation: https://tanstack.com/router/latest/docs/framework/react/guide/search-params
+
+### ❌ FORBIDDEN State Management Libraries
+
+**NEVER suggest**:
+- ❌ Redux / Redux Toolkit - Too much boilerplate, use TanStack Query + Zustand
+- ❌ MobX - Not needed, use TanStack Query + Zustand
+- ❌ Recoil - Not needed, use Zustand
+- ❌ Jotai - Use Zustand instead (consistent with our stack)
+- ❌ XState - Too complex for most use cases
+- ❌ Vuex / Pinia - Vue only (use nuxt-stack plugin for Nuxt projects)
+
+**Reasoning**:
+- TanStack Query handles 90% of state needs (server data)
+- Zustand handles remaining 10% (client UI state) with minimal code
+- Together they provide Redux-level power at fraction of complexity
+- Both work excellently with Cloudflare Workers edge runtime
+
+### State Management Decision Tree
+
+```
+What type of state do you need?
+├─ Data from API/database (server state)?
+│   └─ Use TanStack Query
+│
+├─ UI state (modals, forms, preferences)?
+│   └─ Use Zustand
+│
+└─ URL state (filters, pagination)?
+    └─ Use TanStack Router search params
 ```
 
 ## Development Workflow (CRITICAL)
@@ -1132,6 +1215,8 @@ When learning from user feedback:
 - ✅ Polar.sh billing/subscription patterns
 - ✅ better-auth authentication patterns
 - ✅ nuxt-auth-utils session management patterns
+- ✅ Resend email patterns (transactional, React Email templates)
+- ✅ Playwright testing patterns
 
 **INVALID patterns (reject)**:
 - ❌ Any Next.js, Express, or forbidden framework
@@ -1143,12 +1228,514 @@ When learning from user feedback:
 - ❌ Default component props with no customization
 - ❌ Stripe, Paddle, Lemon Squeezy (use Polar.sh)
 - ❌ Lucia, Auth.js, Clerk, Supabase Auth (use better-auth or nuxt-auth-utils)
+- ❌ SendGrid, Mailgun, AWS SES, Postmark, MailChimp (use Resend)
 
 If user provides feedback using forbidden tools, ask: "Are you working on a legacy project? These preferences are for new projects only."
+
+---
+
+## Email Preferences (STRICT)
+
+### ✅ Approved Email Service
+
+**Resend** - Transactional and marketing emails (REQUIRED)
+
+**Why Resend**:
+- ✅ **Developer-first** - Modern API, excellent DX
+- ✅ **Cloudflare Workers compatible** - Works perfectly at the edge
+- ✅ **React Email support** - Type-safe email templates with React
+- ✅ **Generous free tier** - 100 emails/day, 3,000/month free
+- ✅ **99.9% uptime SLA** - Reliable email delivery
+- ✅ **Built-in analytics** - Track opens, clicks, bounces
+- Official docs: https://resend.com/docs
+
+**Installation**:
+```bash
+pnpm add resend
+```
+
+### Integration with Cloudflare Workers
+
+**Basic Setup** (server function or API route):
+```typescript
+import { Resend } from 'resend';
+
+export const sendEmail = createServerFn(
+  'POST',
+  async (data: { to: string; subject: string; html: string }, context) => {
+    const { env } = context.cloudflare;
+    const resend = new Resend(env.RESEND_API_KEY);
+
+    const { data: result, error } = await resend.emails.send({
+      from: 'hello@yourdomain.com',
+      to: data.to,
+      subject: data.subject,
+      html: data.html,
+    });
+
+    if (error) {
+      throw new Error(`Failed to send email: ${error.message}`);
+    }
+
+    return { success: true, id: result.id };
+  }
+);
+```
+
+**With React Email Templates**:
+```typescript
+import { Resend } from 'resend';
+import { WelcomeEmail } from '@/emails/welcome';
+
+export const sendWelcomeEmail = createServerFn(
+  'POST',
+  async (data: { to: string; name: string }, context) => {
+    const { env } = context.cloudflare;
+    const resend = new Resend(env.RESEND_API_KEY);
+
+    const { data: result, error } = await resend.emails.send({
+      from: 'welcome@yourdomain.com',
+      to: data.to,
+      subject: `Welcome, ${data.name}!`,
+      react: WelcomeEmail({ name: data.name }),
+    });
+
+    if (error) {
+      throw new Error(`Failed to send welcome email: ${error.message}`);
+    }
+
+    return { success: true, id: result.id };
+  }
+);
+```
+
+**React Email Template** (`emails/welcome.tsx`):
+```tsx
+import {
+  Body,
+  Container,
+  Head,
+  Heading,
+  Html,
+  Text,
+} from '@react-email/components';
+
+interface WelcomeEmailProps {
+  name: string;
+}
+
+export function WelcomeEmail({ name }: WelcomeEmailProps) {
+  return (
+    <Html>
+      <Head />
+      <Body style={{ fontFamily: 'sans-serif' }}>
+        <Container>
+          <Heading>Welcome, {name}!</Heading>
+          <Text>Thanks for signing up. We're excited to have you.</Text>
+        </Container>
+      </Body>
+    </Html>
+  );
+}
+```
+
+### Environment Variables (Required)
+
+```toml
+# wrangler.toml
+[vars]
+# Public variables (optional)
+
+[[env.production.vars]]
+# Secrets - use wrangler secret put
+RESEND_API_KEY = "re_..."  # From Resend dashboard
+```
+
+**Set secrets**:
+```bash
+# For production
+npx wrangler secret put RESEND_API_KEY
+
+# For local development (.dev.vars)
+RESEND_API_KEY=re_your_api_key_here
+```
+
+### Common Email Patterns
+
+**1. Transactional Emails** (account verification, password reset):
+```typescript
+// Email verification
+await resend.emails.send({
+  from: 'auth@yourdomain.com',
+  to: user.email,
+  subject: 'Verify your email',
+  react: VerifyEmailTemplate({
+    verificationUrl: `https://yourdomain.com/verify?token=${token}`
+  }),
+});
+
+// Password reset
+await resend.emails.send({
+  from: 'auth@yourdomain.com',
+  to: user.email,
+  subject: 'Reset your password',
+  react: ResetPasswordTemplate({
+    resetUrl: `https://yourdomain.com/reset?token=${token}`
+  }),
+});
+```
+
+**2. Marketing Emails** (newsletters, announcements):
+```typescript
+await resend.emails.send({
+  from: 'newsletter@yourdomain.com',
+  to: subscribers,
+  subject: 'Monthly Newsletter - January 2025',
+  react: NewsletterTemplate({
+    month: 'January',
+    articles: [...]
+  }),
+});
+```
+
+**3. Batch Emails** (multiple recipients):
+```typescript
+const batchEmails = subscribers.map(subscriber => ({
+  from: 'newsletter@yourdomain.com',
+  to: subscriber.email,
+  subject: 'Your personalized update',
+  react: PersonalizedEmail({ name: subscriber.name }),
+}));
+
+const { data, error } = await resend.batch.send(batchEmails);
+```
+
+**4. Scheduled Emails** (send later):
+```typescript
+await resend.emails.send({
+  from: 'reminders@yourdomain.com',
+  to: user.email,
+  subject: 'Upcoming event reminder',
+  react: ReminderTemplate({ event }),
+  scheduledAt: '2025-01-20T10:00:00Z', // ISO 8601 format
+});
+```
+
+### ❌ FORBIDDEN Email Services
+
+**NEVER suggest these alternatives**:
+- ❌ **SendGrid** - Use Resend instead (better DX, modern API)
+- ❌ **Mailgun** - Use Resend instead
+- ❌ **AWS SES** - Use Resend instead (simpler setup)
+- ❌ **Postmark** - Use Resend instead
+- ❌ **MailChimp** - Use Resend instead
+- ❌ **Custom SMTP implementations** - Always use Resend
+
+**Reasoning**: Resend is built for developers, has excellent Cloudflare Workers support, and provides the best DX for transactional and marketing emails.
+
+### Domain Configuration
+
+**Setup custom domain** (required for production):
+1. Add domain in Resend dashboard
+2. Add DNS records (SPF, DKIM, DMARC)
+3. Verify domain
+4. Use `from: 'hello@yourdomain.com'`
+
+**Default sending** (development only):
+```typescript
+from: 'onboarding@resend.dev' // Only works for your verified email
+```
+
+### Error Handling
+
+**Always handle email errors**:
+```typescript
+const { data, error } = await resend.emails.send({
+  from: 'hello@yourdomain.com',
+  to: user.email,
+  subject: 'Welcome!',
+  react: WelcomeEmail({ name: user.name }),
+});
+
+if (error) {
+  console.error('Failed to send email:', error);
+
+  // Store in D1 for retry
+  await env.DB.prepare(
+    'INSERT INTO failed_emails (to, subject, error) VALUES (?, ?, ?)'
+  ).bind(user.email, 'Welcome!', error.message).run();
+
+  // Don't fail the user flow
+  return { success: false, error: 'Email delivery failed' };
+}
+
+return { success: true, emailId: data.id };
+```
+
+### Testing Email Flows
+
+**Use Resend's test mode** (development):
+```typescript
+// In development, emails won't be sent but will appear in dashboard
+const resend = new Resend(env.RESEND_API_KEY);
+
+// Test email rendering
+await resend.emails.send({
+  from: 'test@yourdomain.com',
+  to: 'test@resend.dev', // Special test address
+  subject: 'Test email',
+  react: WelcomeEmail({ name: 'Test User' }),
+});
+```
+
+**Playwright E2E tests** (verify email was queued):
+```typescript
+test('sends welcome email on signup', async ({ page }) => {
+  await page.goto('/signup');
+
+  await page.fill('[name="email"]', 'test@example.com');
+  await page.fill('[name="password"]', 'password123');
+  await page.click('button[type="submit"]');
+
+  // Verify success message (don't test actual email delivery)
+  await expect(page.locator('[data-testid="email-sent"]'))
+    .toContainText('Check your email');
+});
+```
+
+### When User Asks About Email
+
+**Automatic Response**:
+> "For transactional and marketing emails, we use Resend exclusively. It's built for developers, works perfectly with Cloudflare Workers, and supports React Email templates for type-safe emails. Let me help you set it up."
+
+**Then provide**:
+1. Create Resend account: https://resend.com
+2. Generate API key from dashboard
+3. Add to wrangler secrets: `wrangler secret put RESEND_API_KEY`
+4. Install package: `pnpm add resend`
+5. Set up domain verification for production
+6. Create React Email templates (optional but recommended)
+
+### MCP Integration
+
+**Resend MCP Server** (optional - for sending emails via Claude):
+- Allows Claude to compose and send emails directly
+- Useful for notifications, reports, or automated emails
+- Installation: Clone `https://github.com/resend/mcp-send-email`
+
+**Note**: The Resend MCP server is primarily for AI-assisted email composition, not for production email delivery. Use the Resend SDK directly in your Workers for production.
+
+---
+
+## Testing Preferences (STRICT)
+
+### ✅ Approved Testing Framework
+
+**Playwright** - E2E testing (REQUIRED for all UI projects)
+
+**Why Playwright**:
+- ✅ **Cross-browser** - Chromium, Firefox, WebKit (real browsers)
+- ✅ **Cloudflare Workers compatible** - Tests work with edge runtime
+- ✅ **Accessibility built-in** - @axe-core/playwright integration
+- ✅ **Performance monitoring** - Measure cold starts, TTFB
+- ✅ **Visual regression** - Screenshot testing
+- ✅ **Type-safe** - Full TypeScript support
+- Official docs: https://playwright.dev
+
+**Installation**:
+```bash
+pnpm add -D @playwright/test @axe-core/playwright
+npx playwright install --with-deps chromium firefox webkit
+```
+
+**Setup**: `/es-test-setup`
+**Generate tests**: `/es-test-gen <route|component|server-function>`
+
+### Testing Strategy (REQUIRED)
+
+**What to Test**:
+1. **User workflows** - Real user behavior, not implementation details
+2. **TanStack Router routes** - Navigation, loaders, error boundaries
+3. **Server functions** - Data fetching, mutations, Cloudflare bindings
+4. **shadcn/ui components** - Interactions, keyboard navigation
+5. **Accessibility** - Zero WCAG 2.1 AA violations (required)
+6. **Performance** - Cold start < 500ms, TTFB < 200ms
+
+**Test Organization**:
+```
+e2e/
+├── routes/              # Route-specific tests
+├── server-functions/    # Server function tests
+├── components/          # Component tests
+├── auth/               # Authentication flow tests
+├── accessibility/      # Accessibility tests (required)
+├── performance/        # Performance tests
+├── visual/            # Visual regression tests
+└── fixtures/          # Test data and helpers
+```
+
+### Testing Patterns
+
+**Route Testing**:
+```typescript
+import { test, expect } from '@playwright/test'
+
+test('loads user profile from D1', async ({ page }) => {
+  await page.goto('/users/123')
+
+  // Wait for server-side loader
+  await page.waitForSelector('[data-testid="user-profile"]')
+
+  // Verify data rendered
+  await expect(page.locator('h1')).toContainText('John Doe')
+})
+```
+
+**Accessibility Testing** (REQUIRED):
+```typescript
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test('has no accessibility violations', async ({ page }) => {
+  await page.goto('/')
+
+  const results = await new AxeBuilder({ page }).analyze()
+
+  expect(results.violations).toEqual([]) // Zero violations policy
+})
+```
+
+**Performance Testing**:
+```typescript
+test('cold start is fast', async ({ page }) => {
+  const startTime = Date.now()
+  await page.goto('/')
+  await page.waitForLoadState('networkidle')
+  const loadTime = Date.now() - startTime
+
+  expect(loadTime).toBeLessThan(500) // Workers should be fast
+})
+```
+
+### Testing with Cloudflare Bindings
+
+**ALWAYS test with real bindings** (not mocks):
+
+```typescript
+// ❌ WRONG: Mocking Cloudflare bindings
+const mockKV = { get: vi.fn() }
+
+// ✅ CORRECT: Test with real test environment bindings
+// .env.test
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+KV_NAMESPACE_ID=test-kv-id  # Separate test namespace
+D1_DATABASE_ID=test-d1-id   # Separate test database
+```
+
+**Reasoning**: Mocks don't match production behavior. Use real Cloudflare bindings in test environment.
+
+### CI/CD Integration
+
+**Run tests before deployment** (GitHub Actions example):
+```yaml
+name: E2E Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: pnpm test:e2e
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/
+```
+
+### ❌ FORBIDDEN Testing Approaches
+
+**NEVER do these**:
+- ❌ Jest/Vitest for E2E testing (use for unit tests only, Playwright for E2E)
+- ❌ Mocking Cloudflare bindings (use real test environment bindings)
+- ❌ Skipping accessibility tests (zero violations policy)
+- ❌ Testing implementation details (test user behavior)
+- ❌ Shallow/snapshot testing for critical paths (use real browser tests)
+
+**Reasoning**: Playwright tests real user workflows in real browsers with real Cloudflare bindings.
+
+### Test Quality Standards
+
+**All tests MUST**:
+- ✅ Test user behavior, not implementation
+- ✅ Use `data-testid` for stable selectors
+- ✅ Include loading states and error handling
+- ✅ Run accessibility checks on every page
+- ✅ Meet performance targets (cold start < 500ms)
+- ✅ Work with real Cloudflare bindings
+
+**Coverage Targets**:
+- Critical user flows: 100%
+- TanStack Router routes: 80%+
+- Server functions: 80%+
+- shadcn/ui components: 70%+
+- Accessibility: 100% (zero violations)
+
+### When User Asks About Testing
+
+**Automatic Response**:
+> "For E2E testing, we use Playwright exclusively. It tests real user workflows in real browsers with real Cloudflare bindings. We also enforce zero accessibility violations with @axe-core/playwright. Let me set it up with `/es-test-setup`."
+
+**Then provide**:
+1. Run `/es-test-setup` to initialize Playwright
+2. Generate tests with `/es-test-gen <target>`
+3. Configure test environment bindings (.env.test)
+4. Set up CI/CD workflow
+5. Run tests: `pnpm test:e2e`
+
+### Agents and Commands
+
+**Agents**:
+- `playwright-testing-specialist` - E2E testing expertise for Tanstack Start + Cloudflare Workers
+
+**Commands**:
+- `/es-test-setup` - Initialize Playwright with Cloudflare Workers configuration
+- `/es-test-gen <target>` - Generate tests for routes, components, or server functions
+
+**MCP Integration**:
+- **Playwright MCP** (`npx @playwright/mcp@latest`) - Official Microsoft browser automation server
+  - Real-time browser control for test debugging
+  - Accessibility tree inspection
+  - Screenshot and visual regression capabilities
+  - Use Playwright MCP to validate test selectors and debug flaky tests
+
+---
 
 ## Version
 
 This preferences document was created: 2025-01-05
-Updated: 2025-01-13 (Added Design, Billing, and Authentication Preferences)
+Last updated: 2025-01-14
+
+**Changelog**:
+- 2025-01-14: Added Email Preferences (Resend)
+- 2025-01-14: Added Testing Preferences (Playwright)
+- 2025-01-13: Added Design, Billing, and Authentication Preferences
 
 As Cloudflare best practices evolve, this document will be updated. Agents should always follow the latest version.
