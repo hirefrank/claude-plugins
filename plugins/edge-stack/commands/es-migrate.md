@@ -970,7 +970,7 @@ database_id = "..." # From create command
 - **Monitor closely**: Watch logs and metrics for first 48 hours
 - **Keep rollback ready**: Maintain old platform for 1-2 weeks
 - **Use MCP**: Configure Cloudflare MCP for real-time validation
-- **Follow user preferences**: Hono (backend), Nuxt 4 (UI), Vercel AI SDK (AI)
+- **Follow user preferences**: Hono (backend), Tanstack Start (UI), Vercel AI SDK (AI)
 
 ### Don'ts ❌
 

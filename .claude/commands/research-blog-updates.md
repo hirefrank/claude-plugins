@@ -54,6 +54,66 @@ Monitors Anthropic's official blogs for relevant updates and determines how they
 
 ## Workflow
 
+### Phase 0: Load State
+
+**Load previous run state to prevent duplicate analysis**:
+
+```typescript
+import { readFileSync, existsSync } from 'fs';
+
+const STATE_FILE = 'plugins/edge-stack/.logs/blog-updates.json';
+
+interface BlogUpdateState {
+  lastRun: string | null;
+  lastReviewDate: string | null;
+  nextScheduledRun: string | null;
+  totalRuns: number;
+  postsAnalyzed: Record<string, number>;
+  lastProcessedPosts: string[];
+}
+
+let state: BlogUpdateState;
+let sinceDate: string;
+
+// Read state
+if (existsSync(STATE_FILE)) {
+  state = JSON.parse(readFileSync(STATE_FILE, 'utf-8'));
+
+  console.log(`📊 Last run: ${state.lastRun}`);
+  console.log(`📅 Last review date: ${state.lastReviewDate}`);
+  console.log(`📝 Last processed: ${state.lastProcessedPosts.length} posts`);
+
+  sinceDate = state.lastReviewDate || getDateDaysAgo(30);
+} else {
+  // First run - initialize empty state
+  state = {
+    lastRun: null,
+    lastReviewDate: null,
+    nextScheduledRun: null,
+    totalRuns: 0,
+    postsAnalyzed: {},
+    lastProcessedPosts: []
+  };
+
+  sinceDate = getDateDaysAgo(30);
+  console.log('🆕 First run - analyzing last 30 days');
+}
+
+// Allow --since flag to override state
+if (args['--since']) {
+  sinceDate = args['--since'];
+  console.log(`Analyzing posts since: ${sinceDate} (overriding state)`);
+} else {
+  console.log(`Analyzing posts since: ${sinceDate}`);
+}
+
+function getDateDaysAgo(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toISOString().split('T')[0];
+}
+```
+
 ### Phase 1: Fetch Blog Posts
 
 **Fetch from Claude blog**:
@@ -135,6 +195,56 @@ function isRelevant(post: BlogPost): boolean {
   const content = `${post.title} ${post.summary}`.toLowerCase();
   return relevantKeywords.some(keyword => content.includes(keyword));
 }
+```
+
+### Phase 2.5: Filter Already-Processed Posts
+
+**Skip posts that were analyzed in previous runs**:
+
+```typescript
+interface BlogPost {
+  title: string;
+  url: string;
+  date: string;
+  summary: string;
+  source: 'claude-blog' | 'anthropic-engineering';
+}
+
+// allPosts contains combined results from Phase 1
+// state was loaded in Phase 0
+
+// Filter new posts
+const newPosts = allPosts.filter(post => {
+  // Skip if already processed
+  if (state.lastProcessedPosts.includes(post.url)) {
+    console.log(`⏭️  Skipping already analyzed: ${post.title}`);
+    return false;
+  }
+
+  // Skip if before review date
+  if (post.date < sinceDate) {
+    return false;
+  }
+
+  return true;
+});
+
+// Log statistics
+console.log(`\n📊 Filtering Statistics:`);
+console.log(`   Total posts found: ${allPosts.length}`);
+console.log(`   🆕 New posts to analyze: ${newPosts.length}`);
+console.log(`   ⏭️  Already analyzed (skipped): ${allPosts.length - newPosts.length}`);
+
+// If no new posts, exit early
+if (newPosts.length === 0) {
+  console.log('\n✅ No new posts to analyze. All caught up!');
+  console.log(`📅 Next scheduled run: ${state.nextScheduledRun}`);
+  process.exit(0);
+}
+
+// Continue with relevance filtering from Phase 2
+const relevantPosts = newPosts.filter(isRelevant);
+console.log(`   🎯 Relevant posts: ${relevantPosts.length}`);
 ```
 
 ### Phase 3: Deep Analysis
@@ -307,6 +417,81 @@ const analysis = await Task({
 2. Create GitHub issues for approved updates
 3. Schedule implementation based on effort estimates
 4. Re-run this command in 30 days
+```
+
+### Phase 5: Update State
+
+**Update state file with current run information**:
+
+```typescript
+import { writeFileSync } from 'fs';
+
+// Generate timestamps
+const now = new Date();
+const today = now.toISOString().split('T')[0];
+const nextMonth = new Date(now);
+nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+// Update state with current run data
+const updatedState: BlogUpdateState = {
+  lastRun: now.toISOString(),
+  lastReviewDate: today,
+  nextScheduledRun: nextMonth.toISOString().split('T')[0],
+  totalRuns: state.totalRuns + 1,
+  postsAnalyzed: {
+    ...state.postsAnalyzed,
+    [today]: relevantPosts.length
+  },
+  lastProcessedPosts: [
+    // Add new post URLs
+    ...relevantPosts.map(p => p.url),
+    // Keep existing URLs (up to 50)
+    ...state.lastProcessedPosts.slice(0, 50)
+  ].slice(0, 100) // Max 100 URLs total
+};
+
+// Write updated state to file
+writeFileSync(
+  STATE_FILE,
+  JSON.stringify(updatedState, null, 2),
+  'utf-8'
+);
+
+// Show confirmation
+console.log('\n✅ State Updated:');
+console.log(`   File: ${STATE_FILE}`);
+console.log(`   Total runs: ${updatedState.totalRuns}`);
+console.log(`   Posts analyzed today: ${relevantPosts.length}`);
+console.log(`   Tracked URLs: ${updatedState.lastProcessedPosts.length}`);
+console.log(`   📅 Next scheduled run: ${updatedState.nextScheduledRun}`);
+
+// Optional: Generate detailed report (gitignored)
+const reportFile = `plugins/edge-stack/.logs/blog-updates-${today}.report.md`;
+console.log(`\n📝 Detailed report: ${reportFile}`);
+console.log('   (This file is gitignored - available locally only)');
+```
+
+**State file structure**:
+
+```json
+{
+  "lastRun": "2025-11-14T10:30:00.000Z",
+  "lastReviewDate": "2025-11-14",
+  "nextScheduledRun": "2025-12-14",
+  "totalRuns": 5,
+  "postsAnalyzed": {
+    "2025-11-14": 12,
+    "2025-10-14": 8,
+    "2025-09-14": 5,
+    "2025-08-14": 10,
+    "2025-07-14": 7
+  },
+  "lastProcessedPosts": [
+    "https://www.claude.com/blog/recent-post-1",
+    "https://www.anthropic.com/engineering/recent-post-2",
+    "https://www.claude.com/blog/recent-post-3"
+  ]
+}
 ```
 
 ---

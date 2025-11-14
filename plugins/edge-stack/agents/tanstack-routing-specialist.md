@@ -273,14 +273,14 @@ import { Link } from '@tanstack/react-router'
 <Link to="/about">About</Link>
 
 // Link with params
-<Link to="/users/$id" params={{ id: '123' }}>
+<Link to="/users/$id" params={ id: '123'}>
   View User
 </Link>
 
 // Link with search params
 <Link
   to="/users"
-  search={{ page: 2, sort: 'name' }}
+  search={ page: 2, sort: 'name'}
 >
   Users Page 2
 </Link>
@@ -288,13 +288,13 @@ import { Link } from '@tanstack/react-router'
 // Link with active state
 <Link
   to="/dashboard"
-  activeOptions={{ exact: true }}
+  activeOptions={ exact: true}
   activeProps={{
     className: 'font-bold text-blue-600',
-  }}
+ }
   inactiveProps={{
     className: 'text-gray-600',
-  }}
+ }
 >
   Dashboard
 </Link>
@@ -441,14 +441,14 @@ function NotFound() {
 import { Link } from '@tanstack/react-router'
 
 // Prefetch on hover (default)
-<Link to="/users/$id" params={{ id: '123' }}>
+<Link to="/users/$id" params={ id: '123'}>
   View User
 </Link>
 
 // Prefetch immediately
 <Link
   to="/users/$id"
-  params={{ id: '123' }}
+  params={ id: '123'}
   preload="intent"
 >
   View User
@@ -457,7 +457,7 @@ import { Link } from '@tanstack/react-router'
 // Don't prefetch
 <Link
   to="/users/$id"
-  params={{ id: '123' }}
+  params={ id: '123'}
   preload={false}
 >
   View User
@@ -487,7 +487,7 @@ function UserList({ users }) {
           key={user.id}
           onMouseEnter={() => handleMouseEnter(user.id)}
         >
-          <Link to="/users/$id" params={{ id: user.id }}>
+          <Link to="/users/$id" params={ id: user.id}>
             {user.name}
           </Link>
         </li>

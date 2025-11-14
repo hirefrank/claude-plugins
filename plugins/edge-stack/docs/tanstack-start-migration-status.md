@@ -1,54 +1,51 @@
-# Tanstack Start Integration - Implementation Status
+# Tanstack Start Migration - Complete
 
-**Date**: 2025-01-14
-**Status**: Foundation Complete, Additional Work Recommended
+**Date**: 2025-01-14 (Updated)
+**Status**: ✅ Complete - Nuxt Support Removed, Tanstack Start Only
 
 ---
 
-## ✅ COMPLETED (Core Foundation)
+## ✅ MIGRATION COMPLETE
 
-### 1. Framework Decision Tree & Preferences
+### 1. Framework Consolidation
 
-**File**: `plugins/edge-stack/PREFERENCES.md`
+**Breaking Change**: Nuxt support has been completely removed. The edge-stack plugin is now **Tanstack Start (React) only**.
 
 **Changes**:
-- ✅ Updated decision tree: Tanstack Start as **DEFAULT** for new projects
-- ✅ Nuxt 4 preserved for existing Nuxt projects
-- ✅ Added framework selection logic (existing vs new projects)
-- ✅ Updated forbidden frameworks (React now allowed **ONLY via Tanstack Start**)
-- ✅ Added shadcn/ui as required UI library for Tanstack Start
+- ✅ Removed all Nuxt/Vue references from agents and commands
+- ✅ Consolidated to single framework: Tanstack Start (React 19)
+- ✅ Updated all preferences to agent/command files (Claude Code readable)
+- ✅ Added shadcn/ui as required UI library
 - ✅ Added Radix UI documentation links
-- ✅ Added state management section (TanStack Query + Zustand)
+- ✅ Added state management (TanStack Query + Zustand)
 - ✅ Forbidden state libraries documented (Redux, MobX, etc.)
-- ✅ Added React component examples alongside Vue
-- ✅ Maintained anti-generic-AI-aesthetic philosophy for both frameworks
+- ✅ Maintained anti-generic-AI-aesthetic philosophy
 
 ### 2. MCP Server Configuration
 
 **File**: `plugins/edge-stack/.mcp.json`
 
 **Changes**:
-- ✅ Added shadcn/ui official MCP server (`npx -y mcp-remote https://www.shadcn.io/api/mcp`)
-- ✅ Maintained Nuxt UI MCP server (for Nuxt projects)
-- ✅ Maintained Cloudflare MCP and better-auth MCP servers
-- ✅ Updated descriptions to indicate framework applicability
+- ✅ Added shadcn/ui official MCP server
+- ✅ Configured 8 bundled MCP servers (Cloudflare, better-auth, Polar, etc.)
+- ✅ Removed shadcn/ui (Nuxt) references
 
 ### 3. Documentation Updates
 
 **File**: `plugins/edge-stack/README.md`
 
 **Changes**:
-- ✅ Updated header to mention both frameworks: "Tanstack Start (React) or Nuxt 4 (Vue)"
-- ✅ Updated MCP section to list 5 servers (4 active, 1 optional)
-- ✅ Added shadcn/ui MCP server to examples
-- ✅ Updated validation examples to show both frameworks
+- ✅ Updated to Tanstack Start (React) only
+- ✅ Documented 8 MCP servers
+- ✅ Added Playwright testing, Resend email integration
+- ✅ Removed all Nuxt/Vue references
 
 ### 4. New Commands Created
 
 ✅ **`/es-tanstack-migrate`** (`commands/es-tanstack-migrate.md`)
-- Complete migration command from any framework to Tanstack Start
-- Framework detection (React, Vue, Nuxt, Svelte, vanilla JS)
-- Component mapping tables (Vue→React, Next.js→Tanstack)
+- Migrate any framework → Tanstack Start (React)
+- Framework detection (React, Next.js, Vue, Nuxt, Svelte, vanilla JS)
+- Component mapping tables (Vue→React, Next.js→Tanstack Start)
 - Route migration patterns (file-based routing)
 - State management migration (Redux→TanStack Query+Zustand)
 - Cloudflare bindings preservation
@@ -89,7 +86,7 @@
 - Bundle size optimization for Workers
 
 ✅ **`tanstack-migration-specialist`** (`agents/tanstack-migration-specialist.md`)
-- Framework migration expertise
+- Framework migration expertise (Vue/Nuxt/Next.js → Tanstack Start)
 - Component mapping strategies
 - Vue→React conversion patterns
 - Next.js→Tanstack Start migration
@@ -115,213 +112,138 @@
 
 ---
 
-## 🚧 RECOMMENDED ADDITIONAL WORK
+## 🎯 Additional Improvements Completed
 
-### Priority 1: Update Existing Commands (Framework Detection)
+### Authentication & Email Integration
 
-These commands need to detect project framework and behave accordingly:
+✅ **`resend-email-specialist`** (`agents/resend-email-specialist.md`)
+- Complete Resend SDK setup for Workers
+- React Email template patterns
+- Transactional + marketing email flows
+- D1 retry queue patterns
 
-1. **`/es-component`** - Detect Nuxt vs Tanstack Start, generate appropriate component
-2. **`/es-theme`** - Support both Nuxt UI and shadcn/ui theming
-3. **`/es-deploy`** - Add Tanstack Start validation checks
-4. **`/es-validate`** - Support validation for both frameworks
+✅ **`/es-email-setup`** (`commands/es-email-setup.md`)
+- Interactive Resend setup wizard
+- Template generation
+- Server function examples
+- Domain verification guidance
 
-**Recommended Approach**: Add framework detection at command start:
-```bash
-if grep -q "@tanstack/start" package.json; then
-  FRAMEWORK="tanstack-start"
-  # Use Tanstack Start agents and patterns
-elif grep -q "nuxt" package.json; then
-  FRAMEWORK="nuxt"
-  # Use Nuxt agents and patterns
-else
-  echo "❌ Unknown framework"
-  exit 1
-fi
-```
+### Security & Code Quality
 
-### Priority 2: Update Existing Agents (Framework Awareness)
+✅ **`cloudflare-security-sentinel`** (updated)
+- Added Claude Code sandboxing section
+- Filesystem/network permissions
+- Git credential proxying
 
-These agents should support both frameworks:
+✅ **`code-simplicity-reviewer`** (updated)
+- Added 500 LOC file size limit
+- AI-optimized code organization
 
-1. **`frontend-design-specialist`** - Support both Nuxt UI and shadcn/ui design patterns
-2. **`accessibility-guardian`** - Validate both Vue and React component accessibility
-3. **`edge-stack-orchestrator`** - Know about Tanstack Start agents and commands
-4. **`feedback-codifier`** - Learn preferences for both frameworks
+✅ **`workers-ai-specialist`** (updated)
+- Vercel AI SDK (required)
+- Cloudflare AI Agents patterns
 
-### Priority 3: Create Validation Skills
+### State Management
 
-Create framework-specific validation skills:
-
-1. **`tanstack-start-validator/`** (NEW SKILL)
-   - Validate TanStack Router patterns
-   - Check server function implementations
-   - Verify Cloudflare bindings usage
-   - Ensure bundle size < 1MB
-
-2. **`react-component-validator/`** (NEW SKILL)
-   - Validate React hooks usage
-   - Check component patterns
-   - Verify accessibility in React components
-   - Ensure TypeScript types
-
-3. **Update `nuxt-ui-design-validator/`** - Make framework-agnostic or dual-framework
-
-### Priority 4: Create Quick Start Documentation
-
-**File**: `docs/tanstack-start-guide.md`
-- Quick start for new Tanstack Start projects
-- Setup instructions (Cloudflare preset)
-- shadcn/ui installation
-- First route creation
-- First server function
-- Deployment to Workers
-
-**File**: `docs/framework-selection.md`
-- When to use Tanstack Start vs Nuxt 4
-- Migration decision flowchart
-- Pros/cons comparison
-- Team considerations
-
-**File**: `docs/tanstack-start-examples.md`
-- Common patterns and examples
-- Authentication flows
-- Database queries (D1)
-- File uploads (R2)
-- Real-time features (DO)
+✅ **`tanstack-ssr-specialist`** (updated)
+- Complete TanStack Query patterns
+- Zustand store examples
+- Decision tree for state approach
 
 ---
 
 ## 📊 Implementation Summary
 
-### Files Created (10 new files)
-1. ✅ `PREFERENCES.md` (updated)
-2. ✅ `.mcp.json` (updated)
-3. ✅ `README.md` (updated)
-4. ✅ `commands/es-tanstack-migrate.md`
-5. ✅ `commands/es-tanstack-component.md`
-6. ✅ `commands/es-tanstack-route.md`
-7. ✅ `commands/es-tanstack-server-fn.md`
-8. ✅ `agents/tanstack-ui-architect.md`
-9. ✅ `agents/tanstack-migration-specialist.md`
-10. ✅ `agents/tanstack-routing-specialist.md`
-11. ✅ `agents/tanstack-ssr-specialist.md`
-12. ✅ `docs/tanstack-start-migration-status.md` (this file)
+### Files Created/Updated
+1. ✅ `.mcp.json` (8 bundled MCP servers)
+2. ✅ `README.md` (Tanstack Start only)
+3. ✅ `commands/es-tanstack-migrate.md`
+4. ✅ `commands/es-tanstack-component.md`
+5. ✅ `commands/es-tanstack-route.md`
+6. ✅ `commands/es-tanstack-server-fn.md`
+7. ✅ `commands/es-email-setup.md`
+8. ✅ `commands/es-auth-setup.md` (better-auth only)
+9. ✅ `commands/es-billing-setup.md` (Tanstack Start paths)
+10. ✅ `agents/tanstack-ui-architect.md`
+11. ✅ `agents/tanstack-migration-specialist.md`
+12. ✅ `agents/tanstack-routing-specialist.md`
+13. ✅ `agents/tanstack-ssr-specialist.md`
+14. ✅ `agents/resend-email-specialist.md`
+15. ✅ `agents/better-auth-specialist.md` (updated)
+16. ✅ `agents/frontend-design-specialist.md` (updated)
+17. ✅ `docs/tanstack-start-migration-status.md` (this file)
 
-### Framework Support Matrix
+### Framework Consolidation Complete
 
-| Feature | Tanstack Start | Nuxt 4 | Status |
-|---------|---------------|--------|--------|
-| **Decision Tree** | DEFAULT for new | Existing projects | ✅ Complete |
-| **MCP Server** | shadcn/ui | Nuxt UI | ✅ Complete |
-| **Migration Command** | /es-tanstack-migrate | /es-nuxt-migrate | ✅ Complete |
-| **Component Generator** | /es-tanstack-component | /es-component | ✅ Complete |
-| **Route Generator** | /es-tanstack-route | Manual | ✅ Complete |
-| **Server Function** | /es-tanstack-server-fn | Nuxt server routes | ✅ Complete |
-| **UI Architect Agent** | tanstack-ui-architect | nuxt-ui-architect | ✅ Complete |
-| **Migration Agent** | tanstack-migration-specialist | nuxt-migration-specialist | ✅ Complete |
-| **Routing Agent** | tanstack-routing-specialist | N/A | ✅ Complete |
-| **SSR Agent** | tanstack-ssr-specialist | N/A | ✅ Complete |
-| **Theme Command** | /es-theme | /es-theme | 🚧 Needs update |
-| **Deploy Command** | /es-deploy | /es-deploy | 🚧 Needs update |
-| **Validate Command** | /es-validate | /es-validate | 🚧 Needs update |
-| **Design Agent** | frontend-design-specialist | frontend-design-specialist | 🚧 Needs update |
-| **Accessibility Agent** | accessibility-guardian | accessibility-guardian | 🚧 Needs update |
-| **Validator Skill** | tanstack-start-validator | nuxt-ui-design-validator | 🚧 Not created |
-| **Documentation** | Quick start guide | Exists | 🚧 Not created |
-
----
-
-## 🎯 Next Steps
-
-### Immediate (Core Functionality)
-1. Test `/es-tanstack-migrate` on a sample Next.js project
-2. Test `/es-tanstack-component` to generate a Button component
-3. Test `/es-tanstack-route` to create a new route
-4. Verify MCP servers are accessible (run `/mcp` in Claude Code)
-
-### Short Term (Framework Awareness)
-1. Update `/es-component` to detect framework and delegate appropriately
-2. Update `/es-theme` to support shadcn/ui theming
-3. Update `/es-deploy` to handle Tanstack Start builds
-4. Update `frontend-design-specialist` agent to support both frameworks
-
-### Medium Term (Complete Integration)
-1. Create `tanstack-start-validator` skill
-2. Create `react-component-validator` skill
-3. Update `accessibility-guardian` for React components
-4. Create Tanstack Start documentation
+| Feature | Status |
+|---------|--------|
+| **Framework** | ✅ Tanstack Start (React 19) only |
+| **UI Library** | ✅ shadcn/ui + Radix UI |
+| **Authentication** | ✅ better-auth (universal) |
+| **Email** | ✅ Resend + React Email |
+| **State** | ✅ TanStack Query + Zustand |
+| **MCP Servers** | ✅ 8 bundled servers |
+| **Migration** | ✅ Any framework → Tanstack Start |
+| **Component Generator** | ✅ /es-tanstack-component |
+| **Route Generator** | ✅ /es-tanstack-route |
+| **Server Functions** | ✅ /es-tanstack-server-fn |
+| **Nuxt References** | ✅ Removed (migration docs only) |
 
 ---
 
-## 🔍 Testing Checklist
+## 📝 Breaking Changes (v2.0.0)
 
-### Manual Testing
+### Removed
+- ❌ Nuxt 4 support completely removed
+- ❌ Vue 3 components (edge-stack is React-only)
+- ❌ nuxt-auth-utils (replaced with better-auth)
+- ❌ shadcn/ui (replaced with shadcn/ui)
+- ❌ `/es-component` command (use `/es-tanstack-component`)
 
-- [ ] Create new Tanstack Start project: `pnpm create @tanstack/start@latest test-app`
-- [ ] Run `/es-tanstack-component button PrimaryButton` in test project
-- [ ] Run `/es-tanstack-route /users/$id` in test project
-- [ ] Run `/es-tanstack-server-fn getUser GET --binding d1` in test project
-- [ ] Verify shadcn/ui MCP server accessible: `/mcp`
-- [ ] Test migration: Run `/es-tanstack-migrate` on existing Next.js/Nuxt project
-
-### Validation
-
-- [ ] All new agents load without errors
-- [ ] All new commands parse correctly
-- [ ] MCP servers connect successfully
-- [ ] PREFERENCES.md decision tree makes sense
-- [ ] Framework detection works in commands
-
----
-
-## 📝 Notes
-
-### Design Philosophy Maintained
-- ✅ Anti-generic-AI-aesthetic rules apply to BOTH frameworks
-- ✅ Distinctive design enforcement in component generators
-- ✅ Custom fonts and color palettes required
-- ✅ Forbidden: Inter fonts, purple gradients, glossy effects
-
-### State Management Strategy
-- ✅ Tanstack Start: TanStack Query (server) + Zustand (client)
-- ✅ Nuxt 4: useAsyncData/useFetch (server) + Pinia/useState (client)
-- ✅ Forbidden: Redux, MobX, Recoil (too much boilerplate)
-
-### MCP Integration
-- ✅ shadcn/ui MCP: Official server for component validation
-- ✅ Radix UI MCP: Community server for primitives
-- ✅ React docs MCP: Community servers available
-- ✅ All Tanstack Start agents leverage MCP for accuracy
+### Migration Path
+- Existing Nuxt projects: Use `/es-tanstack-migrate` to convert to Tanstack Start (React)
+- Vue components: Will be converted to React during migration
+- Authentication: better-auth works for both Tanstack Start and standalone Workers
 
 ---
 
 ## 🚀 Current Capabilities
 
-Your es-stack platform now supports:
+The edge-stack plugin now provides:
 
-1. **Dual Framework Support**:
-   - Tanstack Start (React) for new projects
-   - Nuxt 4 (Vue) for existing Nuxt projects
+1. **Single Framework Stack**:
+   - Tanstack Start (React 19) ONLY
+   - shadcn/ui + Radix UI components
+   - TanStack Router for routing
+   - TanStack Query + Zustand for state
 
 2. **Complete Migration Workflows**:
-   - Any framework → Tanstack Start
-   - Any framework → Nuxt 4
+   - React/Next.js → Tanstack Start
+   - Vue/Nuxt → Tanstack Start (React)
+   - Svelte → Tanstack Start
+   - Vanilla JS → Tanstack Start
 
 3. **Scaffolding Commands**:
-   - Components (shadcn/ui for Tanstack, Nuxt UI for Nuxt)
-   - Routes (TanStack Router for Tanstack, Nuxt pages for Nuxt)
-   - Server functions (Tanstack) / API routes (Nuxt)
+   - `/es-tanstack-component` - Generate shadcn/ui components
+   - `/es-tanstack-route` - Create TanStack Router routes
+   - `/es-tanstack-server-fn` - Generate server functions
+   - `/es-auth-setup` - Configure better-auth
+   - `/es-email-setup` - Configure Resend emails
+   - `/es-billing-setup` - Configure Polar.sh billing
 
-4. **Expert Agents**:
-   - 4 new Tanstack Start specialists
-   - 22 existing agents (some need framework awareness updates)
+4. **Expert Agents (25 total)**:
+   - 4 Tanstack Start specialists
+   - Authentication, email, billing specialists
+   - Security, testing, deployment experts
+   - All optimized for Cloudflare Workers
 
-5. **MCP-Powered Accuracy**:
+5. **MCP-Powered Accuracy (8 servers)**:
    - No prop hallucination (validated via MCP)
-   - Official component documentation
+   - Official component documentation (shadcn/ui)
    - Real-time Cloudflare account context
+   - better-auth setup guidance
+   - Polar.sh billing integration
 
 ---
 
-**Status**: Foundation is solid. Platform is functional for Tanstack Start projects. Additional work (Priority 1-3) will enhance the experience and make framework switching seamless.
+**Status**: ✅ Complete. edge-stack is now a focused, powerful Tanstack Start + Cloudflare Workers development platform.

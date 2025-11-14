@@ -1,10 +1,10 @@
 ---
-description: Generate or update custom design themes for Tailwind CSS and Nuxt UI. Creates distinctive typography, colors, animations, and design tokens to prevent generic "AI aesthetic"
+description: Generate or update custom design themes for Tailwind CSS and shadcn/ui. Creates distinctive typography, colors, animations, and design tokens to prevent generic "AI aesthetic"
 ---
 
 # Theme Generator Command
 
-<command_purpose> Generate distinctive design themes that prevent generic aesthetics. Creates custom Tailwind configuration with unique fonts, brand colors, animation presets, and Nuxt UI customizations. Replaces Inter fonts, purple gradients, and minimal animations with branded alternatives. </command_purpose>
+<command_purpose> Generate distinctive design themes that prevent generic aesthetics. Creates custom Tailwind configuration with unique fonts, brand colors, animation presets, and shadcn/ui customizations. Replaces Inter fonts, purple gradients, and minimal animations with branded alternatives. </command_purpose>
 
 ## Introduction
 
@@ -15,8 +15,8 @@ description: Generate or update custom design themes for Tailwind CSS and Nuxt U
 ## Prerequisites
 
 <requirements>
-- Nuxt 4 project with Tailwind CSS configured
-- Nuxt UI installed
+- Tanstack Start project with Tailwind CSS configured
+- shadcn/ui installed
 - Access to custom font files or Google Fonts
 - Brand color palette (or will be generated)
 </requirements>
@@ -64,7 +64,7 @@ First, check if a theme already exists and analyze generic patterns.
 - [ ] Detect Inter/Roboto fonts (generic ❌)
 - [ ] Detect default purple colors (generic ❌)
 - [ ] Check for custom animation presets
-- [ ] Check `app.config.ts` for Nuxt UI customization
+- [ ] Check `app.config.ts` for shadcn/ui customization
 - [ ] Analyze existing component usage patterns
 
 </analysis_steps>
@@ -554,21 +554,21 @@ export default <Partial<Config>>{
 
 </tailwind_config_template>
 
-### 6. Generate Nuxt UI Theme Customization
+### 6. Generate shadcn/ui Theme Customization
 
 <thinking>
-Create app.config.ts with global Nuxt UI customizations.
+Create app.config.ts with global shadcn/ui customizations.
 </thinking>
 
-#### Nuxt UI Config:
+#### shadcn/ui Config:
 
-<nuxt_ui_config>
+<shadcn_ui_config>
 
 ```typescript
 // app.config.ts
 export default defineAppConfig({
   ui: {
-    // Primary color (used by Nuxt UI components)
+    // Primary color (used by shadcn/ui components)
     primary: 'brand-coral',
     secondary: 'brand-ocean',
     gray: 'neutral',
@@ -614,12 +614,12 @@ export default defineAppConfig({
 });
 ```
 
-</nuxt_ui_config>
+</shadcn_ui_config>
 
 ### 7. Update Font Loading
 
 <thinking>
-Configure font loading in nuxt.config.ts (Google Fonts or local fonts).
+Configure font loading in app.config.ts (Google Fonts or local fonts).
 </thinking>
 
 #### Font Loading Config:
@@ -627,7 +627,7 @@ Configure font loading in nuxt.config.ts (Google Fonts or local fonts).
 <font_loading>
 
 ```typescript
-// nuxt.config.ts
+// app.config.ts
 export default defineNuxtConfig({
   // ... other config
 
@@ -684,8 +684,8 @@ export default defineNuxtConfig({
 
 📁 Files Created/Updated:
 - tailwind.config.ts (complete theme configuration)
-- app.config.ts (Nuxt UI global customization)
-- nuxt.config.ts (font loading configuration)
+- app.config.ts (shadcn/ui global customization)
+- app.config.ts (font loading configuration)
 - assets/fonts/fonts.css (if using local fonts)
 
 🎨 Theme Summary:
@@ -717,7 +717,7 @@ export default defineNuxtConfig({
 📖 Usage Examples:
 
 **Typography**:
-```vue
+```tsx
 <h1 class="font-heading text-6xl text-brand-midnight">
   Heading
 </h1>
@@ -732,7 +732,7 @@ export default defineNuxtConfig({
 ```
 
 **Colors**:
-```vue
+```tsx
 <div class="bg-brand-coral text-white">
   Primary action
 </div>
@@ -747,7 +747,7 @@ export default defineNuxtConfig({
 ```
 
 **Animations**:
-```vue
+```tsx
 <div class="animate-slide-up">
   Slides up on mount
 </div>
@@ -761,16 +761,16 @@ export default defineNuxtConfig({
 </div>
 ```
 
-**Nuxt UI with Theme**:
-```vue
+**shadcn/ui with Theme**:
+```tsx
 <!-- Automatically uses theme colors -->
-<UButton color="primary">
+<Button color="primary">
   Uses brand-coral
-</UButton>
+</Button>
 
-<UCard class="shadow-brand">
+<Card class="shadow-brand">
   Uses theme shadows
-</UCard>
+</Card>
 ```
 
 ---
@@ -799,8 +799,8 @@ Your project now has a distinctive visual identity! 🎨
 - Custom color palette defined (not default purple)
 - 15+ animation presets created
 - All colors meet WCAG 2.1 AA contrast requirements
-- Fonts configured in `nuxt.config.ts`
-- Nuxt UI customization in `app.config.ts`
+- Fonts configured in `app.config.ts`
+- shadcn/ui customization in `app.config.ts`
 - Design system composable updated
 
 ## Post-Generation Actions
@@ -818,4 +818,4 @@ After generating theme:
 - All colors are contrast-validated for accessibility
 - Animations respect `prefers-reduced-motion`
 - Theme is fully customizable after generation
-- Works seamlessly with Nuxt UI components
+- Works seamlessly with shadcn/ui components

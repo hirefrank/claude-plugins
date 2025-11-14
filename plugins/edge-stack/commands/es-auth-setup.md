@@ -1,5 +1,5 @@
 ---
-description: Interactive authentication setup wizard. Configures nuxt-auth-utils, better-auth, OAuth providers, and generates handlers for Cloudflare Workers.
+description: Interactive authentication setup wizard. Configures better-auth, OAuth providers, and generates handlers for Cloudflare Workers.
 ---
 
 # Authentication Setup Command
@@ -8,13 +8,13 @@ description: Interactive authentication setup wizard. Configures nuxt-auth-utils
 
 ## Introduction
 
-<role>Senior Security Engineer with expertise in authentication, nuxt-auth-utils, better-auth, and Cloudflare Workers security</role>
+<role>Senior Security Engineer with expertise in authentication, better-auth, and Cloudflare Workers security</role>
 
 **This command will**:
-- Detect framework (Nuxt vs standalone Worker)
-- Configure nuxt-auth-utils (Nuxt primary) or better-auth (advanced/Worker)
+- Detect framework (Tanstack Start vs standalone Worker)
+- Configure better-auth for all authentication needs
 - Query better-auth MCP for OAuth provider requirements
-- Generate login/register/logout handlers
+- Generate login/register/logout handlers with React Server Functions
 - Create D1 database schema for users/sessions
 - Configure session security (HTTPS cookies, CSRF)
 - Generate environment variables template
@@ -22,7 +22,7 @@ description: Interactive authentication setup wizard. Configures nuxt-auth-utils
 ## Prerequisites
 
 <requirements>
-- Cloudflare Workers project (Nuxt or Hono)
+- Cloudflare Workers project (Tanstack Start or Hono)
 - D1 database configured (or will create)
 - For OAuth: Provider credentials (Google, GitHub, etc.)
 </requirements>
@@ -36,7 +36,7 @@ description: Interactive authentication setup wizard. Configures nuxt-auth-utils
 🔐 Authentication Setup Wizard
 
 1. What framework are you using?
-   a) Nuxt 4
+   a) Tanstack Start
    b) Standalone Worker (Hono/plain TS)
 
 2. What authentication methods do you need?
@@ -49,54 +49,52 @@ description: Interactive authentication setup wizard. Configures nuxt-auth-utils
 
 **Decision Logic**:
 ```
-If Nuxt + Email/Password only:
-  → nuxt-auth-utils
+If Tanstack Start:
+  → better-auth with React Server Functions
 
-If Nuxt + OAuth/Passkeys/Magic Links:
-  → better-auth (auth) + nuxt-auth-utils (sessions)
-
-If Standalone Worker:
-  → better-auth
+If Standalone Worker (Hono):
+  → better-auth with Hono middleware
 ```
 
 ### 2. Install Dependencies
 
-**For Nuxt + Simple Auth**:
+**For Tanstack Start**:
 ```bash
-npm install nuxt-auth-utils @node-rs/argon2
+pnpm add better-auth @node-rs/argon2
 ```
 
-**For Nuxt + OAuth**:
+**For Standalone Worker (Hono)**:
 ```bash
-npm install nuxt-auth-utils better-auth @node-rs/argon2
-```
-
-**For Standalone Worker**:
-```bash
-npm install better-auth hono
+pnpm add better-auth hono @node-rs/argon2
 ```
 
 ### 3. Generate Configuration Files
 
-#### Nuxt + nuxt-auth-utils Only
+#### Tanstack Start + better-auth
 
-**Generate**: `nuxt.config.ts` (update)
+**Generate**: `app/auth.server.ts`
 ```typescript
-export default defineNuxtConfig({
-  modules: ['nuxt-auth-utils'],
+import { betterAuth } from 'better-auth';
 
-  runtimeConfig: {
-    session: {
-      name: 'nuxt-session',
-      password: process.env.NUXT_SESSION_PASSWORD, // 32+ char secret
-      cookie: {
-        sameSite: 'lax',
-        secure: true, // HTTPS only
-        httpOnly: true, // Prevent XSS
-      },
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    }
-  }
+export const auth = betterAuth({
+  database: {
+    type: 'd1',
+    database: process.env.DB,
+  },
+
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true,
+  },
+
+  session: {
+    cookieName: 'session',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60 * 1000, // 5 minutes
+    },
+  },
 });
 ```
 
@@ -124,7 +122,6 @@ export default defineEventHandler(async (event) => {
 });
 ```
 
-#### Nuxt + better-auth + nuxt-auth-utils
 
 **Query MCP for OAuth Setup**:
 ```typescript
@@ -160,7 +157,7 @@ export const auth = betterAuth({
 export default defineEventHandler(async (event) => {
   const response = await auth.handler(event.node.req, event.node.res);
 
-  // Migrate better-auth session to nuxt-auth-utils
+  // 
   if (event.node.req.url?.includes('/callback')) {
     const session = await auth.api.getSession({ headers: event.node.req.headers });
     if (session) {
@@ -218,10 +215,10 @@ CREATE INDEX idx_accounts_user ON accounts(user_id);
 
 **Generate**: `.dev.vars`
 ```bash
-# Session password (32+ characters)
-NUXT_SESSION_PASSWORD=your-32-char-secret-here
+# better-auth secret (generate with: openssl rand -base64 32)
+BETTER_AUTH_SECRET=your-32-char-secret-here
 
-# OAuth credentials (if using better-auth)
+# OAuth credentials (if using OAuth providers)
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GITHUB_CLIENT_ID=your-github-client-id
@@ -230,7 +227,7 @@ GITHUB_CLIENT_SECRET=your-github-client-secret
 
 **Production Setup**:
 ```bash
-wrangler secret put NUXT_SESSION_PASSWORD
+wrangler secret put BETTER_AUTH_SECRET
 wrangler secret put GOOGLE_CLIENT_SECRET
 wrangler secret put GITHUB_CLIENT_SECRET
 ```
@@ -274,7 +271,7 @@ export default defineEventHandler(async (event) => {
 ## Output Summary
 
 **Files Created**:
-- Configuration (nuxt.config.ts or auth.ts)
+- Configuration (app.config.ts or auth.ts)
 - Auth handlers (login, register, logout, OAuth callback)
 - Database migration (users, accounts)
 - Protected route example
@@ -290,8 +287,8 @@ export default defineEventHandler(async (event) => {
 
 ## Notes
 
-- Always use nuxt-auth-utils for Nuxt (Workers-optimized)
-- Add better-auth only when OAuth/passkeys needed
+- Always use better-auth for authentication (Workers-optimized)
+- Add OAuth/passkeys/magic links as needed
 - Query better-auth MCP for latest provider requirements
 - Use Argon2id for password hashing (never bcrypt)
 - Store secrets in Cloudflare Workers secrets (not wrangler.toml)

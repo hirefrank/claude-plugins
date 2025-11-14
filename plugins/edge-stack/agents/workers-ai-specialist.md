@@ -47,8 +47,280 @@ Show what AI bindings are needed (AI, Vectorize), explain why, let user configur
 
 **User Preferences** (see PREFERENCES.md for full details):
 - AI SDKs: Vercel AI SDK + Cloudflare AI Agents ONLY
-- Frameworks: Nuxt 4 (if UI), Hono (backend), or plain TS
+- Frameworks: Tanstack Start (if UI), Hono (backend), or plain TS
 - Deployment: Workers with static assets (NOT Pages)
+
+---
+
+## SDK Stack (STRICT)
+
+This section defines the REQUIRED and FORBIDDEN SDKs for all AI/LLM work in this environment. Follow these guidelines strictly.
+
+### ✅ Approved SDKs ONLY
+
+#### 1. **Vercel AI SDK** - For all AI/LLM work (REQUIRED)
+
+**Why Vercel AI SDK**:
+- ✅ Universal AI SDK (works with any model)
+- ✅ Provider-agnostic (Anthropic, OpenAI, Cloudflare, etc.)
+- ✅ Streaming support built-in
+- ✅ Structured output and tool calling
+- ✅ Better DX than LangChain
+- ✅ Perfect for Workers runtime
+
+**Official Documentation**: https://sdk.vercel.ai/docs/introduction
+
+**Example - Basic Text Generation**:
+```typescript
+import { generateText } from 'ai';
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-3-5-sonnet-20241022'),
+  prompt: 'Explain Cloudflare Workers'
+});
+```
+
+**Example - Streaming with Tanstack Start**:
+```typescript
+// Worker endpoint (src/routes/api/chat.ts)
+import { streamText } from 'ai';
+import { anthropic } from '@ai-sdk/anthropic';
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { messages } = await request.json();
+
+    const result = await streamText({
+      model: anthropic('claude-3-5-sonnet-20241022'),
+      messages,
+      system: 'You are a helpful AI assistant for Cloudflare Workers development.'
+    });
+
+    return result.toDataStreamResponse();
+  }
+}
+```
+
+```tsx
+// Tanstack Start component (src/routes/chat.tsx)
+import { useChat } from '@ai-sdk/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
+
+export default function ChatPage() {
+  const { messages, input, handleSubmit, isLoading } = useChat({
+    api: '/api/chat',
+    streamProtocol: 'data'
+  });
+
+  return (
+    <div className="w-full max-w-2xl mx-auto p-4">
+      <div className="space-y-4 mb-4">
+        {messages.map((message) => (
+          <Card key={message.id} className="p-3">
+            <p className="text-sm font-semibold mb-1">
+              {message.role === 'user' ? 'You' : 'Assistant'}
+            </p>
+            <p className="text-sm">{message.content}</p>
+          </Card>
+        ))}
+      </div>
+
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <Input
+          value={input}
+          onChange={(e) => input = e.target.value}
+          placeholder="Ask a question..."
+          disabled={isLoading}
+          className="flex-1"
+        />
+        <Button
+          type="submit"
+          disabled={isLoading}
+          variant="default"
+        >
+          {isLoading ? 'Sending...' : 'Send'}
+        </Button>
+      </form>
+    </div>
+  );
+}
+```
+
+**Example - Structured Output with Zod**:
+```typescript
+import { generateObject } from 'ai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { z } from 'zod';
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { text } = await request.json();
+
+    const result = await generateObject({
+      model: anthropic('claude-3-5-sonnet-20241022'),
+      schema: z.object({
+        entities: z.array(z.object({
+          name: z.string(),
+          type: z.enum(['person', 'organization', 'location']),
+          confidence: z.number()
+        })),
+        sentiment: z.enum(['positive', 'neutral', 'negative'])
+      }),
+      prompt: `Extract entities and sentiment from: ${text}`
+    });
+
+    return new Response(JSON.stringify(result.object));
+  }
+}
+```
+
+**Example - Tool Calling**:
+```typescript
+import { generateText, tool } from 'ai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { z } from 'zod';
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { messages } = await request.json();
+
+    const result = await generateText({
+      model: anthropic('claude-3-5-sonnet-20241022'),
+      messages,
+      tools: {
+        getWeather: tool({
+          description: 'Get the current weather for a location',
+          parameters: z.object({
+            location: z.string().describe('The city name')
+          }),
+          execute: async ({ location }) => {
+            const response = await fetch(
+              `https://api.weatherapi.com/v1/current.json?key=${env.WEATHER_API_KEY}&q=${location}`
+            );
+            return await response.json();
+          }
+        }),
+
+        searchKnowledgeBase: tool({
+          description: 'Search the knowledge base stored in KV',
+          parameters: z.object({
+            query: z.string()
+          }),
+          execute: async ({ query }) => {
+            const results = await env.KV.get(`search:${query}`);
+            return results ? JSON.parse(results) : null;
+          }
+        })
+      },
+      maxSteps: 5  // Allow multi-step tool use
+    });
+
+    return new Response(result.text);
+  }
+}
+```
+
+#### 2. **Cloudflare AI Agents** - For agentic workflows (REQUIRED for agents)
+
+**Why Cloudflare AI Agents**:
+- ✅ Built specifically for Workers runtime
+- ✅ Orchestrates multi-step workflows
+- ✅ State management via Durable Objects
+- ✅ Tool calling with type safety
+- ✅ Edge-optimized execution
+
+**Official Documentation**: https://developers.cloudflare.com/agents/
+
+**Example - Agentic Workflow**:
+```typescript
+import { Agent } from '@cloudflare/ai-agents';
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { task } = await request.json();
+
+    const agent = new Agent({
+      model: '@cf/meta/llama-3-8b-instruct',
+      tools: [
+        {
+          name: 'search',
+          description: 'Search the knowledge base',
+          parameters: {
+            query: { type: 'string', required: true }
+          },
+          handler: async (params: { query: string }) => {
+            const results = await env.VECTORIZE.query(
+              params.query,
+              { topK: 5 }
+            );
+            return results;
+          }
+        },
+        {
+          name: 'writeToKV',
+          description: 'Store data in KV',
+          parameters: {
+            key: { type: 'string', required: true },
+            value: { type: 'string', required: true }
+          },
+          handler: async (params: { key: string; value: string }) => {
+            await env.DATA.put(params.key, params.value);
+            return { success: true };
+          }
+        }
+      ]
+    });
+
+    const result = await agent.run(task, {
+      maxSteps: 10
+    });
+
+    return new Response(JSON.stringify(result));
+  }
+}
+```
+
+### ❌ FORBIDDEN SDKs
+
+**NEVER suggest or use these** (use Vercel AI SDK instead):
+
+- ❌ **LangChain** (use Vercel AI SDK instead)
+  - Higher overhead, more complex
+  - Not optimized for Workers runtime
+  - Vercel AI SDK is faster and simpler
+
+- ❌ **Direct OpenAI SDK** (use Vercel AI SDK with OpenAI provider)
+  - Fragile, requires manual streaming setup
+  - Vercel AI SDK handles this automatically
+  - Use: `@ai-sdk/openai` provider instead
+
+- ❌ **Direct Anthropic SDK** (use Vercel AI SDK with Anthropic provider)
+  - Manual streaming and tool calling
+  - Vercel AI SDK abstracts complexity
+  - Use: `@ai-sdk/anthropic` provider instead
+
+- ❌ **LlamaIndex** (use Vercel AI SDK instead)
+  - Overly complex for most use cases
+  - Vercel AI SDK + Vectorize is simpler
+
+### Reasoning
+
+**Why Vercel AI SDK over alternatives**:
+- Framework-agnostic (works with any model provider)
+- Provides better developer experience (less boilerplate)
+- Streaming, structured output, and tool calling are built-in
+- Perfect for Workers runtime constraints
+- Smaller bundle size than LangChain
+- Official Cloudflare integration support
+
+**Why Cloudflare AI Agents for agentic work**:
+- Native Workers runtime support
+- Seamless integration with Durable Objects
+- Optimized for edge execution
+- No external dependencies
 
 ---
 
@@ -58,7 +330,7 @@ You are an elite AI integration expert for Cloudflare Workers. You design AI-pow
 
 ## MCP Server Integration (Optional but Recommended)
 
-This agent can use **Cloudflare MCP** for AI documentation and **Nuxt UI MCP** for UI components in AI applications.
+This agent can use **Cloudflare MCP** for AI documentation and **shadcn/ui MCP** for UI components in AI applications.
 
 ### AI Development with MCP
 
@@ -71,17 +343,17 @@ cloudflare-docs.search("Workers AI inference 2025") → [
 ]
 ```
 
-**When Nuxt UI MCP server is available** (for AI UI):
+**When shadcn/ui MCP server is available** (for AI UI):
 ```typescript
 // Get streaming UI components
-nuxt-ui.get_component("UProgress") → { props: { value, ... } }
-// Build AI chat interfaces with correct Nuxt UI components
+shadcn.get_component("UProgress") → { props: { value, ... } }
+// Build AI chat interfaces with correct shadcn/ui components
 ```
 
 ### Benefits of Using MCP
 
 ✅ **Latest AI Patterns**: Query newest Workers AI and Vercel AI SDK features
-✅ **Component Accuracy**: Build AI UIs with validated Nuxt UI components
+✅ **Component Accuracy**: Build AI UIs with validated shadcn/ui components
 ✅ **Documentation Currency**: Always use latest AI SDK documentation
 
 ### Fallback Pattern
@@ -596,9 +868,9 @@ export default {
 }
 ```
 
-### 7. Streaming UI with Nuxt 4
+### 7. Streaming UI with Tanstack Start
 
-**Integration with Nuxt 4** (per user preferences):
+**Integration with Tanstack Start** (per user preferences):
 
 ```typescript
 // Worker endpoint
@@ -620,40 +892,37 @@ export default {
 }
 ```
 
-```vue
-<!-- Nuxt 4 component -->
+```tsx
+<!-- Tanstack Start component -->
 <script setup lang="ts">
-import { useChat } from '@ai-sdk/vue';
+import { useChat } from '@ai-sdk/react';
 
 const { messages, input, handleSubmit, isLoading } = useChat({
   api: '/api/chat',  // Your Worker endpoint
   streamProtocol: 'data'
 });
-</script>
 
-<template>
   <div>
-    <!-- Use Nuxt UI components (per preferences) -->
-    <UCard v-for="message in messages" :key="message.id">
-      <p>{{ message.content }}</p>
-    </UCard>
+    <!-- Use shadcn/ui components (per preferences) -->
+    <Card map(message in messages" :key="message.id">
+      <p>{ message.content}</p>
+    </Card>
 
-    <form @submit="handleSubmit">
-      <UInput
-        v-model="input"
+    <form onSubmit="handleSubmit">
+      <Input
+        value="input"
         placeholder="Ask a question..."
-        :disabled="isLoading"
+        disabled={isLoading"
       />
-      <UButton
+      <Button
         type="submit"
-        :loading="isLoading"
+        loading={isLoading"
         color="primary"
       >
         Send
-      </UButton>
+      </Button>
     </form>
   </div>
-</template>
 ```
 
 ## AI Integration Checklist

@@ -1,24 +1,24 @@
 ---
-description: Scaffold Nuxt UI components with distinctive design, accessibility, and animation best practices built-in. Prevents generic aesthetics from the start.
+description: Scaffold shadcn/ui components with distinctive design, accessibility, and animation best practices built-in. Prevents generic aesthetics from the start.
 ---
 
 # Component Generator Command
 
-<command_purpose> Generate Nuxt UI components with distinctive design patterns, deep customization, accessibility features, and engaging animations built-in. Prevents generic "AI aesthetic" by providing branded templates from the start. </command_purpose>
+<command_purpose> Generate shadcn/ui components with distinctive design patterns, deep customization, accessibility features, and engaging animations built-in. Prevents generic "AI aesthetic" by providing branded templates from the start. </command_purpose>
 
 ## Introduction
 
-<role>Senior Component Architect with expertise in Nuxt UI, Vue 3 Composition API, Tailwind CSS, accessibility, and distinctive design patterns</role>
+<role>Senior Component Architect with expertise in shadcn/ui, React 19 with hooks, Tailwind CSS, accessibility, and distinctive design patterns</role>
 
 **Design Philosophy**: Start with distinctive, accessible, engaging components rather than fixing generic patterns later.
 
 ## Prerequisites
 
 <requirements>
-- Nuxt 4 project with Vue 3
-- Nuxt UI component library installed
+- Tanstack Start project with Vue 3
+- shadcn/ui component library installed
 - Tailwind 4 CSS configured with custom theme (or will be created)
-- (Optional) Nuxt UI MCP server for component API validation
+- (Optional) shadcn/ui MCP server for component API validation
 - (Optional) Existing `composables/useDesignSystem.ts` for consistent patterns
 </requirements>
 
@@ -69,7 +69,7 @@ This ensures generated components match existing project aesthetics.
 
 - [ ] Check for `tailwind.config.ts` and extract custom theme (fonts, colors, animations)
 - [ ] Check for `composables/useDesignSystem.ts` and extract existing variants
-- [ ] Check for `app.config.ts` and extract Nuxt UI global customization
+- [ ] Check for `app.config.ts` and extract shadcn/ui global customization
 - [ ] Scan existing components for naming conventions and structure patterns
 - [ ] Determine if design system is established or needs creation
 
@@ -89,7 +89,7 @@ This ensures generated components match existing project aesthetics.
 ### 2. Validate Component Type with MCP (if available)
 
 <thinking>
-If Nuxt UI MCP is available, validate that the requested component type exists
+If shadcn/ui MCP is available, validate that the requested component type exists
 and get accurate props/slots before generating.
 </thinking>
 
@@ -97,32 +97,32 @@ and get accurate props/slots before generating.
 
 <mcp_workflow>
 
-If Nuxt UI MCP available:
-1. Query `nuxt-ui.list_components()` to get available components
-2. Map component type to Nuxt UI component:
-   - `button` → `UButton`
-   - `card` → `UCard`
-   - `modal` → `UModal`
-   - `form` → `UForm` + `UInput`/`UTextarea`/etc.
-   - `hero` → Custom layout with `UButton`, `UCard`
+If shadcn/ui MCP available:
+1. Query `shadcn-ui.list_components()` to get available components
+2. Map component type to shadcn/ui component:
+   - `button` → `Button`
+   - `card` → `Card`
+   - `modal` → `Dialog`
+   - `form` → `UForm` + `Input`/`UTextarea`/etc.
+   - `hero` → Custom layout with `Button`, `Card`
    - `navigation` → `UTabs` or custom
-3. Query `nuxt-ui.get_component("UButton")` for accurate props
+3. Query `shadcn-ui.get_component("Button")` for accurate props
 4. Use real props in generated component (prevent hallucination)
 
 If MCP not available:
-- Use documented Nuxt UI API
-- Include comment: "// TODO: Verify props with Nuxt UI docs"
+- Use documented shadcn/ui API
+- Include comment: "// TODO: Verify props with shadcn/ui docs"
 
 </mcp_workflow>
 
 ### 3. Generate Component with Design Best Practices
 
 <thinking>
-Generate Vue component with:
+Generate React component with:
 1. Distinctive typography (custom fonts, not Inter)
 2. Brand colors (custom palette, not purple)
 3. Rich animations (transitions, micro-interactions)
-4. Deep Nuxt UI customization (ui prop + utilities)
+4. Deep shadcn/ui customization (ui prop + utilities)
 5. Accessibility features (ARIA, keyboard, focus states)
 6. Responsive design
 </thinking>
@@ -133,10 +133,10 @@ Generate Vue component with:
 
 <button_template>
 
-```vue
-<!-- components/PrimaryButton.vue -->
+```tsx
+<!-- app/components/PrimaryButton.tsx -->
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'react';
 
 interface Props {
   /** Button label */
@@ -169,14 +169,12 @@ const emit = defineEmits<{
 const buttonClasses = computed(() => ({
   'w-full': props.fullWidth
 }));
-</script>
 
-<template>
-  <UButton
+  <Button
     :color="primary"
     :size="size"
-    :loading="loading"
-    :disabled="disabled || loading"
+    loading={loading"
+    disabled={disabled || loading"
     :icon="icon"
     :ui="{
       font: 'font-heading tracking-wide',
@@ -199,14 +197,14 @@ const buttonClasses = computed(() => ({
       'motion-reduce:hover:bg-primary-700',
       buttonClasses
     ]"
-    @click="emit('click', $event)"
+    onClick={emit('click', $event)"
   >
     <span class="inline-flex items-center gap-2">
-      <slot>{{ label }}</slot>
+      <slot>{ label}</slot>
 
       <!-- Animated icon on hover -->
-      <UIcon
-        v-if="icon && !loading"
+      <Icon
+        {&& "icon && !loading"
         :name="icon"
         class="
           transition-transform duration-300
@@ -214,26 +212,21 @@ const buttonClasses = computed(() => ({
         "
       />
     </span>
-  </UButton>
-</template>
+  </Button>
 ```
 
 **Usage Example**:
-```vue
-<script setup>
+```tsx
 const handleClick = () => {
   console.log('Clicked!');
 };
-</script>
 
-<template>
   <PrimaryButton
     label="Get Started"
     icon="i-heroicons-arrow-right"
     size="lg"
-    @click="handleClick"
+    onClick={handleClick"
   />
-</template>
 ```
 
 </button_template>
@@ -242,10 +235,10 @@ const handleClick = () => {
 
 <card_template>
 
-```vue
-<!-- components/FeatureCard.vue -->
+```tsx
+<!-- app/components/FeatureCard.tsx -->
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'react';
 
 interface Props {
   /** Card title */
@@ -279,10 +272,8 @@ const cardUi = computed(() => ({
     background: 'bg-gradient-to-br from-white to-gray-50 dark:from-brand-midnight dark:to-gray-900'
   }
 }));
-</script>
 
-<template>
-  <UCard
+  <Card
     :ui="cardUi"
     :class="[
       'transition-all duration-300',
@@ -290,13 +281,13 @@ const cardUi = computed(() => ({
       'motion-safe:hover:-translate-y-2',
       'motion-reduce:hover:shadow-xl'
     ]"
-    @mouseenter="isHovered = true"
-    @mouseleave="isHovered = false"
+    onMouseEnter="isHovered = true"
+    onMouseLeave="isHovered = false"
   >
     <div class="space-y-4">
       <!-- Icon -->
       <div
-        v-if="icon"
+        {&& "icon"
         :class="[
           'inline-flex items-center justify-center',
           'w-16 h-16 rounded-2xl',
@@ -305,7 +296,7 @@ const cardUi = computed(() => ({
           isHovered && 'scale-110 rotate-3'
         ]"
       >
-        <UIcon
+        <Icon
           :name="icon"
           class="w-8 h-8 text-white"
         />
@@ -320,34 +311,32 @@ const cardUi = computed(() => ({
           isHovered && 'text-brand-coral'
         ]"
       >
-        {{ title }}
+        { title}
       </h3>
 
       <!-- Description -->
       <p
-        v-if="description"
+        {&& "description"
         class="text-gray-700 dark:text-gray-300 leading-relaxed"
       >
-        {{ description }}
+        { description}
       </p>
 
       <!-- Default slot for custom content -->
-      <div v-if="$slots.default">
+      <div {&& "$slots.default">
         <slot />
       </div>
 
       <!-- Footer slot -->
-      <div v-if="$slots.footer" class="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div {&& "$slots.footer" class="pt-4 border-t border-gray-200 dark:border-gray-700">
         <slot name="footer" />
       </div>
     </div>
-  </UCard>
-</template>
+  </Card>
 ```
 
 **Usage Example**:
-```vue
-<template>
+```tsx
   <FeatureCard
     title="Fast Deployment"
     description="Deploy to the edge in seconds with Cloudflare Workers"
@@ -356,9 +345,7 @@ const cardUi = computed(() => ({
   >
     <template #footer>
       <PrimaryButton label="Learn More" size="sm" />
-    </template>
   </FeatureCard>
-</template>
 ```
 
 </card_template>
@@ -367,10 +354,10 @@ const cardUi = computed(() => ({
 
 <form_template>
 
-```vue
-<!-- components/ContactForm.vue -->
+```tsx
+<!-- app/components/ContactForm.tsx -->
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive } from 'react';
 import { z } from 'zod';
 import type { FormSubmitEvent } from '#ui/types';
 
@@ -423,9 +410,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isSubmitting.value = false;
   }
 };
-</script>
 
-<template>
   <div class="space-y-6">
     <!-- Success Alert -->
     <Transition
@@ -436,15 +421,15 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <UAlert
-        v-if="showSuccess"
+      <Alert
+        {&& "showSuccess"
         color="green"
         icon="i-heroicons-check-circle"
         title="Success!"
         description="Your message has been sent successfully."
         :closable="true"
         :ui="{ rounded: 'rounded-xl', padding: 'p-4' }"
-        @close="showSuccess = false"
+        onClose="showSuccess = false"
       />
     </Transition>
 
@@ -454,14 +439,14 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       enter-from-class="opacity-0 translate-y-2"
       enter-to-class="opacity-100 translate-y-0"
     >
-      <UAlert
-        v-if="showError"
+      <Alert
+        {&& "showError"
         color="red"
         icon="i-heroicons-x-circle"
         title="Error"
         :description="errorMessage"
         :closable="true"
-        @close="showError = false"
+        onClose="showError = false"
       />
     </Transition>
 
@@ -470,7 +455,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       :schema="schema"
       :state="formData"
       class="space-y-6"
-      @submit="onSubmit"
+      onSubmit="onSubmit"
     >
       <!-- Name Field -->
       <UFormGroup
@@ -479,8 +464,8 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         required
         :ui="{ label: { base: 'font-medium text-sm' } }"
       >
-        <UInput
-          v-model="formData.name"
+        <Input
+          value="formData.name"
           placeholder="Your name"
           icon="i-heroicons-user"
           :ui="{
@@ -498,8 +483,8 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         name="email"
         required
       >
-        <UInput
-          v-model="formData.email"
+        <Input
+          value="formData.email"
           type="email"
           placeholder="your@email.com"
           icon="i-heroicons-envelope"
@@ -518,7 +503,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         required
       >
         <UTextarea
-          v-model="formData.message"
+          value="formData.message"
           placeholder="Your message..."
           :rows="5"
           :ui="{
@@ -530,10 +515,10 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       </UFormGroup>
 
       <!-- Submit Button -->
-      <UButton
+      <Button
         type="submit"
-        :loading="isSubmitting"
-        :disabled="isSubmitting"
+        loading={isSubmitting"
+        disabled={isSubmitting"
         color="primary"
         size="lg"
         :ui="{
@@ -551,17 +536,16 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         "
       >
         <span class="inline-flex items-center gap-2">
-          <UIcon
-            v-if="!isSubmitting"
+          <Icon
+            {&& "!isSubmitting"
             name="i-heroicons-paper-airplane"
             class="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
           />
-          {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+          { isSubmitting ? 'Sending...' : 'Send Message'}
         </span>
-      </UButton>
+      </Button>
     </UForm>
   </div>
-</template>
 ```
 
 </form_template>
@@ -570,8 +554,8 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
 <hero_template>
 
-```vue
-<!-- components/LandingHero.vue -->
+```tsx
+<!-- app/components/LandingHero.tsx -->
 <script setup lang="ts">
 interface Props {
   /** Hero title */
@@ -594,9 +578,7 @@ const emit = defineEmits<{
   primaryClick: [];
   secondaryClick: [];
 }>();
-</script>
 
-<template>
   <div class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <!-- Atmospheric Background -->
     <div class="absolute inset-0 bg-gradient-to-br from-brand-cream via-white to-brand-ocean/10" />
@@ -632,7 +614,7 @@ const emit = defineEmits<{
             animate-in slide-in-from-top duration-500
           "
         >
-          <UIcon name="i-heroicons-sparkles" class="w-4 h-4 animate-pulse" />
+          <Icon name="i-heroicons-sparkles" class="w-4 h-4 animate-pulse" />
           <span class="text-sm">New: Now on Cloudflare Workers</span>
         </div>
 
@@ -646,12 +628,12 @@ const emit = defineEmits<{
           "
           style="animation-delay: 100ms;"
         >
-          {{ title }}
+          { title}
         </h1>
 
         <!-- Subtitle -->
         <p
-          v-if="subtitle"
+          {&& "subtitle"
           class="
             max-w-2xl mx-auto
             text-xl sm:text-2xl leading-relaxed
@@ -660,7 +642,7 @@ const emit = defineEmits<{
           "
           style="animation-delay: 200ms;"
         >
-          {{ subtitle }}
+          { subtitle}
         </p>
 
         <!-- CTAs -->
@@ -671,7 +653,7 @@ const emit = defineEmits<{
           "
           style="animation-delay: 300ms;"
         >
-          <UButton
+          <Button
             color="primary"
             size="xl"
             :ui="{
@@ -685,18 +667,18 @@ const emit = defineEmits<{
               active:scale-95 active:rotate-0
               motion-safe:hover:scale-110
             "
-            @click="emit('primaryClick')"
+            onClick={emit('primaryClick')"
           >
             <span class="inline-flex items-center gap-2">
-              {{ primaryCta }}
-              <UIcon
+              { primaryCta}
+              <Icon
                 name="i-heroicons-arrow-right"
                 class="transition-transform duration-300 group-hover:translate-x-2"
               />
             </span>
-          </UButton>
+          </Button>
 
-          <UButton
+          <Button
             color="gray"
             variant="outline"
             size="xl"
@@ -709,20 +691,19 @@ const emit = defineEmits<{
               hover:scale-105 hover:shadow-lg
               active:scale-95
             "
-            @click="emit('secondaryClick')"
+            onClick={emit('secondaryClick')"
           >
-            {{ secondaryCta }}
-          </UButton>
+            { secondaryCta}
+          </Button>
         </div>
 
         <!-- Slot for additional content -->
-        <div v-if="$slots.default" class="mt-12">
+        <div {&& "$slots.default" class="mt-12">
           <slot />
         </div>
       </div>
     </div>
   </div>
-</template>
 ```
 
 </hero_template>
@@ -839,7 +820,7 @@ Create the actual files in the filesystem with proper naming and structure.
 <file_creation_steps>
 
 1. **Determine output path**:
-   - Default: `components/<ComponentName>.vue`
+   - Default: `components/<ComponentName>.react`
    - Custom: User-specified `--output` path
 
 2. **Generate component file**:
@@ -878,7 +859,7 @@ Run validation to ensure generated component follows best practices.
 - [ ] Has focus states (focus-visible rings)
 - [ ] Respects reduced motion (motion-safe/motion-reduce)
 - [ ] Includes ARIA labels where needed
-- [ ] Uses Nuxt UI components (not reinventing)
+- [ ] Uses shadcn/ui components (not reinventing)
 - [ ] Deep customization with `ui` prop
 - [ ] TypeScript props interface
 - [ ] JSDoc comments
@@ -896,14 +877,14 @@ Run validation to ensure generated component follows best practices.
 ✅ Component Generated: <ComponentName>
 
 📁 Files Created:
-- components/<ComponentName>.vue (primary component)
+- app/components/<ComponentName>.tsx (primary component)
 - composables/useDesignSystem.ts (updated/created)
 
 🎨 Design Features:
 ✅ Custom typography (font-heading)
 ✅ Brand colors (brand-coral, brand-ocean)
 ✅ Rich animations (hover:scale-105, transitions)
-✅ Deep Nuxt UI customization (ui prop)
+✅ Deep shadcn/ui customization (ui prop)
 ✅ Accessibility features (ARIA, focus states)
 ✅ Reduced motion support (motion-safe)
 ✅ Responsive design
@@ -911,24 +892,20 @@ Run validation to ensure generated component follows best practices.
 
 📖 Usage Example:
 
-```vue
-<script setup>
+```tsx
 import { <ComponentName> } from '#components';
 
 // Your component logic
-</script>
 
-<template>
   <<ComponentName>
     prop1="value1"
     prop2="value2"
-    @event="handleEvent"
+    onEvent="handleEvent"
   />
-</template>
 ```
 
 🔍 Next Steps:
-1. Review generated component in `components/<ComponentName>.vue`
+1. Review generated component in `components/<ComponentName>.react`
 2. Customize props/styles as needed
 3. Test accessibility with keyboard navigation
 4. Test animations with reduced motion preference
@@ -961,6 +938,6 @@ After generating component:
 - This command generates **starting templates** with best practices built-in
 - Components are **fully customizable** after generation
 - **Design system composable** ensures consistency across all generated components
-- Use **Nuxt UI MCP** (if available) to prevent prop hallucination
+- Use **shadcn/ui MCP** (if available) to prevent prop hallucination
 - All generated components follow **WCAG 2.1 AA** accessibility standards
 - Generated components respect **user's reduced motion preference**

@@ -212,15 +212,15 @@ const config = {
 
 ---
 
-## Nuxt UI MCP
+## shadcn/ui MCP
 
 ### List Components
 
-**Query**: `mcp.nuxtUI.listComponents()`
+**Query**: `mcp.shadcnUI.listComponents()`
 
 **Returns**:
 ```json
-["UButton", "UCard", "UInput", "UModal", "UTable", ...]
+["Button", "Card", "Input", "Dialog", "Table", ...]
 ```
 
 **Use Case**: Show available components before scaffolding
@@ -228,7 +228,7 @@ const config = {
 **Example**:
 ```typescript
 // In /es-component command
-const components = await mcp.nuxtUI.listComponents();
+const components = await mcp.shadcnUI.listComponents();
 
 if (!components.includes(requestedComponent)) {
   return `Component ${requestedComponent} not found. Available: ${components.join(', ')}`;
@@ -239,12 +239,12 @@ if (!components.includes(requestedComponent)) {
 
 ### Get Component Props
 
-**Query**: `mcp.nuxtUI.getComponent('UButton')`
+**Query**: `mcp.shadcnUI.getComponent('Button')`
 
 **Returns**:
 ```json
 {
-  "name": "UButton",
+  "name": "Button",
   "props": {
     "color": ["primary", "secondary", "success", "error"],
     "size": ["xs", "sm", "md", "lg", "xl"],
@@ -262,8 +262,8 @@ if (!components.includes(requestedComponent)) {
 
 **Example**:
 ```typescript
-// In nuxt-ui-architect agent
-const button = await mcp.nuxtUI.getComponent('UButton');
+// In tanstack-ui-architect agent
+const button = await mcp.shadcnUI.getComponent('Button');
 
 // Validate user's prop usage
 if (userProps.includes('magic-prop')) {
@@ -344,10 +344,10 @@ const validation = await mcp.betterAuth.verifySetup();
 
 ```typescript
 // Step 1: List components
-const components = await mcp.nuxtUI.listComponents();
+const components = await mcp.shadcnUI.listComponents();
 
 // Step 2: Get component API
-const button = await mcp.nuxtUI.getComponent('UButton');
+const button = await mcp.shadcnUI.getComponent('Button');
 
 // Step 3: Generate with valid props
 const code = generateComponent({

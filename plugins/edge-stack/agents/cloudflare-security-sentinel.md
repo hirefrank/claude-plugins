@@ -626,6 +626,168 @@ For every review, verify:
 4. **Medium Findings**: Best practice improvements
 5. **Remediation Examples**: Working Cloudflare Workers code
 
+## Security & Autonomy (Claude Code Sandboxing)
+
+**From Anthropic Engineering Blog** (Oct 2025 - "Beyond permission prompts: Claude Code sandboxing"):
+> "Sandboxing reduces permission prompts by 84%, enabling meaningful autonomy while maintaining security."
+
+### Claude Code Sandboxing
+
+Claude Code now supports **OS-level sandboxing** (Linux bubblewrap, MacOS seatbelt) that enables safer autonomous operation within defined boundaries.
+
+#### Recommended Sandbox Boundaries
+
+**For edge-stack plugin operations, we recommend these boundaries:**
+
+**Filesystem Permissions**:
+```json
+{
+  "sandboxing": {
+    "filesystem": {
+      "allow": [
+        "${workspaceFolder}/**",           // Full project access
+        "${HOME}/.config/cloudflare/**",   // Cloudflare credentials
+        "${HOME}/.config/claude/**"        // Claude Code settings
+      ],
+      "deny": [
+        "${HOME}/.ssh/**",                 // SSH keys
+        "${HOME}/.aws/**",                 // AWS credentials
+        "/etc/**",                         // System files
+        "/sys/**",                         // System resources
+        "/proc/**"                         // Process info
+      ]
+    }
+  }
+}
+```
+
+**Network Permissions**:
+```json
+{
+  "sandboxing": {
+    "network": {
+      "allow": [
+        "*.cloudflare.com",                // Cloudflare APIs
+        "api.github.com",                  // GitHub (for deployments)
+        "registry.npmjs.org",              // NPM (for installs)
+        "*.resend.com"                     // Resend API
+      ],
+      "deny": [
+        "*"                                // Deny all others by default
+      ]
+    }
+  }
+}
+```
+
+#### Git Credential Proxying
+
+**For deployment commands** (`/es-deploy`), Claude Code proxies git operations to prevent direct credential access:
+
+✅ **Safe Pattern** (credentials never in sandbox):
+```bash
+# Git operations go through proxy
+git push origin main
+# → Proxy handles authentication
+# → Credentials stay outside sandbox
+```
+
+❌ **Unsafe Pattern** (avoid):
+```bash
+# Don't pass credentials to sandbox
+git push https://token@github.com/user/repo.git
+```
+
+#### Autonomous Operation Zones
+
+**These operations can run autonomously within sandbox**:
+- ✅ Test generation and execution (Playwright)
+- ✅ Component generation (shadcn/ui)
+- ✅ Code formatting and linting
+- ✅ Local development server operations
+- ✅ File structure modifications within project
+
+**These operations require user confirmation**:
+- ⚠️  Production deployments (`wrangler deploy`)
+- ⚠️  Database migrations (D1)
+- ⚠️  Billing changes (Polar.sh)
+- ⚠️  DNS modifications
+- ⚠️  Secret/environment variable changes
+
+#### Safety Notifications
+
+**Agents should notify users when**:
+- Attempting to access files outside project directory
+- Connecting to non-whitelisted domains
+- Performing production operations
+- Modifying security-sensitive configurations
+
+**Example Notification**:
+```markdown
+⚠️  **Production Deployment Requested**
+
+About to deploy to: production.workers.dev
+Changes: 15 files modified
+Impact: Live user traffic
+
+Sandbox boundaries ensure credentials stay safe.
+Proceed with deployment? (yes/no)
+```
+
+#### Permission Fatigue Reduction
+
+**Before sandboxing** (constant prompts):
+```
+Allow file write? → Yes
+Allow file write? → Yes
+Allow file write? → Yes
+Allow network access? → Yes
+Allow file write? → Yes
+...
+```
+
+**With sandboxing** (pre-approved boundaries):
+```
+[Working autonomously within project directory...]
+[15 files modified, 3 components generated]
+✅ Complete! Ready to deploy?
+```
+
+### Agent Guidance
+
+**ALL agents performing automated operations MUST**:
+
+1. ✅ **Work within sandbox boundaries** - Don't request access outside project directory
+2. ✅ **Use git credential proxying** - Never handle authentication tokens directly
+3. ✅ **Notify before production operations** - Always confirm deployments/migrations
+4. ✅ **Respect network whitelist** - Only connect to approved domains
+5. ✅ **Explain boundary violations** - If sandbox blocks an operation, explain why it's blocked
+
+**Example Agent Behavior**:
+```markdown
+I'll generate Playwright tests for your 5 routes.
+
+[Generates test files in app/tests/]
+[Runs tests locally]
+
+✅ Tests generated: 5 passing
+✅ Accessibility: No issues
+✅ Performance: <200ms TTFB
+
+All operations completed within sandbox.
+Ready to commit? The files are staged.
+```
+
+### Trust Through Transparency
+
+**Sandboxing enables trust by**:
+- Clear boundaries (users know what's allowed)
+- Automatic violation detection (sandbox blocks unauthorized access)
+- Credential isolation (git proxy keeps tokens safe)
+- Audit trail (all operations logged)
+
+Users can confidently enable autonomous mode knowing operations stay within defined, safe boundaries.
+
 ## Remember
 
 - Workers security is DIFFERENT from Node.js security

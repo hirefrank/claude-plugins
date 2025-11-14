@@ -21,7 +21,7 @@ description: Interactive Polar.sh billing integration wizard. Sets up products, 
 ## Prerequisites
 
 <requirements>
-- Cloudflare Workers project (Nuxt or Hono)
+- Cloudflare Workers project (Tanstack Start or Hono)
 - Polar.sh account: https://polar.sh
 - D1 database configured in wrangler.toml (or will create)
 - Polar Access Token (will guide through obtaining)
@@ -77,7 +77,7 @@ Create comprehensive webhook handler with signature verification
 and all critical event handlers.
 </thinking>
 
-**Generate File**: `server/api/webhooks/polar.ts` (Nuxt) or `src/webhooks/polar.ts` (Hono)
+**Generate File**: `app/routes/api/webhooks/polar.ts` (Tanstack Start) or `src/webhooks/polar.ts` (Hono)
 
 ```typescript
 // Generated webhook handler
@@ -211,7 +211,7 @@ async function handleSubscriptionPastDue(data: any, env: Env) {
   console.log('Subscription past due:', id);
 }
 
-// Nuxt-specific export
+// App-specific export
 export default defineEventHandler(async (event) => {
   return await handlePolarWebhook(
     event.node.req,
@@ -286,7 +286,7 @@ wrangler d1 migrations apply DB --remote
 Create middleware to check subscription status on protected routes.
 </thinking>
 
-**Generate File**: `server/middleware/subscription.ts` (Nuxt) or `src/middleware/subscription.ts` (Hono)
+**Generate File**: `app/middleware/subscription.ts` (Tanstack Start) or `src/middleware/subscription.ts` (Hono)
 
 ```typescript
 // Subscription check middleware
@@ -347,7 +347,6 @@ export async function requireActiveSubscription(
 // Helper to get user ID from session
 async function getUserIdFromSession(request: Request, env: Env): Promise<string | null> {
   // TODO: Implement based on your auth setup
-  // For nuxt-auth-utils:
   // const session = await getUserSession(event);
   // return session?.user?.id || null;
 

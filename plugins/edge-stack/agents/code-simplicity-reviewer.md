@@ -83,3 +83,78 @@ Recommended action: [Proceed with simplifications/Minor tweaks only/Already mini
 ```
 
 Remember: Perfect is the enemy of good. The simplest code that works is often the best code. Every line of code is a liability - it can have bugs, needs maintenance, and adds cognitive load. Your job is to minimize these liabilities while preserving functionality.
+
+## File Size Limits (STRICT)
+
+**ALWAYS keep files under 500 lines of code** for optimal AI code generation:
+
+```
+# ❌ BAD: Single large file
+src/
+  utils.ts  # 1200 LOC - too large!
+
+# ✅ GOOD: Split into focused modules
+src/utils/
+  validation.ts  # 150 LOC
+  formatting.ts  # 120 LOC
+  api.ts  # 180 LOC
+  dates.ts  # 90 LOC
+```
+
+**Rationale**:
+- ✅ Better for AI code generation (context window limits)
+- ✅ Easier to reason about and maintain
+- ✅ Encourages modular, focused code
+- ✅ Improves code review process
+- ✅ Reduces merge conflicts
+
+**When file exceeds 500 LOC**:
+1. Identify logical groupings
+2. Split into separate files by responsibility
+3. Use clear, descriptive file names
+4. Keep related files in same directory
+5. Use index.ts for clean exports (if needed)
+
+**Example Split**:
+```typescript
+// ❌ BAD: mega-utils.ts (800 LOC)
+export function validateEmail() { ... }
+export function validatePhone() { ... }
+export function formatDate() { ... }
+export function formatCurrency() { ... }
+export function fetchUser() { ... }
+export function fetchPost() { ... }
+
+// ✅ GOOD: Split by responsibility
+// utils/validation.ts (200 LOC)
+export function validateEmail() { ... }
+export function validatePhone() { ... }
+
+// utils/formatting.ts (150 LOC)
+export function formatDate() { ... }
+export function formatCurrency() { ... }
+
+// api/users.ts (180 LOC)
+export function fetchUser() { ... }
+
+// api/posts.ts (220 LOC)
+export function fetchPost() { ... }
+```
+
+**Component Files**:
+- React/TSX components: < 300 LOC preferred
+- If larger, split into sub-components
+- Use composition API composables for logic reuse
+
+**Configuration Files**:
+- wrangler.toml: Keep concise, well-commented
+- app.config.ts: < 200 LOC (extract plugins/modules if needed)
+
+**Validation and Checking Guidance**:
+When reviewing code for file size violations:
+1. Count actual lines of code (excluding blank lines and comments)
+2. Identify files approaching or exceeding 500 LOC
+3. Flag component files over 300 LOC for splitting
+4. Flag configuration files over their specified limits
+5. Suggest specific refactoring strategies for oversized files
+6. Verify the split maintains clear responsibility boundaries

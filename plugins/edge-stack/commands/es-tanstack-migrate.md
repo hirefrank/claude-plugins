@@ -95,7 +95,7 @@ fi
    find pages -name "*.jsx" -o -name "*.tsx" 2>/dev/null | wc -l
    find app -name "page.tsx" 2>/dev/null | wc -l
 
-   # Vue/Nuxt
+   # React/Nuxt
    find pages -name "*.vue" 2>/dev/null | wc -l
 
    # Vanilla
@@ -115,7 +115,7 @@ fi
    # React Query/TanStack Query
    grep -r "useQuery\|QueryClient" src/ 2>/dev/null
 
-   # Vuex/Pinia
+   # Zustand/Pinia
    grep -r "createStore\|defineStore" src/ store/ 2>/dev/null
 
    # Context API
@@ -189,7 +189,7 @@ Comprehensive report on current framework and migration complexity
 - Framework paradigm shift: [None / Small / Large]
   - React → Tanstack Start: Low (same paradigm, better tooling)
   - Next.js → Tanstack Start: Medium (different routing)
-  - Vue/Nuxt → Tanstack Start: High (Vue to React conversion)
+  - React/Nuxt → Tanstack Start: High (Vue to React conversion)
   - Vanilla → Tanstack Start: Medium (adding framework)
 - Component count: [X components] - [Low / Medium / High]
 - State management migration: [Simple / Complex]
@@ -278,7 +278,7 @@ The tanstack-migration-specialist agent will generate a comprehensive plan inclu
 | `/api/users` | `src/routes/api/users.ts` | No | N/A | API route (server function) |
 
 **State Management Strategy**:
-- Current: [Redux / Context / Vuex / etc.]
+- Current: [Redux / Context / Zustand / etc.]
 - Target: TanStack Query (server state) + Zustand (client state)
 - Migration approach: [Details]
 
@@ -293,7 +293,7 @@ The tanstack-migration-specialist agent will generate a comprehensive plan inclu
 - Rationale: [Why]
 
 **Styling Strategy**:
-- Current: [Material UI / Chakra / Nuxt UI / Custom CSS]
+- Current: [Material UI / Chakra / shadcn/ui / Custom CSS]
 - Target: shadcn/ui + Tailwind 4
 - Migration: [Component-by-component replacement]
 
@@ -449,19 +449,15 @@ Only execute if user approves. Work through phases systematically.
 
    ```tsx
    // OLD (Vue)
-   <template>
      <div class="card">
-       <h2>{{ title }}</h2>
-       <p>{{ description }}</p>
+       <h2>{ title}</h2>
+       <p>{ description}</p>
      </div>
-   </template>
 
-   <script setup>
    const props = defineProps<{
      title: string
      description: string
    }>()
-   </script>
 
    // NEW (React + shadcn/ui)
    import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -696,13 +692,12 @@ wrangler rollback
 - `useEffect` + fetch → TanStack Query `useQuery`
 - Context API → Zustand (for client state)
 
-### Vue/Nuxt → Tanstack Start
+### React/Nuxt → Tanstack Start
 
 **Complexity**: High (Vue to React conversion)
 
 **Key mappings**:
-- `<template>` → JSX
-- `{{ }}` interpolation → `{}`
+- `{}` interpolation → `{}`
 - `v-if` → `{condition && <Component />}`
 - `v-for` → `.map()`
 - `v-model` → `value` + `onChange`

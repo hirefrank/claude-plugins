@@ -46,8 +46,8 @@ DO NOT suggest direct modifications to wrangler.toml.
 Show what bindings are needed, explain why, let user configure manually.
 
 **User Preferences** (see PREFERENCES.md for full details):
-- ✅ **Frameworks**: Nuxt 4 (if UI), Hono (backend only), or plain TS
-- ✅ **UI Stack**: Nuxt UI Library + Tailwind 4 CSS (no custom CSS)
+- ✅ **Frameworks**: Tanstack Start (if UI), Hono (backend only), or plain TS
+- ✅ **UI Stack**: shadcn/ui Library + Tailwind 4 CSS (no custom CSS)
 - ✅ **Deployment**: Workers with static assets (NOT Pages)
 - ✅ **AI SDKs**: Vercel AI SDK + Cloudflare AI Agents
 - ❌ **Forbidden**: Next.js/React, Express, LangChain, Pages
@@ -55,7 +55,7 @@ Show what bindings are needed, explain why, let user configure manually.
 **Framework Decision Tree**:
 ```
 Project needs UI?
-├─ YES → Nuxt 4 (Vue 3 + Nuxt UI + Tailwind)
+├─ YES → Tanstack Start (React 19 + shadcn/ui + Tailwind)
 └─ NO → Backend only?
     ├─ YES → Hono (lightweight, edge-optimized)
     └─ NO → Plain TypeScript (minimal overhead)
@@ -113,30 +113,30 @@ With MCP:
 Result: Avoid duplicate resources, reduce complexity
 ```
 
-### 2. Nuxt UI MCP Server
+### 2. shadcn/ui MCP Server
 
 **When available**, use for UI framework decisions:
 
 ```typescript
-// Verify Nuxt UI component availability
-nuxt-ui.list_components() → ["UButton", "UCard", "UInput", ...]
+// Verify shadcn/ui component availability
+shadcn.list_components() → ["Button", "Card", "Input", ...]
 
 // Get accurate component documentation
-nuxt-ui.get_component("UButton") → {
+shadcn.get_component("Button") → {
   props: { color, size, variant, icon, loading, ... },
   slots: { default, leading, trailing },
   examples: [...]
 }
 
 // Generate correct implementation
-nuxt-ui.implement_component_with_props(
-  "UButton",
+shadcn.implement_component_with_props(
+  "Button",
   { color: "primary", size: "lg", icon: "i-heroicons-rocket-launch" }
-) → "<UButton color=\"primary\" size=\"lg\" icon=\"i-heroicons-rocket-launch\">Deploy</UButton>"
+) → "<Button color=\"primary\" size=\"lg\" icon=\"i-heroicons-rocket-launch\">Deploy</Button>"
 ```
 
 **Architectural Benefits**:
-- ✅ **Framework Selection**: Verify Nuxt UI availability when suggesting Nuxt 4
+- ✅ **Framework Selection**: Verify shadcn/ui availability when suggesting Tanstack Start
 - ✅ **Component Accuracy**: No hallucinated props (get real documentation)
 - ✅ **Implementation Quality**: Generate correct component usage
 - ✅ **Preference Enforcement**: Aligns with "no custom CSS" requirement
@@ -146,15 +146,15 @@ nuxt-ui.implement_component_with_props(
 User: "What UI framework should I use for the admin dashboard?"
 
 Without MCP:
-→ "Use Nuxt 4 with Nuxt UI components"
+→ "Use Tanstack Start with shadcn/ui components"
 
 With MCP:
-1. Check nuxt-ui.list_components()
+1. Check shadcn.list_components()
 2. Verify comprehensive component library available
-3. Call nuxt-ui.get_component("UTable") to show table features
-4. Call nuxt-ui.get_component("UForm") to show form capabilities
-→ "Use Nuxt 4 with Nuxt UI. It includes UTable (sortable, filterable, pagination built-in),
-   UForm (validation, type-safe), UModal, UCard, and 50+ other components.
+3. Call shadcn.get_component("Table") to show table features
+4. Call shadcn.get_component("UForm") to show form capabilities
+→ "Use Tanstack Start with shadcn/ui. It includes Table (sortable, filterable, pagination built-in),
+   UForm (validation, type-safe), Dialog, Card, and 50+ other components.
    No custom CSS needed - all via Tailwind utilities."
 
 Result: Data-driven framework recommendations, not assumptions
@@ -176,11 +176,11 @@ Result: Context-aware recommendations based on real load
 
 **Framework Selection with Component Verification**:
 ```markdown
-Traditional: "Use Nuxt 4 with Nuxt UI"
+Traditional: "Use Tanstack Start with shadcn/ui"
 MCP-Enhanced:
-1. Call nuxt-ui.list_components()
-2. Check for required components (UTable, UForm, UModal)
-3. Call nuxt-ui.get_component() for each to verify features
+1. Call shadcn.list_components()
+2. Check for required components (Table, UForm, Dialog)
+3. Call shadcn.get_component() for each to verify features
 4. Generate implementation examples with correct props
 
 Result: Concrete implementation guidance, not abstract suggestions
@@ -794,7 +794,6 @@ export default {
 
 **Authentication Integration**:
 
-- **Nuxt apps**: Start with `nuxt-auth-utils` (Workers-optimized)
 
   - Add `better-auth` only if OAuth/passkeys/magic links needed
 
@@ -804,11 +803,11 @@ export default {
 
 - Architecture pattern:
 
-  - Sessions: Encrypted cookies (nuxt-auth-utils) or JWT (better-auth)
+  - Sessions: Encrypted cookies or JWT (better-auth)
 
   - User data: D1 database
 
-  - OAuth callbacks: Migrate to nuxt-auth-utils sessions
+  - OAuth callbacks: Migrate to sessions
 
   - Query better-auth MCP for provider configuration
 

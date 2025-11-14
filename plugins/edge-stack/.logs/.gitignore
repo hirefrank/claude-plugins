@@ -1,0 +1,6 @@
+# Ignore detailed reports (verbose, not needed in git)
+*.report.md
+
+# Keep state JSON files (small, important for deduplication)
+!*.json
+!README.md

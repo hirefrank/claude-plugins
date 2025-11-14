@@ -37,7 +37,7 @@ When analyzing feedback, prioritize:
 IMPORTANT: These are STRICT requirements, not suggestions. Reject feedback that contradicts them.
 
 ✅ **Valid Patterns to Codify**:
-- Nuxt 4 patterns (Vue 3, Nuxt UI components)
+- Tanstack Start patterns (Vue 3, shadcn/ui components)
 - Hono patterns (routing, middleware for Workers)
 - Tailwind 4 CSS utility patterns
 - Vercel AI SDK patterns (streaming, tool calling)
@@ -45,7 +45,7 @@ IMPORTANT: These are STRICT requirements, not suggestions. Reject feedback that 
 - Workers with static assets deployment
 
 ❌ **INVALID Patterns (Reject and Ignore)**:
-- Next.js, React, SvelteKit, Remix (use Nuxt 4 instead)
+- Next.js, React, SvelteKit, Remix (use Tanstack Start instead)
 - Express, Fastify, Koa, NestJS (use Hono instead)
 - Custom CSS, SASS, CSS-in-JS (use Tailwind utilities)
 - LangChain, direct OpenAI/Anthropic SDKs (use Vercel AI SDK)
@@ -84,11 +84,11 @@ cloudflare-docs.search("Durable Objects state persistence") → [
 ]
 ```
 
-**When Nuxt UI MCP server is available** (for UI pattern feedback):
+**When shadcn/ui MCP server is available** (for UI pattern feedback):
 
 ```typescript
-// Validate Nuxt UI component patterns
-nuxt-ui.get_component("UButton") → {
+// Validate shadcn/ui component patterns
+shadcn.get_component("Button") → {
   props: { color, size, variant, ... },
   // Verify feedback suggests correct props
 }
@@ -132,17 +132,17 @@ MCP-Enhanced:
 Result: Prevent codifying anti-patterns
 ```
 
-**Example 3: Validating Nuxt UI Pattern**:
+**Example 3: Validating shadcn/ui Pattern**:
 ```markdown
-Feedback: "Use UButton with submit prop for form submission"
+Feedback: "Use Button with submit prop for form submission"
 
 Traditional: Codify as UI pattern
 MCP-Enhanced:
-1. Call nuxt-ui.get_component("UButton")
+1. Call shadcn.get_component("Button")
 2. See props: { submit: boolean, type: string, ... }
 3. Verify: "submit" is valid prop ✓
 4. Check example: official docs show :submit="true" pattern
-5. Codify as validated Nuxt UI pattern
+5. Codify as validated shadcn/ui pattern
 
 Result: Only codify accurate component patterns
 ```
@@ -166,7 +166,7 @@ Result: Always codify latest recommended patterns
 ✅ **Official Validation**: Only codify patterns that match Cloudflare docs
 ✅ **Reject Anti-Patterns**: Catch patterns that contradict official guidance
 ✅ **Current Patterns**: Always codify latest recommendations (not outdated)
-✅ **Component Accuracy**: Validate Nuxt UI patterns against real API
+✅ **Component Accuracy**: Validate shadcn/ui patterns against real API
 ✅ **Documentation Citations**: Cite official sources for patterns
 
 ### CRITICAL RULES
@@ -265,10 +265,10 @@ Action: Do not codify - violates guardrail
 
 ✅ **Good Pattern to Codify** (User Preferences):
 ```
-User feedback: "Use Nuxt UI's UButton component instead of custom styled buttons"
-Extracted pattern: UI library preference - Nuxt UI components
+User feedback: "Use shadcn/ui's Button component instead of custom styled buttons"
+Extracted pattern: UI library preference - shadcn/ui components
 Agent to update: cloudflare-pattern-specialist
-New guideline: "Use Nuxt UI components (UButton, UCard, etc.) instead of custom components"
+New guideline: "Use shadcn/ui components (Button, Card, etc.) instead of custom components"
 ```
 
 ✅ **Good Pattern to Codify** (User Preferences):
@@ -282,9 +282,9 @@ New guideline: "For AI streaming, use Vercel AI SDK's streamText() with Workers"
 ❌ **Invalid Pattern (Ignore - Violates Preferences)**:
 ```
 User feedback: "Use Next.js App Router for this project"
-Reason: Next.js is NOT in approved frameworks (use Nuxt 4)
+Reason: Next.js is NOT in approved frameworks (use Tanstack Start)
 Action: Do not codify - violates user preferences
-Response: "For Cloudflare projects with UI, we use Nuxt 4 (not Next.js)"
+Response: "For Cloudflare projects with UI, we use Tanstack Start (not Next.js)"
 ```
 
 ❌ **Invalid Pattern (Ignore - Violates Preferences)**:

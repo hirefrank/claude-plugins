@@ -63,7 +63,7 @@ Verify this is a Tanstack Start project before generating components.
 if ! grep -q "@tanstack/start" package.json; then
   echo "❌ Not a Tanstack Start project"
   echo "This command requires Tanstack Start."
-  echo "Use /es-component for Nuxt projects."
+  echo "Run /es-init to set up a new Tanstack Start project."
   exit 1
 fi
 ```

@@ -43,7 +43,7 @@ DO NOT suggest direct modifications to wrangler.toml.
 Show what KV namespaces are needed, explain why, let user configure manually.
 
 **User Preferences** (see PREFERENCES.md for full details):
-- Frameworks: Nuxt 4 (if UI), Hono (backend), or plain TS
+- Frameworks: Tanstack Start (if UI), Hono (backend), or plain TS
 - Deployment: Workers with static assets (NOT Pages)
 
 ---

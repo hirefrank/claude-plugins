@@ -10,7 +10,7 @@ triggers: ["auth file changes", "session config changes", "security-related modi
 
 This SKILL automatically activates when:
 - Files matching `**/auth/**` are created/modified
-- Session configuration files modified (nuxt.config.ts, auth.ts)
+- Session configuration files modified (app.config.ts, auth.ts)
 - Password hashing code changes
 - Cookie configuration changes
 - Before deployment operations
@@ -37,7 +37,7 @@ This SKILL automatically activates when:
 ### P2 - Important (Warn)
 
 **CSRF Protection**:
-- ⚠️ CSRF protection enabled (automatic in nuxt-auth-utils/better-auth)
+- ⚠️ CSRF protection enabled (automatic in better-auth)
 - ⚠️ No custom form handlers bypassing CSRF
 
 **Rate Limiting**:
