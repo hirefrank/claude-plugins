@@ -29,9 +29,9 @@ Analyzes your AI conversation exports (Claude, ChatGPT) to automatically generat
 Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Tanstack Start (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, Resend email, and shadcn/ui design system.
 
 **Key Features:**
-- 23 specialized agents (all with MCP integration)
-- 12 autonomous SKILLs (continuous validation)
-- 20 workflow commands (including setup wizards and test generation)
+- **27 specialized agents** (all with MCP integration) - [View all agents](./plugins/edge-stack/agents/)
+- **12 autonomous SKILLs** (continuous validation) - [View all skills](./plugins/edge-stack/skills/)
+- **24 workflow commands** (including setup wizards and test generation) - [View all commands](./plugins/edge-stack/commands/)
 - **8 bundled MCP servers** (Cloudflare, shadcn/ui, better-auth, Playwright, Package Registry, TanStack Router, Tailwind CSS, Polar) - no manual setup required
 - **E2E testing** with Playwright and automated test generation
 - **Email integration** with Resend for transactional and marketing emails
@@ -39,7 +39,18 @@ Complete full-stack development toolkit optimized for edge computing. Build mode
 - **Documentation validation** - keeps docs in sync with code
 - Distinctive design system preventing generic "AI aesthetics"
 
-**Usage**:
+**Command Highlights** (see [full list](./plugins/edge-stack/commands/)):
+- **Setup**: `/es-billing-setup`, `/es-auth-setup`, `/es-test-setup`, `/es-email-setup`
+- **Development**: `/es-tanstack-route`, `/es-tanstack-component`, `/es-component`, `/es-worker`
+- **Testing**: `/es-test-gen`, `/es-test-setup`
+- **Validation**: `/es-validate`, `/es-design-review`
+- **Workflow**: `/es-commit`, `/es-review`, `/es-work`, `/es-resolve-parallel`
+- **Migration**: `/es-tanstack-migrate`, `/es-migrate`
+- **Utilities**: `/es-plan`, `/es-issue`, `/es-triage`, `/es-theme`, `/es-deploy`
+
+For detailed documentation on all agents, commands, skills, and MCP integration, see the [Edge Stack Plugin README](./plugins/edge-stack/README.md).
+
+**Quick Start**:
 - `/es-billing-setup` - Interactive Polar.sh billing integration
 - `/es-auth-setup` - Interactive authentication configuration
 - `/es-test-setup` - Initialize Playwright E2E testing
@@ -76,6 +87,19 @@ npx claude-plugins install @hirefrank/hirefrank-marketplace/claude-skills-analyz
 ```
 
 This automatically adds the marketplace and installs the plugin in a single step.
+
+## What Is Edge-First Development?
+
+Edge-first development prioritizes:
+- **Serverless-first**: No servers to manage, automatic scaling
+- **Globally distributed**: Run at the edge, close to users
+- **TypeScript native**: Type-safe from Workers to frontend
+- **Platform primitives**: KV, D1, R2, Durable Objects, not vendor-agnostic abstractions
+
+This plugin accelerates edge development by:
+1. **Preventing platform pitfalls**: Validates Workers runtime compatibility, detects forbidden APIs
+2. **Enforcing best practices**: Optimizes cold starts, caching, data access patterns
+3. **Generating edge-aware code**: Scaffolds Workers, DOs, bindings with correct patterns
 
 ## Quick Start Guide
 
@@ -118,7 +142,7 @@ See the [full Quick Start guide](./plugins/claude-skills-analyzer/README.md#quic
 /es-commit
 ```
 
-See the [full documentation](./plugins/edge-stack/README.md) for detailed instructions including all 23 agents, 20 commands, 12 SKILLs, and 8 MCP servers.
+See the [full documentation](./plugins/edge-stack/README.md) for detailed instructions including all 27 agents, 24 commands, 12 SKILLs, and 8 MCP servers.
 
 ## Plugin Categories
 
@@ -170,8 +194,8 @@ hirefrank-marketplace/
 │       │   └── plugin.json
 │       ├── .claude-code/
 │       │   └── statusline.json
-│       ├── agents/        # 22 specialized agents
-│       ├── commands/      # 18 workflow commands
+│       ├── agents/        # 27 specialized agents
+│       ├── commands/      # 24 workflow commands
 │       ├── skills/        # 12 autonomous SKILLs
 │       └── README.md
 ├── docs/                    # Shared documentation

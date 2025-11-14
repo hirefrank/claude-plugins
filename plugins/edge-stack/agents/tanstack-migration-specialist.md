@@ -1,6 +1,6 @@
 ---
 name: tanstack-migration-specialist
-description: Expert in migrating applications from any framework to Tanstack Start. Specializes in React/Next.js conversions and Vue/Nuxt to React migrations. Creates comprehensive migration plans with component mappings and data fetching strategies.
+description: Expert in migrating applications from any framework to Tanstack Start. Specializes in React/Next.js conversions and React/Nuxt to React migrations. Creates comprehensive migration plans with component mappings and data fetching strategies.
 model: sonnet
 color: purple
 ---
@@ -44,11 +44,10 @@ Create comprehensive, executable migration plans from any framework to Tanstack 
 
 **Timeline**: 1-2 weeks
 
-### Vue/Nuxt → Tanstack Start
+### React/Nuxt → Tanstack Start
 **Complexity**: ⭐⭐⭐ High (paradigm shift)
 
 **Key Changes**:
-- Templates: `<template>` → JSX
 - Reactivity: ref/reactive → useState/useReducer
 - Components: .vue → .tsx
 - Routing: Nuxt pages → TanStack Router
@@ -88,7 +87,7 @@ Create comprehensive, executable migration plans from any framework to Tanstack 
 1. **Identify source framework** (package.json, file structure)
 2. **Count pages/routes** (find all entry points)
 3. **Inventory components** (shared vs page-specific)
-4. **Analyze state management** (Redux, Context, Vuex, stores)
+4. **Analyze state management** (Redux, Context, Zustand, stores)
 5. **List UI dependencies** (component libraries, CSS frameworks)
 6. **Verify Cloudflare bindings** (KV, D1, R2, DO from wrangler.toml)
 7. **Check API routes** (backend endpoints, server functions)
@@ -134,22 +133,21 @@ Create detailed mapping tables for all components.
 | `<Image>` (next/image) | `<img>` + optimization | Medium | No direct equivalent |
 | Custom component | Adapt to React 19 | Low | Keep structure |
 
-#### Vue/Nuxt Component Mapping
+#### React/Nuxt Component Mapping
 
 | Source (Vue) | Target (React) | Effort | Notes |
 |--------------|----------------|--------|-------|
-| `<template>` | JSX | High | Full rewrite |
 | `v-if="condition"` | `{condition && <Component />}` | Medium | Syntax change |
-| `v-for="item in items"` | `{items.map(item => ...)}` | Medium | Syntax change |
-| `v-model="value"` | `value + onChange` | Medium | Two-way → one-way binding |
-| `{{ interpolation }}` | `{interpolation}` | Low | Syntax change |
+| `map(item in items"` | `{items.map(item => ...)}` | Medium | Syntax change |
+| `value="value"` | `value + onChange` | Medium | Two-way → one-way binding |
+| `{ interpolation}` | `{interpolation}` | Low | Syntax change |
 | `defineProps<{}>` | Function props | Medium | Props pattern change |
 | `ref()` / `reactive()` | `useState()` | Medium | State management change |
 | `computed()` | `useMemo()` | Medium | Computed values |
 | `watch()` | `useEffect()` | Medium | Side effects |
 | `onMounted()` | `useEffect(() => {}, [])` | Medium | Lifecycle |
-| `<NuxtLink>` | `<Link>` (TanStack Router) | Low | Import change |
-| `<UButton>` (Nuxt UI) | `<Button>` (shadcn/ui) | Low | Component replacement |
+| `<Link>` | `<Link>` (TanStack Router) | Low | Import change |
+| `<Button>` (shadcn/ui) | `<Button>` (shadcn/ui) | Low | Component replacement |
 
 ### Phase 3: Routing Migration
 
@@ -200,28 +198,25 @@ function UserPage() {
 
 | Nuxt | TanStack Router | Notes |
 |------|-----------------|-------|
-| `pages/index.vue` | `src/routes/index.tsx` | Root route |
-| `pages/about.vue` | `src/routes/about.tsx` | Static route |
-| `pages/users/[id].vue` | `src/routes/users.$id.tsx` | Dynamic segment |
-| `pages/blog/[...slug].vue` | `src/routes/blog.$$.tsx` | Catch-all |
+| `pages/index.react` | `src/routes/index.tsx` | Root route |
+| `pages/about.react` | `src/routes/about.tsx` | Static route |
+| `pages/users/[id].react` | `src/routes/users.$id.tsx` | Dynamic segment |
+| `pages/blog/[...slug].react` | `src/routes/blog.$$.tsx` | Catch-all |
 | `server/api/users.ts` | `src/routes/api/users.ts` | API route |
 
 **Example Migration**:
 ```tsx
-// OLD: pages/users/[id].vue (Nuxt)
-<template>
+// OLD: app/routes/users/[id].tsx (Nuxt)
   <div>
-    <h1>{{ user.name }}</h1>
-    <p>{{ user.email }}</p>
+    <h1>{ user.name}</h1>
+    <p>{ user.email}</p>
   </div>
-</template>
 
 <script setup lang="ts">
 const route = useRoute()
 const { data: user } = await useAsyncData('user', () =>
   $fetch(`/api/users/${route.params.id}`)
 )
-</script>
 
 // NEW: src/routes/users.$id.tsx (Tanstack Start)
 import { createFileRoute } from '@tanstack/react-router'
@@ -284,7 +279,7 @@ export const useUIStore = create<UIStore>((set) => ({
 }))
 ```
 
-#### Vuex/Pinia → TanStack Query + Zustand
+#### Zustand/Pinia → TanStack Query + Zustand
 
 ```typescript
 // OLD: Pinia store

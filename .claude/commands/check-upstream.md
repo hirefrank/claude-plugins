@@ -15,7 +15,8 @@ Automates upstream template monitoring from Every Inc's Compounding Engineering 
 5. Creates GitHub issues for changes to implement
 
 **Upstream Repository**: https://github.com/EveryInc/every-marketplace
-**Tracking File**: plugins/edge-stack/UPSTREAM.md
+**State File**: plugins/edge-stack/.logs/upstream-check.json (machine-readable)
+**Tracking File**: plugins/edge-stack/UPSTREAM.md (human-readable, legacy)
 **License**: MIT (requires attribution)
 
 ---
@@ -51,6 +52,43 @@ Automates upstream template monitoring from Every Inc's Compounding Engineering 
 
 ## Workflow
 
+### Phase 0: Load State
+
+**Load previous run state to prevent duplicate analysis**:
+
+```bash
+STATE_FILE="plugins/edge-stack/.logs/upstream-check.json"
+
+echo "Loading state from previous runs..."
+
+# Read state file
+if [ -f "$STATE_FILE" ]; then
+  LAST_REVIEW_DATE=$(jq -r '.lastReviewDate' "$STATE_FILE" 2>/dev/null || echo "")
+  TOTAL_RUNS=$(jq -r '.totalRuns' "$STATE_FILE" 2>/dev/null || echo "0")
+
+  echo "✅ Found state file"
+  echo "   Last review: $LAST_REVIEW_DATE"
+  echo "   Total runs: $TOTAL_RUNS"
+else
+  # First run - check UPSTREAM.md fallback
+  if grep -q "Last Review:" plugins/edge-stack/UPSTREAM.md 2>/dev/null; then
+    LAST_REVIEW_DATE=$(grep "Last Review:" plugins/edge-stack/UPSTREAM.md | cut -d: -f2 | xargs)
+    echo "📋 Using date from UPSTREAM.md: $LAST_REVIEW_DATE"
+  else
+    # Default to 30 days ago
+    LAST_REVIEW_DATE=$(date -d '30 days ago' +%Y-%m-%d)
+    echo "🆕 First run - analyzing last 30 days"
+  fi
+fi
+
+# Use --since flag if provided, otherwise use state
+SINCE_DATE=${FLAG_SINCE:-$LAST_REVIEW_DATE}
+
+echo ""
+echo "Review period: $SINCE_DATE → $(date +%Y-%m-%d)"
+echo ""
+```
+
 ### Phase 1: Setup Upstream Remote
 
 **Check if upstream remote exists**:
@@ -71,16 +109,11 @@ echo "✅ Fetched latest upstream changes"
 
 ### Phase 2: Determine Review Period
 
-**Extract last review date from UPSTREAM.md**:
+**Review period determined in Phase 0**:
 
 ```bash
-# Get last review date from UPSTREAM.md
-LAST_REVIEW=$(grep "Last Review:" plugins/edge-stack/UPSTREAM.md | cut -d: -f2 | xargs)
-
-# If --since flag provided, use that instead
-SINCE_DATE=${FLAG_SINCE:-$LAST_REVIEW}
-
-echo "Reviewing commits since: $SINCE_DATE"
+# SINCE_DATE already set in Phase 0
+echo "Using review date: $SINCE_DATE"
 ```
 
 ### Phase 3: Fetch Upstream Commits
@@ -88,16 +121,47 @@ echo "Reviewing commits since: $SINCE_DATE"
 **Get commits since review date**:
 
 ```bash
-# Fetch commits
+# Fetch all commits in date range
 git log every-upstream/main \
   --since="$SINCE_DATE" \
   --pretty=format:"%H|%an|%ad|%s" \
   --date=short \
-  > /tmp/upstream-commits.txt
+  > /tmp/all-upstream-commits.txt
 
-COMMIT_COUNT=$(wc -l < /tmp/upstream-commits.txt)
+TOTAL_COMMITS=$(wc -l < /tmp/all-upstream-commits.txt)
 
-echo "Found $COMMIT_COUNT upstream commits to analyze"
+echo "Found $TOTAL_COMMITS upstream commits in date range"
+```
+
+### Phase 3.5: Filter Already-Processed Commits
+
+**Skip commits already analyzed in previous runs**:
+
+```bash
+# Load already-processed commit hashes from state
+if [ -f "$STATE_FILE" ]; then
+  jq -r '.lastProcessedCommits[]' "$STATE_FILE" 2>/dev/null > /tmp/processed-commits.txt || touch /tmp/processed-commits.txt
+else
+  touch /tmp/processed-commits.txt
+fi
+
+# Filter out already-processed commits
+grep -v -F -f /tmp/processed-commits.txt /tmp/all-upstream-commits.txt > /tmp/new-commits.txt || true
+
+NEW_COMMITS=$(wc -l < /tmp/new-commits.txt)
+SKIPPED_COMMITS=$((TOTAL_COMMITS - NEW_COMMITS))
+
+echo ""
+echo "📊 Commit Statistics:"
+echo "   Total commits found: $TOTAL_COMMITS"
+echo "   New commits to analyze: $NEW_COMMITS"
+echo "   Already analyzed (skipped): $SKIPPED_COMMITS"
+echo ""
+
+if [ "$NEW_COMMITS" -eq 0 ]; then
+  echo "✅ No new commits to analyze. All caught up!"
+  exit 0
+fi
 ```
 
 ### Phase 4: Analyze Each Commit
@@ -112,7 +176,7 @@ For each commit, call the `upstream-tracker` agent:
 Analyze these upstream commits and determine adoption strategy:
 
 **Commits to analyze**:
-[list of commits with hash, date, subject]
+[list of NEW commits from /tmp/new-commits.txt with hash, date, subject]
 
 **Our current architecture**:
 - edge-stack plugin: Tanstack Start (React), Cloudflare Workers, 8 MCPs
@@ -414,28 +478,70 @@ Replace Rails metrics with Workers metrics:
 
 ---
 
-## Phase 6: Update UPSTREAM.md
+## Phase 6: Update State Files
 
-**Apply updates to tracking file**:
+**Update both state file and UPSTREAM.md**:
 
 ```bash
-# Update Last Review date
-sed -i "s/Last Review: .*/Last Review: $(date +%Y-%m-%d)/" plugins/edge-stack/UPSTREAM.md
+# Update state file
+TODAY=$(date +%Y-%m-%d)
+NOW=$(date -Iseconds)
+NEXT_MONTH=$(date -d '+1 month' +%Y-%m-%d)
 
-# Update Next Review date (1 month from now)
-NEXT_REVIEW=$(date -d '+1 month' +%Y-%m-%d)
-sed -i "s/Next Review: .*/Next Review: $NEXT_REVIEW/" plugins/edge-stack/UPSTREAM.md
+# Extract new commit hashes
+NEW_COMMIT_HASHES=$(cut -d'|' -f1 /tmp/new-commits.txt)
+
+# Read existing state or initialize
+if [ -f "$STATE_FILE" ]; then
+  EXISTING_STATE=$(cat "$STATE_FILE")
+  OLD_TOTAL_RUNS=$(echo "$EXISTING_STATE" | jq -r '.totalRuns // 0')
+  OLD_COMMITS=$(echo "$EXISTING_STATE" | jq -r '.lastProcessedCommits // []')
+else
+  OLD_TOTAL_RUNS=0
+  OLD_COMMITS="[]"
+fi
+
+# Create updated state
+cat > "$STATE_FILE" << EOF
+{
+  "lastRun": "$NOW",
+  "lastReviewDate": "$TODAY",
+  "nextScheduledRun": "$NEXT_MONTH",
+  "totalRuns": $((OLD_TOTAL_RUNS + 1)),
+  "commitsAnalyzed": {
+$([ -f "$STATE_FILE" ] && jq -r '.commitsAnalyzed | to_entries | map("    \"" + .key + "\": " + (.value | tostring)) | join(",\n")' "$STATE_FILE" || echo "")$([ -f "$STATE_FILE" ] && echo "," || echo "")
+    "$TODAY": $NEW_COMMITS
+  },
+  "lastProcessedCommits": $(echo "$NEW_COMMIT_HASHES" | jq -R -s 'split("\n") | map(select(length > 0))' | jq ". + $OLD_COMMITS | unique | .[0:200]")
+}
+EOF
+
+echo "✅ Updated state file: $STATE_FILE"
+echo "   Last run: $NOW"
+echo "   Next scheduled: $NEXT_MONTH"
+echo "   Total runs: $((OLD_TOTAL_RUNS + 1))"
+echo "   Commits tracked: $(jq -r '.lastProcessedCommits | length' "$STATE_FILE")"
+echo ""
+
+# Also update UPSTREAM.md for backwards compatibility
+sed -i "s/Last Review: .*/Last Review: $TODAY/" plugins/edge-stack/UPSTREAM.md
+sed -i "s/Next Review: .*/Next Review: $NEXT_MONTH/" plugins/edge-stack/UPSTREAM.md
 
 # Update metrics
-TOTAL_REVIEWED=$((TOTAL_REVIEWED + COMMIT_COUNT))
-sed -i "s/Changes reviewed: .*/Changes reviewed: $TOTAL_REVIEWED/" plugins/edge-stack/UPSTREAM.md
+if grep -q "Changes reviewed:" plugins/edge-stack/UPSTREAM.md; then
+  OLD_REVIEWED=$(grep "Changes reviewed:" plugins/edge-stack/UPSTREAM.md | grep -oP '\d+')
+  NEW_REVIEWED=$((OLD_REVIEWED + NEW_COMMITS))
+  sed -i "s/Changes reviewed: .*/Changes reviewed: $NEW_REVIEWED/" plugins/edge-stack/UPSTREAM.md
+fi
 
 # Append new entries (from agent output)
 cat >> plugins/edge-stack/UPSTREAM.md << EOF
 
-### $(date +%Y-%m-%d): [Upstream changes from analysis]
+### $TODAY: [Upstream changes from analysis]
 [Entries generated by upstream-tracker agent]
 EOF
+
+echo "✅ Updated UPSTREAM.md (backwards compatibility)"
 ```
 
 ### Phase 7: Create GitHub Issues (Optional)
@@ -457,16 +563,24 @@ gh issue create \
 ```bash
 $ /check-upstream --create-issues
 
+Loading state from previous runs...
+✅ Found state file
+   Last review: 2024-12-14
+   Total runs: 2
+
+Review period: 2024-12-14 → 2025-01-14
+
 Setting up upstream remote...
 ✅ every-upstream remote exists
 ✅ Fetched latest changes
 
-Determining review period...
-Last review: 2024-12-14
-Reviewing commits since: 2024-12-14
-
 Fetching upstream commits...
-Found 15 commits to analyze
+Found 15 upstream commits in date range
+
+📊 Commit Statistics:
+   Total commits found: 15
+   New commits to analyze: 8
+   Already analyzed (skipped): 7
 
 Analyzing commits with upstream-tracker agent...
 [Analysis in progress...]
@@ -477,12 +591,12 @@ Analyzing commits with upstream-tracker agent...
 Upstream Review Summary
 ──────────────────────────────────────
 
-Total commits analyzed: 15
-- To adopt: 3 (critical: 1, high: 2)
-- To adapt: 2 (medium priority)
-- To ignore: 10 (language-specific)
+Total commits analyzed: 8 (7 previously analyzed, skipped)
+- To adopt: 2 (critical: 1, high: 1)
+- To adapt: 1 (medium priority)
+- To ignore: 5 (language-specific)
 
-Estimated effort: 5 hours
+Estimated effort: 3 hours
 Breaking changes: 0
 
 ──────────────────────────────────────
@@ -492,20 +606,20 @@ Critical changes found! Recommended immediate action:
 
 High priority changes:
 1. Enhanced git worktree handling (commit abc456) - 1 hour
-2. Improved feedback codification (commit abc789) - 2 hours
 
 Creating GitHub issues...
 ✅ Created issue #10: Adopt upstream triage bug fix
 ✅ Created issue #11: Enhanced git worktree handling
-✅ Created issue #12: Improved feedback codification
-✅ Created issue #13: Adapt performance monitoring for Workers
-✅ Created issue #14: Adapt testing patterns for Cloudflare
+✅ Created issue #12: Adapt performance monitoring for Workers
 
-Updating UPSTREAM.md...
-✅ Updated review date
-✅ Added 5 adopted changes
-✅ Added 10 ignored changes
-✅ Updated metrics
+Updating state files...
+✅ Updated state file: plugins/edge-stack/.logs/upstream-check.json
+   Last run: 2025-01-14T10:30:00-05:00
+   Next scheduled: 2025-02-14
+   Total runs: 3
+   Commits tracked: 23
+
+✅ Updated UPSTREAM.md (backwards compatibility)
 
 ──────────────────────────────────────
 

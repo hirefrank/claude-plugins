@@ -1,7 +1,8 @@
 ---
 name: component-aesthetic-checker
-description: Validates Nuxt UI component customization depth, ensuring components aren't used with default props and checking for consistent design system implementation across the application
-triggers: ["nuxt ui component usage", "component prop changes", "design token updates", "ui prop customization"]
+description: Validates shadcn/ui component customization depth, ensuring components aren't used with default props and checking for consistent design system implementation across Tanstack Start applications
+triggers: ["shadcn ui component usage", "component prop changes", "design token updates", "className customization", "cn() utility usage"]
+note: "Updated for Tanstack Start (React) + shadcn/ui. Code examples use React/TSX with className and cn() utility for styling."
 ---
 
 # Component Aesthetic Checker SKILL
@@ -9,7 +10,7 @@ triggers: ["nuxt ui component usage", "component prop changes", "design token up
 ## Activation Patterns
 
 This SKILL automatically activates when:
-- Nuxt UI components (`UButton`, `UCard`, `UInput`, etc.) are used in `.vue` files
+- shadcn/ui components (`Button`, `Card`, `Input`, etc.) are used in `.react` files
 - Component props are added or modified
 - The `ui` prop is customized for component variants
 - Design system tokens are referenced in components
@@ -29,33 +30,32 @@ This SKILL automatically activates when:
 ### Specific Checks Performed
 
 #### ❌ Critical Issues (Insufficient Customization)
-```vue
+```tsx
 <!-- These patterns trigger alerts: -->
 
 <!-- Using default props only -->
-<UButton @click="submit">Submit</UButton>
+<Button onClick="submit">Submit</Button>
 
 <!-- No UI prop customization -->
-<UCard>
-  <template #header>Title</template>
+<Card>
   <p>Content</p>
-</UCard>
+</Card>
 
 <!-- Inconsistent spacing -->
-<div class="p-4">  <!-- Random spacing values -->
-  <UButton class="mt-3 ml-2">Action</UButton>
+<div className="p-4">  <!-- Random spacing values -->
+  <Button className="mt-3 ml-2">Action</Button>
 </div>
 
 <!-- Missing loading states -->
-<UButton @click="asyncAction">Save</UButton>  <!-- No :loading prop -->
+<Button onClick="asyncAction">Save</Button>  <!-- No :loading prop -->
 ```
 
 #### ✅ Correct Customized Patterns
-```vue
+```tsx
 <!-- These patterns are validated as correct: -->
 
 <!-- Deep customization with ui prop -->
-<UButton
+<Button
   color="brand-coral"
   size="lg"
   variant="solid"
@@ -64,15 +64,15 @@ This SKILL automatically activates when:
     rounded: 'rounded-full',
     padding: { lg: 'px-8 py-4' }
   }"
-  :loading="isSubmitting"
-  class="transition-all duration-300 hover:scale-105"
-  @click="submit"
+  loading={isSubmitting"
+  className="transition-all duration-300 hover:scale-105"
+  onClick="submit"
 >
   Submit
-</UButton>
+</Button>
 
 <!-- Fully customized card -->
-<UCard
+<Card
   :ui="{
     background: 'bg-white dark:bg-brand-midnight',
     ring: 'ring-1 ring-brand-coral/20',
@@ -81,38 +81,37 @@ This SKILL automatically activates when:
     body: { padding: 'p-8' },
     header: { padding: 'px-8 pt-8 pb-4' }
   }"
-  class="transition-shadow duration-300 hover:shadow-2xl"
+  className="transition-shadow duration-300 hover:shadow-2xl"
 >
   <template #header>
-    <h3 class="font-heading text-2xl">Title</h3>
-  </template>
-  <p class="text-gray-700 dark:text-gray-300">Content</p>
-</UCard>
+    <h3 className="font-heading text-2xl">Title</h3>
+  <p className="text-gray-700 dark:text-gray-300">Content</p>
+</Card>
 
 <!-- Consistent spacing (Tailwind scale) -->
-<div class="p-6 space-y-4">
-  <UButton class="mt-4">Action</UButton>
+<div className="p-6 space-y-4">
+  <Button className="mt-4">Action</Button>
 </div>
 
 <!-- Proper loading state -->
-<UButton
-  :loading="isSubmitting"
-  :disabled="isSubmitting"
-  @click="asyncAction"
+<Button
+  loading={isSubmitting"
+  disabled={isSubmitting"
+  onClick="asyncAction"
 >
-  {{ isSubmitting ? 'Saving...' : 'Save' }}
-</UButton>
+  { isSubmitting ? 'Saving...' : 'Save'}
+</Button>
 ```
 
 ## Integration Points
 
 ### Complementary to Existing Components
-- **nuxt-ui-architect agent**: Handles component selection and API guidance, SKILL validates implementation
+- **tanstack-ui-architect agent**: Handles component selection and API guidance, SKILL validates implementation
 - **frontend-design-specialist agent**: Provides design direction, SKILL enforces consistency
-- **nuxt-ui-design-validator**: Catches generic patterns, SKILL ensures deep customization
+- **shadcn-ui-design-validator**: Catches generic patterns, SKILL ensures deep customization
 
 ### Escalation Triggers
-- Component API questions → `nuxt-ui-architect` agent (with MCP lookup)
+- Component API questions → `tanstack-ui-architect` agent (with MCP lookup)
 - Design consistency issues → `frontend-design-specialist` agent
 - Complex component composition → `/es-component` command
 - Full component audit → `/es-design-review` command
@@ -120,7 +119,7 @@ This SKILL automatically activates when:
 ## Validation Rules
 
 ### P1 - Critical (Default Component Usage)
-- **No UI Prop Customization**: Using Nuxt UI components without `ui` prop
+- **No UI Prop Customization**: Using shadcn/ui components without `ui` prop
 - **All Default Props**: No color, size, variant, or other prop customizations
 - **Missing Loading States**: Async actions without `:loading` prop
 - **No Hover States**: Interactive components without hover feedback
@@ -143,17 +142,14 @@ This SKILL automatically activates when:
 ## Remediation Examples
 
 ### Fixing Default Component Usage
-```vue
+```tsx
 <!-- ❌ Critical: Default props only -->
-<template>
-  <UButton @click="handleClick">
+  <Button onClick="handleClick">
     Click me
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Deep customization -->
-<template>
-  <UButton
+  <Button
     color="primary"
     size="lg"
     variant="solid"
@@ -164,31 +160,25 @@ This SKILL automatically activates when:
       padding: { lg: 'px-8 py-4' },
       shadow: 'shadow-lg hover:shadow-xl'
     }"
-    class="transition-all duration-300 hover:scale-105 active:scale-95"
-    @click="handleClick"
+    className="transition-all duration-300 hover:scale-105 active:scale-95"
+    onClick="handleClick"
   >
     Click me
-  </UButton>
-</template>
+  </Button>
 ```
 
 ### Fixing Missing Loading States
-```vue
+```tsx
 <!-- ❌ Critical: No loading feedback -->
-<script setup>
 const handleSubmit = async () => {
   await submitForm();
 };
-</script>
 
-<template>
-  <UButton @click="handleSubmit">
+  <Button onClick="handleSubmit">
     Submit Form
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Proper loading state -->
-<script setup>
 const isSubmitting = ref(false);
 
 const handleSubmit = async () => {
@@ -199,77 +189,67 @@ const handleSubmit = async () => {
     isSubmitting.value = false;
   }
 };
-</script>
 
-<template>
-  <UButton
-    :loading="isSubmitting"
-    :disabled="isSubmitting"
-    @click="handleSubmit"
+  <Button
+    loading={isSubmitting"
+    disabled={isSubmitting"
+    onClick="handleSubmit"
   >
-    <span class="flex items-center gap-2">
-      <UIcon
-        v-if="!isSubmitting"
+    <span className="flex items-center gap-2">
+      <Icon
+        {&& "!isSubmitting"
         name="i-heroicons-paper-airplane"
       />
-      {{ isSubmitting ? 'Submitting...' : 'Submit Form' }}
+      { isSubmitting ? 'Submitting...' : 'Submit Form'}
     </span>
-  </UButton>
-</template>
+  </Button>
 ```
 
 ### Fixing Inconsistent Spacing
-```vue
+```tsx
 <!-- ❌ P2: Random spacing values -->
-<template>
-  <div class="p-3">
-    <UCard class="mt-5 ml-7">
-      <div class="p-2">
-        <UButton class="mt-3.5">Action</UButton>
+  <div className="p-3">
+    <Card className="mt-5 ml-7">
+      <div className="p-2">
+        <Button className="mt-3.5">Action</Button>
       </div>
-    </UCard>
+    </Card>
   </div>
-</template>
 
 <!-- ✅ Correct: Tailwind spacing scale -->
-<template>
-  <div class="p-4">
-    <UCard class="mt-4">
-      <div class="p-6 space-y-4">
-        <UButton>Action</UButton>
+  <div className="p-4">
+    <Card className="mt-4">
+      <div className="p-6 space-y-4">
+        <Button>Action</Button>
       </div>
-    </UCard>
+    </Card>
   </div>
-</template>
 
 <!-- Using consistent spacing: 4, 6, 8, 12, 16 (Tailwind scale) -->
 ```
 
 ### Fixing Design System Inconsistency
-```vue
+```tsx
 <!-- ❌ P2: Inconsistent component styling -->
-<template>
   <div>
     <!-- Button 1: Heavily customized -->
-    <UButton
+    <Button
       color="primary"
       :ui="{ rounded: 'rounded-full', shadow: 'shadow-xl' }"
     >
       Action 1
-    </UButton>
+    </Button>
 
     <!-- Button 2: Default (inconsistent!) -->
-    <UButton>Action 2</UButton>
+    <Button>Action 2</Button>
 
     <!-- Button 3: Different customization pattern -->
-    <UButton color="red" size="xs">
+    <Button color="red" size="xs">
       Action 3
-    </UButton>
+    </Button>
   </div>
-</template>
 
 <!-- ✅ Correct: Consistent design system -->
-<script setup>
 // Define reusable button variants
 const buttonVariants = {
   primary: {
@@ -293,37 +273,31 @@ const buttonVariants = {
     class: 'transition-colors duration-200'
   }
 };
-</script>
 
-<template>
-  <div class="space-x-4">
-    <UButton v-bind="buttonVariants.primary">
+  <div className="space-x-4">
+    <Button v-bind="buttonVariants.primary">
       Action 1
-    </UButton>
+    </Button>
 
-    <UButton v-bind="buttonVariants.primary">
+    <Button v-bind="buttonVariants.primary">
       Action 2
-    </UButton>
+    </Button>
 
-    <UButton v-bind="buttonVariants.secondary">
+    <Button v-bind="buttonVariants.secondary">
       Action 3
-    </UButton>
+    </Button>
   </div>
-</template>
 ```
 
 ### Fixing Underutilized UI Prop
-```vue
+```tsx
 <!-- ❌ P3: Not using ui prop for customization -->
-<template>
-  <UCard class="rounded-2xl shadow-xl p-8">
+  <Card className="rounded-2xl shadow-xl p-8">
     <p>Content</p>
-  </UCard>
-</template>
+  </Card>
 
 <!-- ✅ Correct: Proper ui prop usage -->
-<template>
-  <UCard
+  <Card
     :ui="{
       rounded: 'rounded-2xl',
       shadow: 'shadow-xl hover:shadow-2xl',
@@ -333,21 +307,20 @@ const buttonVariants = {
       },
       ring: 'ring-1 ring-brand-coral/20'
     }"
-    class="transition-shadow duration-300"
+    className="transition-shadow duration-300"
   >
-    <p class="text-gray-700 dark:text-gray-300">Content</p>
-  </UCard>
-</template>
+    <p className="text-gray-700 dark:text-gray-300">Content</p>
+  </Card>
 ```
 
 ## MCP Server Integration
 
-When Nuxt UI MCP server is available:
+When shadcn/ui MCP server is available:
 
 ### Component Prop Validation
 ```typescript
 // Before validating customization depth, get actual component API
-const componentDocs = await mcp.nuxt_ui.get_component("UButton");
+const componentDocs = await mcp.shadcn.get_component("Button");
 
 // Validate that used props exist
 // componentDocs.props: ['color', 'size', 'variant', 'icon', 'loading', 'disabled', ...]
@@ -373,7 +346,7 @@ const uiSchema = componentDocs.ui_schema;
 ### Consistency Across Components
 ```typescript
 // Check multiple component instances
-const buttonInstances = findAllComponents("UButton");
+const buttonInstances = findAllComponents("Button");
 
 // Analyze customization patterns
 // Flag: Component used with 5 different customization styles
@@ -397,58 +370,58 @@ const buttonInstances = findAllComponents("UButton");
 ## Usage Examples
 
 ### During Component Usage
-```vue
-// Developer adds: <UButton>Click me</UButton>
-// SKILL immediately activates: "⚠️ P1: UButton using all default props. Customize with color, size, variant, and ui prop for brand distinctiveness."
+```tsx
+// Developer adds: <Button>Click me</Button>
+// SKILL immediately activates: "⚠️ P1: Button using all default props. Customize with color, size, variant, and ui prop for brand distinctiveness."
 ```
 
 ### During Async Actions
-```vue
-// Developer creates async button: <UButton @click="submitForm">Submit</UButton>
+```tsx
+// Developer creates async button: <Button onClick="submitForm">Submit</Button>
 // SKILL immediately activates: "⚠️ P1: Button triggers async action but lacks :loading prop. Add loading state for user feedback."
 ```
 
 ### During Refactoring
-```vue
+```tsx
 // Developer adds 5th different button style
-// SKILL immediately activates: "⚠️ P2: UButton used with 5 different customization patterns. Consider creating reusable variants for consistency."
+// SKILL immediately activates: "⚠️ P2: Button used with 5 different customization patterns. Consider creating reusable variants for consistency."
 ```
 
 ### Before Deployment
-```vue
+```tsx
 // SKILL runs comprehensive check: "✅ Component aesthetic validation passed. 23 components with deep customization, consistent patterns, and proper loading states detected."
 ```
 
 ## Design System Maturity Levels
 
 ### Level 0: Defaults Only (Avoid)
-```vue
-<UButton>Action</UButton>
-<UCard><p>Content</p></UCard>
-<UInput v-model="value" />
+```tsx
+<Button>Action</Button>
+<Card><p>Content</p></Card>
+<Input value="value" />
 ```
 **Issues**: Generic appearance, no brand identity, inconsistent with custom design
 
 ### Level 1: Basic Props (Minimum)
-```vue
-<UButton color="primary" size="lg">Action</UButton>
-<UCard class="shadow-lg"><p>Content</p></UCard>
-<UInput v-model="value" placeholder="Enter value" />
+```tsx
+<Button color="primary" size="lg">Action</Button>
+<Card className="shadow-lg"><p>Content</p></Card>
+<Input value="value" placeholder="Enter value" />
 ```
 **Better**: Some customization, but limited depth
 
 ### Level 2: UI Prop + Classes (Target)
-```vue
-<UButton
+```tsx
+<Button
   color="primary"
   size="lg"
   :ui="{ rounded: 'rounded-full', font: 'font-heading' }"
-  class="transition-all duration-300 hover:scale-105"
+  className="transition-all duration-300 hover:scale-105"
 >
   Action
-</UButton>
+</Button>
 
-<UCard
+<Card
   :ui="{
     background: 'bg-white dark:bg-brand-midnight',
     ring: 'ring-1 ring-brand-coral/20',
@@ -456,26 +429,26 @@ const buttonInstances = findAllComponents("UButton");
   }"
 >
   <p>Content</p>
-</UCard>
+</Card>
 ```
 **Ideal**: Deep customization, brand-distinctive, consistent patterns
 
 ### Level 3: Design System (Advanced)
-```vue
+```tsx
 <!-- Reusable variants from composables -->
-<UButton v-bind="designSystem.button.variants.primary">
+<Button v-bind="designSystem.button.variants.primary">
   Action
-</UButton>
+</Button>
 
-<UCard v-bind="designSystem.card.variants.elevated">
+<Card v-bind="designSystem.card.variants.elevated">
   <p>Content</p>
-</UCard>
+</Card>
 ```
 **Advanced**: Centralized design system, maximum consistency
 
 ## Component Customization Checklist
 
-For each Nuxt UI component, validate:
+For each shadcn/ui component, validate:
 
 - [ ] **Props**: Uses at least 2-3 props (color, size, variant, etc.)
 - [ ] **UI Prop**: Includes `ui` prop for deep customization (rounded, font, padding, shadow)
@@ -488,4 +461,4 @@ For each Nuxt UI component, validate:
 - [ ] **Spacing**: Uses Tailwind spacing scale (4, 6, 8, 12, 16)
 - [ ] **Consistency**: Follows same patterns as other instances
 
-This SKILL ensures every Nuxt UI component is deeply customized, consistently styled, and provides excellent user feedback, preventing the default/generic appearance that makes AI-generated UIs immediately recognizable.
+This SKILL ensures every shadcn/ui component is deeply customized, consistently styled, and provides excellent user feedback, preventing the default/generic appearance that makes AI-generated UIs immediately recognizable.

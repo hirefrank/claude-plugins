@@ -53,7 +53,7 @@ Run these agents in parallel:
 - [ ] Include URLs to Cloudflare documentation and best practices
 - [ ] Create a reference list of similar Workers implementations or PRs
 - [ ] Note any Cloudflare-specific conventions discovered in documentation
-- [ ] Document user preferences from PREFERENCES.md (Nuxt 4, Hono, Vercel AI SDK)
+- [ ] Document user preferences from PREFERENCES.md (Tanstack Start, Hono, Vercel AI SDK)
 
 ### 2. Issue Planning & Structure
 

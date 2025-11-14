@@ -29,7 +29,7 @@ Create a new slash command in `.claude/commands/` for the requested task.
 
 **Integrations:**
 - Platform-specific MCPs for account context and docs
-- Nuxt UI MCP - component documentation
+- shadcn/ui MCP - component documentation
 - Stripe, Todoist, Featurebase (if relevant)
 
 ## Best Practices

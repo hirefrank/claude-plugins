@@ -70,29 +70,55 @@ git fetch every-upstream
 
 ## Adopted Changes
 
-_This section will track upstream changes we adopt over time._
+### 2025-11-14: Fixed Command Prefix Documentation
+- **Upstream commit**: 4d66320
+- **Description**: Updated all command examples to use plugin namespace prefixes
+- **Applied to**: README.md (marketplace + plugin)
+- **Changes**:
+  - `/review` → `/edge-stack:review`
+  - `/work` → `/edge-stack:work`
+  - `/plan` → `/edge-stack:plan`
+  - All generic commands now show correct namespace
+  - Edge-specific commands (es-*) unchanged
+- **Reason**: Prevents user confusion - marketplace plugins require namespace prefix
 
-### Example Entry Format:
-```markdown
-### YYYY-MM-DD: [Change Description]
-- Upstream commit: [hash]
-- Description: [what changed]
-- Applied to: [which file(s)]
-- Changes: [what we adapted]
-- Reason: [why we adopted it]
-```
+### 2025-11-14: Enhanced Marketplace README Structure
+- **Upstream commit**: daf3afc
+- **Description**: Expanded marketplace README with philosophy, examples, and comprehensive documentation
+- **Applied to**: README.md (marketplace)
+- **Changes**:
+  - Added "What Is Edge-First Development?" section
+  - Added workflow diagrams (Mermaid)
+  - Added practical command examples
+  - Improved value proposition clarity
+- **Reason**: Better first impressions, improved discoverability, clearer use cases
+
+### 2025-11-14: Added Cross-Documentation References
+- **Upstream commit**: b87934c + 4d66320
+- **Description**: Improved navigation between marketplace and plugin-specific documentation
+- **Applied to**: README.md (both marketplace and plugin)
+- **Changes**:
+  - Marketplace README links to plugin README for details
+  - Plugin README links to marketplace README for installation
+  - Clear separation of concerns (overview vs reference)
+- **Reason**: Better user navigation, clearer documentation structure
 
 ## Ignored Changes
 
-_This section will track upstream changes we intentionally ignore._
+### 2025-11-14: Droid (Factory) Installation Instructions
+- **Upstream commit**: 4e2a828
+- **Description**: Added quick start guide for Droid (Factory) alternative to Claude Code
+- **Reason**: We target Claude Code users exclusively. Droid is a separate product with different architecture. Not relevant to our user base.
 
-### Example Entry Format:
-```markdown
-### YYYY-MM-DD: [Change Description]
-- Upstream commit: [hash]
-- Description: [what changed]
-- Reason: [why we ignored it]
-```
+### 2025-11-14: CHANGELOG.md Deletion
+- **Upstream commit**: a230b2b
+- **Description**: Deleted plugins/compounding-engineering/CHANGELOG.md file
+- **Reason**: We don't have a CHANGELOG.md file. We use git history and GitHub releases for change tracking.
+
+### 2025-11-14: Merge Commit (No Unique Content)
+- **Upstream commit**: b1284a2
+- **Description**: Merge pull request combining documentation changes
+- **Reason**: Merge commit with no unique content - actual changes tracked in individual commits.
 
 ## Review Schedule
 
@@ -132,3 +158,19 @@ If we create genuinely generic improvements (not Cloudflare-specific), we may co
 - Workers runtime checks
 - Binding analysis tools
 - Edge optimization patterns
+
+## Adoption Metrics
+
+- **Changes reviewed**: 6
+- **Changes adopted**: 3
+- **Changes adapted**: 0 (adopted directly)
+- **Changes ignored**: 3
+- **Time investment**: ~4-6 hours (documentation improvements)
+- **Value assessment**: High (prevents user confusion, improves discoverability)
+
+## Current Status
+
+**Last Review**: 2025-11-14
+**Next Review**: 2025-12-14
+**Tracking Active**: Yes
+**Value Assessment**: High value - upstream provides excellent documentation patterns and marketplace standards

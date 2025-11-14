@@ -1,17 +1,18 @@
 ---
-name: nuxt-ui-design-validator
-description: Automatically validates frontend design patterns to prevent generic aesthetics (Inter fonts, purple gradients, minimal animations) and enforce distinctive, branded design during Nuxt 4 development
-triggers: ["vue file creation", "component changes", "tailwind config changes", "nuxt config changes", "design system updates"]
+name: shadcn-ui-design-validator
+description: Automatically validates frontend design patterns to prevent generic aesthetics (Inter fonts, purple gradients, minimal animations) and enforce distinctive, branded design during Tanstack Start (React) development with shadcn/ui
+triggers: ["tsx file creation", "component changes", "tailwind config changes", "shadcn component usage", "design system updates"]
+note: "Updated for Tanstack Start + shadcn/ui. Validates React/TSX components with shadcn/ui patterns."
 ---
 
-# Nuxt UI Design Validator SKILL
+# shadcn/ui Design Validator SKILL
 
 ## Activation Patterns
 
 This SKILL automatically activates when:
-- New `.vue` components are created in Nuxt projects
+- New `.tsx` React components are created
 - Tailwind configuration (`tailwind.config.ts`) is modified
-- Nuxt configuration (`nuxt.config.ts`) is modified
+- Tanstack Start configuration (`app.config.ts`) is modified
 - Component styling or classes are changed
 - Design token definitions are updated
 - Before deployment commands are executed
@@ -23,59 +24,59 @@ This SKILL automatically activates when:
 - **Typography Analysis**: Ensures distinctive font choices and hierarchy
 - **Animation Validation**: Checks for engaging micro-interactions and transitions
 - **Color System**: Validates distinctive color palettes vs generic defaults
-- **Component Customization**: Ensures Nuxt UI components are customized, not default
+- **Component Customization**: Ensures shadcn/ui components are customized, not default
 
 ### Specific Checks Performed
 
 #### ❌ Critical Violations (Generic Design Patterns)
-```vue
+```tsx
 <!-- These patterns trigger alerts: -->
 
 <!-- Generic font (Inter/Roboto) -->
-<div class="font-sans">  <!-- Using default Inter -->
+<div className="font-sans">  <!-- Using default Inter -->
 
 <!-- Purple gradient on white (overused pattern) -->
-<div class="bg-gradient-to-r from-purple-500 to-purple-600">
+<div className="bg-gradient-to-r from-purple-500 to-purple-600">
 
 <!-- No animations/transitions -->
-<UButton @click="submit">Submit</UButton>  <!-- No hover state -->
+<Button onClick="submit">Submit</Button>  <!-- No hover state -->
 
 <!-- Default background colors -->
-<div class="bg-gray-50">  <!-- Generic #f9fafb -->
+<div className="bg-gray-50">  <!-- Generic #f9fafb -->
 ```
 
 #### ✅ Correct Distinctive Patterns
-```vue
+```tsx
 <!-- These patterns are validated as correct: -->
 
 <!-- Custom distinctive fonts -->
-<h1 class="font-heading">  <!-- Custom font family -->
+<h1 className="font-heading">  <!-- Custom font family -->
 
 <!-- Custom brand colors -->
-<div class="bg-brand-coral">  <!-- Distinctive palette -->
+<div className="bg-brand-coral">  <!-- Distinctive palette -->
 
 <!-- Engaging animations -->
-<UButton
-  class="transition-all duration-300 hover:scale-105 hover:shadow-xl"
-  @click="submit"
+<Button
+  className="transition-all duration-300 hover:scale-105 hover:shadow-xl"
+  onClick="submit"
 >
   Submit
-</UButton>
+</Button>
 
 <!-- Atmospheric backgrounds -->
-<div class="bg-gradient-to-br from-brand-ocean via-brand-sky to-brand-coral">
+<div className="bg-gradient-to-br from-brand-ocean via-brand-sky to-brand-coral">
 ```
 
 ## Integration Points
 
 ### Complementary to Existing Components
 - **frontend-design-specialist agent**: Handles deep design analysis, SKILL provides immediate validation
-- **nuxt-ui-architect agent**: Component expertise, SKILL validates implementation
+- **tanstack-ui-architect agent**: Component expertise, SKILL validates implementation
 - **es-design-review command**: SKILL provides continuous validation between explicit reviews
 
 ### Escalation Triggers
 - Complex design system questions → `frontend-design-specialist` agent
-- Component customization help → `nuxt-ui-architect` agent
+- Component customization help → `tanstack-ui-architect` agent
 - Accessibility concerns → `accessibility-guardian` agent
 - Full design review → `/es-design-review` command
 
@@ -86,7 +87,7 @@ This SKILL automatically activates when:
 - **Purple Gradients**: `from-purple-*` to `to-purple-*` on white backgrounds
 - **Generic Grays**: `bg-gray-50`, `bg-gray-100` (overused neutrals)
 - **No Animations**: Interactive elements without hover/focus transitions
-- **Default Component Props**: Using Nuxt UI components with all default props
+- **Default Component Props**: Using shadcn/ui components with all default props
 
 ### P2 - Important (Polish and Engagement)
 - **Missing Hover States**: Buttons/links without hover effects
@@ -104,19 +105,14 @@ This SKILL automatically activates when:
 ## Remediation Examples
 
 ### Fixing Generic Fonts
-```vue
+```tsx
 <!-- ❌ Critical: Default Inter font -->
-<template>
-  <h1 class="text-4xl font-sans">Welcome</h1>
-</template>
+  <h1 className="text-4xl font-sans">Welcome</h1>
 
 <!-- ✅ Correct: Distinctive custom font -->
-<template>
-  <h1 class="text-4xl font-heading tracking-tight">Welcome</h1>
-</template>
+  <h1 className="text-4xl font-heading tracking-tight">Welcome</h1>
 
 <!-- tailwind.config.ts -->
-<script>
 export default {
   theme: {
     extend: {
@@ -130,27 +126,21 @@ export default {
     }
   }
 }
-</script>
 ```
 
 ### Fixing Generic Colors
-```vue
+```tsx
 <!-- ❌ Critical: Purple gradient (overused) -->
-<template>
-  <div class="bg-gradient-to-r from-purple-500 to-purple-600">
-    <h2 class="text-white">Hero Section</h2>
+  <div className="bg-gradient-to-r from-purple-500 to-purple-600">
+    <h2 className="text-white">Hero Section</h2>
   </div>
-</template>
 
 <!-- ✅ Correct: Custom brand colors -->
-<template>
-  <div class="bg-gradient-to-br from-brand-coral via-brand-ocean to-brand-sunset">
-    <h2 class="text-white">Hero Section</h2>
+  <div className="bg-gradient-to-br from-brand-coral via-brand-ocean to-brand-sunset">
+    <h2 className="text-white">Hero Section</h2>
   </div>
-</template>
 
 <!-- tailwind.config.ts -->
-<script>
 export default {
   theme: {
     extend: {
@@ -168,47 +158,39 @@ export default {
     }
   }
 }
-</script>
 ```
 
 ### Fixing Missing Animations
-```vue
+```tsx
 <!-- ❌ Critical: No hover/transition effects -->
-<template>
-  <UButton @click="handleSubmit">
+  <Button onClick="handleSubmit">
     Submit Form
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Engaging animations -->
-<template>
-  <UButton
-    class="transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
-    @click="handleSubmit"
+  <Button
+    className="transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
+    onClick="handleSubmit"
   >
-    <span class="inline-flex items-center gap-2">
+    <span className="inline-flex items-center gap-2">
       Submit Form
-      <UIcon
+      <Icon
         name="i-heroicons-arrow-right"
-        class="transition-transform duration-300 group-hover:translate-x-1"
+        className="transition-transform duration-300 group-hover:translate-x-1"
       />
     </span>
-  </UButton>
-</template>
+  </Button>
 ```
 
 ### Fixing Default Component Usage
-```vue
+```tsx
 <!-- ❌ P2: All default props (generic appearance) -->
-<template>
-  <UCard>
+  <Card>
     <p>Content here</p>
-  </UCard>
-</template>
+  </Card>
 
 <!-- ✅ Correct: Customized for brand distinctiveness -->
-<template>
-  <UCard
+  <Card
     :ui="{
       background: 'bg-white dark:bg-brand-midnight',
       ring: 'ring-1 ring-brand-coral/20',
@@ -216,16 +198,15 @@ export default {
       shadow: 'shadow-xl hover:shadow-2xl',
       body: { padding: 'p-8' }
     }"
-    class="transition-all duration-300 hover:-translate-y-1"
+    className="transition-all duration-300 hover:-translate-y-1"
   >
-    <p class="text-gray-700 dark:text-gray-300">Content here</p>
-  </UCard>
-</template>
+    <p className="text-gray-700 dark:text-gray-300">Content here</p>
+  </Card>
 ```
 
 ## MCP Server Integration
 
-When Nuxt UI MCP server is available:
+When shadcn/ui MCP server is available:
 - Query component customization options before validation
 - Verify that suggested customizations use valid props
 - Get latest component API to prevent hallucination
@@ -233,8 +214,8 @@ When Nuxt UI MCP server is available:
 
 **Example MCP Usage**:
 ```typescript
-// Validate UButton customization
-const buttonDocs = await mcp.nuxt_ui.get_component("UButton");
+// Validate Button customization
+const buttonDocs = await mcp.shadcn.get_component("Button");
 // Check if suggested props exist: color, size, variant, ui, etc.
 // Ensure customizations align with actual API
 ```
@@ -256,14 +237,14 @@ const buttonDocs = await mcp.nuxt_ui.get_component("UButton");
 ## Usage Examples
 
 ### During Component Creation
-```vue
-// Developer creates: <div class="font-sans bg-purple-500">
+```tsx
+// Developer creates: <div className="font-sans bg-purple-500">
 // SKILL immediately activates: "⚠️ WARNING: Using default 'font-sans' (Inter) and purple gradient. Consider custom brand fonts and colors for distinctive design."
 ```
 
 ### During Styling
-```vue
-// Developer adds: <UButton>Click me</UButton>
+```tsx
+// Developer adds: <Button>Click me</Button>
 // SKILL immediately activates: "⚠️ P2: Button lacks hover animations. Add transition utilities for better engagement: class='transition-all duration-300 hover:scale-105'"
 ```
 
@@ -274,7 +255,7 @@ const buttonDocs = await mcp.nuxt_ui.get_component("UButton");
 ```
 
 ### Before Deployment
-```vue
+```tsx
 // SKILL runs comprehensive check: "✅ Design validation passed. Custom fonts, distinctive colors, engaging animations, and customized components detected."
 ```
 
@@ -293,12 +274,12 @@ This SKILL implements the core insight from Claude's "Improving Frontend Design 
 ## Distinctive vs Generic Patterns
 
 ### ❌ Generic Patterns (What to Avoid)
-```vue
+```tsx
 <!-- The "AI default aesthetic" -->
-<div class="bg-white">
-  <h1 class="font-sans text-gray-900">Title</h1>
-  <div class="bg-gradient-to-r from-purple-500 to-purple-600">
-    <UButton>Action</UButton>
+<div className="bg-white">
+  <h1 className="font-sans text-gray-900">Title</h1>
+  <div className="bg-gradient-to-r from-purple-500 to-purple-600">
+    <Button>Action</Button>
   </div>
 </div>
 ```
@@ -311,32 +292,32 @@ This SKILL implements the core insight from Claude's "Improving Frontend Design 
 - Default components (no customization)
 
 ### ✅ Distinctive Patterns (What to Strive For)
-```vue
+```tsx
 <!-- Brand-distinctive aesthetic -->
-<div class="bg-gradient-to-br from-brand-cream via-white to-brand-ocean/10">
-  <h1 class="font-heading text-6xl text-brand-midnight tracking-tighter">
+<div className="bg-gradient-to-br from-brand-cream via-white to-brand-ocean/10">
+  <h1 className="font-heading text-6xl text-brand-midnight tracking-tighter">
     Title
   </h1>
-  <div class="relative overflow-hidden rounded-3xl bg-brand-coral p-8">
+  <div className="relative overflow-hidden rounded-3xl bg-brand-coral p-8">
     <!-- Atmospheric background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-coral to-brand-sunset opacity-80" />
+    <div className="absolute inset-0 bg-gradient-to-br from-brand-coral to-brand-sunset opacity-80" />
 
-    <UButton
+    <Button
       :ui="{
         font: 'font-heading',
         rounded: 'rounded-full',
         size: 'xl'
       }"
-      class="relative z-10 transition-all duration-500 hover:scale-110 hover:rotate-2 hover:shadow-2xl active:scale-95"
+      className="relative z-10 transition-all duration-500 hover:scale-110 hover:rotate-2 hover:shadow-2xl active:scale-95"
     >
-      <span class="flex items-center gap-2">
+      <span className="flex items-center gap-2">
         Action
-        <UIcon
+        <Icon
           name="i-heroicons-sparkles"
-          class="animate-pulse"
+          className="animate-pulse"
         />
       </span>
-    </UButton>
+    </Button>
   </div>
 </div>
 ```
@@ -349,4 +330,4 @@ This SKILL implements the core insight from Claude's "Improving Frontend Design 
 - Heavily customized components (ui prop + utility classes)
 - Micro-interactions (icon pulse, hover effects)
 
-This SKILL ensures every Nuxt 4 project develops a distinctive visual identity by preventing generic patterns and guiding developers toward branded, engaging design implementations.
+This SKILL ensures every Tanstack Start project develops a distinctive visual identity by preventing generic patterns and guiding developers toward branded, engaging design implementations.

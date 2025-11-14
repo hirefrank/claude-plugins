@@ -296,8 +296,8 @@ jobs:
       - name: Run Playwright tests
         run: pnpm test:e2e
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${ secrets.CLOUDFLARE_ACCOUNT_ID}
+          CLOUDFLARE_API_TOKEN: ${ secrets.CLOUDFLARE_API_TOKEN}
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v3

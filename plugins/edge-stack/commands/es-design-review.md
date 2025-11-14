@@ -1,5 +1,5 @@
 ---
-description: Comprehensive frontend design review to prevent generic aesthetics and ensure distinctive, accessible, engaging interfaces using Nuxt UI and Tailwind CSS
+description: Comprehensive frontend design review to prevent generic aesthetics and ensure distinctive, accessible, engaging interfaces using shadcn/ui and Tailwind CSS
 ---
 
 # Design Review Command
@@ -8,7 +8,7 @@ description: Comprehensive frontend design review to prevent generic aesthetics 
 
 ## Introduction
 
-<role>Senior Frontend Design Architect with expertise in Nuxt UI, Tailwind CSS, accessibility (WCAG 2.1 AA), and distinctive design patterns</role>
+<role>Senior Frontend Design Architect with expertise in shadcn/ui, Tailwind CSS, accessibility (WCAG 2.1 AA), and distinctive design patterns</role>
 
 **Design Philosophy** (from Claude Skills Blog):
 > "Think about frontend design the way a frontend engineer would. The more you can map aesthetic improvements to implementable frontend code, the better Claude can execute."
@@ -18,11 +18,11 @@ description: Comprehensive frontend design review to prevent generic aesthetics 
 ## Prerequisites
 
 <requirements>
-- Nuxt 4 project with Vue 3 components
-- Nuxt UI component library installed
+- Tanstack Start project with Vue 3 components
+- shadcn/ui component library installed
 - Tailwind 4 CSS configured
-- Vue files (`.vue`) in `components/`, `pages/`, `layouts/`
-- (Optional) Nuxt UI MCP server for accurate component guidance
+- Vue files (`.react`) in `components/`, `pages/`, `layouts/`
+- (Optional) shadcn/ui MCP server for accurate component guidance
 </requirements>
 
 ## Main Tasks
@@ -38,11 +38,11 @@ This enables targeted design review of components, pages, and configuration.
 
 <task_list>
 
-- [ ] Scan for Vue components in `components/`, `pages/`, `layouts/`, `app.vue`
+- [ ] Scan for Vue components in `components/`, `pages/`, `layouts/`, `app.react`
 - [ ] Check `tailwind.config.ts` or `tailwind.config.js` for custom theme configuration
-- [ ] Check `nuxt.config.ts` for Nuxt UI configuration
+- [ ] Check `app.config.ts` for shadcn/ui configuration
 - [ ] Check `app.config.ts` for global UI customization
-- [ ] Identify which components use Nuxt UI (`UButton`, `UCard`, etc.)
+- [ ] Identify which components use shadcn/ui (`Button`, `Card`, etc.)
 - [ ] Count total Vue files to determine review scope
 
 </task_list>
@@ -52,9 +52,9 @@ This enables targeted design review of components, pages, and configuration.
 <summary_format>
 📊 **Project Scope**:
 - X Vue components found
-- Y Nuxt UI components detected
+- Y shadcn/ui components detected
 - Tailwind config: Found/Not Found
-- Nuxt UI config: Found/Not Found
+- shadcn/ui config: Found/Not Found
 - Review target: Components + Configuration
 </summary_format>
 
@@ -68,7 +68,7 @@ Run design-focused analysis in 3 phases. Focus on preventing generic patterns an
 
 These skills run autonomously to catch generic patterns:
 
-1. ✅ **nuxt-ui-design-validator** (SKILL)
+1. ✅ **shadcn-ui-design-validator** (SKILL)
    - Detects Inter/Roboto fonts
    - Detects purple gradients
    - Detects missing animations
@@ -98,11 +98,11 @@ Launch specialized agents for comprehensive review:
 4. Task frontend-design-specialist(all Vue files, Tailwind config)
    - Identify generic patterns (fonts, colors, animations)
    - Map aesthetic improvements to code
-   - Provide specific Tailwind/Nuxt UI recommendations
+   - Provide specific Tailwind/shadcn/ui recommendations
    - Prioritize by impact (P1/P2/P3)
    - Generate implementable code examples
 
-5. Task nuxt-ui-architect(all Vue files with Nuxt UI components)
+5. Task shadcn-ui-architect(all Vue files with shadcn/ui components)
    - Validate component selection and usage
    - Check prop usage vs available (via MCP if available)
    - Validate `ui` prop customization depth
@@ -126,9 +126,9 @@ Launch specialized agents for comprehensive review:
    - Validate extended spacing/sizing
    - Check for design tokens
 
-8. Review Nuxt UI Configuration
+8. Review shadcn/ui Configuration
    - Check `app.config.ts` for global UI customization
-   - Check `nuxt.config.ts` for Nuxt UI theme settings
+   - Check `app.config.ts` for shadcn/ui theme settings
    - Validate consistent design system approach
 
 </parallel_tasks>
@@ -193,7 +193,7 @@ and prioritize by impact on brand distinctiveness and user experience.
 **Generic Patterns Detected**:
 - ❌ Inter font used in X components
 - ❌ Purple gradient in Y components
-- ❌ Default props in Z Nuxt UI components
+- ❌ Default props in Z shadcn/ui components
 - ❌ Missing animations on W interactive elements
 - ❌ A accessibility violations (WCAG 2.1 AA)
 
@@ -216,8 +216,8 @@ and prioritize by impact on brand distinctiveness and user experience.
 **Finding**: Using default Inter font system-wide
 
 **Current State**:
-```vue
-<!-- components/Hero.vue:12 -->
+```tsx
+<!-- app/components/Hero.tsx:12 -->
 <h1 class="text-4xl font-sans">Welcome</h1>
 
 <!-- tailwind.config.ts -->
@@ -227,7 +227,7 @@ fontFamily: {
 ```
 
 **Recommendation**:
-```vue
+```tsx
 <!-- Updated component -->
 <h1 class="text-4xl font-heading tracking-tight">Welcome</h1>
 
@@ -242,7 +242,7 @@ fontFamily: {
 **Implementation**:
 1. Update `tailwind.config.ts` with custom fonts (5 min)
 2. Add font-heading class to all headings (10 min)
-3. Verify font loading in `nuxt.config.ts` (5 min)
+3. Verify font loading in `app.config.ts` (5 min)
 **Total**: ~20 minutes
 
 ---
@@ -250,20 +250,20 @@ fontFamily: {
 ### 2. Purple Gradient Hero (Overused Pattern)
 
 **Severity**: P1 - High Impact
-**Files Affected**: `components/Hero.vue:8`
+**Files Affected**: `app/components/Hero.tsx:8`
 **Impact**: "AI-generated" aesthetic, lacks brand identity
 
 **Finding**: Hero section uses purple-500 to purple-600 gradient (appears in 60%+ of AI-generated sites)
 
 **Current State**:
-```vue
+```tsx
 <div class="bg-gradient-to-r from-purple-500 to-purple-600">
   <h1 class="text-white">Hero Title</h1>
 </div>
 ```
 
 **Recommendation**:
-```vue
+```tsx
 <div class="relative overflow-hidden">
   <!-- Multi-layer atmospheric background -->
   <div class="absolute inset-0 bg-gradient-to-br from-brand-coral via-brand-ocean to-brand-sunset" />
@@ -298,23 +298,23 @@ colors: {
 
 ---
 
-### 3. UButton Components with Default Props (23 instances)
+### 3. Button Components with Default Props (23 instances)
 
 **Severity**: P1 - High Impact
 **Files Affected**: 8 components
 **Impact**: Generic appearance, no brand identity
 
-**Finding**: 23 UButton instances using default props only (no customization)
+**Finding**: 23 Button instances using default props only (no customization)
 
 **Current State**:
-```vue
-<!-- components/CallToAction.vue:34 -->
-<UButton @click="handleClick">Click me</UButton>
+```tsx
+<!-- app/components/CallToAction.tsx:34 -->
+<Button onClick={handleClick">Click me</Button>
 ```
 
 **Recommendation**:
-```vue
-<UButton
+```tsx
+<Button
   color="primary"
   size="lg"
   :ui="{
@@ -330,20 +330,20 @@ colors: {
     focus:outline-none
     focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2
   "
-  @click="handleClick"
+  onClick={handleClick"
 >
   <span class="inline-flex items-center gap-2">
     Click me
-    <UIcon
+    <Icon
       name="i-heroicons-sparkles"
       class="transition-transform duration-300 group-hover:rotate-12"
     />
   </span>
-</UButton>
+</Button>
 ```
 
 **Better Approach: Create Reusable Variants**:
-```vue
+```tsx
 <!-- composables/useDesignSystem.ts -->
 export const useDesignSystem = () => {
   const button = {
@@ -363,15 +363,11 @@ export const useDesignSystem = () => {
 };
 
 <!-- Usage in components -->
-<script setup>
 const { button } = useDesignSystem();
-</script>
 
-<template>
-  <UButton v-bind="button.primary" @click="handleClick">
+  <Button v-bind="button.primary" onClick={handleClick">
     Click me
-  </UButton>
-</template>
+  </Button>
 ```
 
 **Implementation**:
@@ -392,17 +388,17 @@ const { button } = useDesignSystem();
 **Finding**: 32 interactive elements (buttons, links, cards) without hover animations
 
 **Recommendation**: Add transition utilities to all interactive elements
-```vue
+```tsx
 <!-- Before -->
-<UCard>Content</UCard>
+<Card>Content</Card>
 
 <!-- After -->
-<UCard
+<Card
   :ui="{ shadow: 'shadow-lg hover:shadow-2xl' }"
   class="transition-all duration-300 hover:-translate-y-1"
 >
   Content
-</UCard>
+</Card>
 ```
 
 [Continue with remaining P2 issues...]
@@ -417,10 +413,10 @@ const { button } = useDesignSystem();
 **Standard**: WCAG 1.4.3 (4.5:1 for normal text, 3:1 for large text)
 
 **Violations**:
-1. `components/Footer.vue:23` - Gray-400 on white (2.9:1) ❌
-2. `pages/about.vue:45` - Brand-coral on white (3.2:1) ❌
-3. `components/Badge.vue:12` - Yellow-300 on white (1.8:1) ❌
-4. `layouts/default.vue:67` - Blue-400 on gray-50 (2.4:1) ❌
+1. `app/components/Footer.tsx:23` - Gray-400 on white (2.9:1) ❌
+2. `app/routes/about.tsx:45` - Brand-coral on white (3.2:1) ❌
+3. `app/components/Badge.tsx:12` - Yellow-300 on white (1.8:1) ❌
+4. `layouts/default.tsx:67` - Blue-400 on gray-50 (2.4:1) ❌
 
 **Fixes**: [Specific contrast-compliant color recommendations]
 
@@ -440,9 +436,9 @@ const { button } = useDesignSystem();
 3. ✅ Fix critical accessibility violations (contrast)
 
 ### Priority 2: Component Updates (2-3 hours)
-4. ✅ Update all UButton instances with design system variants
+4. ✅ Update all Button instances with design system variants
 5. ✅ Add hover animations to interactive elements
-6. ✅ Customize UCard components with distinctive styling
+6. ✅ Customize Card components with distinctive styling
 
 ### Priority 3: Polish (1-2 hours)
 7. ✅ Enhance micro-interactions
@@ -513,7 +509,7 @@ Ask user: "Would you like me to create todos for these findings? You can then us
 ✅ Project ready for distinctive brand identity when:
 - 0% Inter/Roboto font usage
 - 0% purple gradient usage
-- 100% of Nuxt UI components deeply customized
+- 100% of shadcn/ui components deeply customized
 - 100% of interactive elements have animations
 - 100% WCAG 2.1 AA compliance
 - Distinctiveness score ≥ 85/100
@@ -529,7 +525,7 @@ After implementing fixes:
 ## Resources
 
 - Claude Skills Blog: Improving Frontend Design Through Skills
-- Nuxt UI Documentation: https://ui.nuxt.com
+- shadcn/ui Documentation: https://ui.shadcn.com
 - Tailwind 4 Documentation: https://tailwindcss.com/docs/v4-beta
 - WCAG 2.1 Guidelines: https://www.w3.org/WAI/WCAG21/quickref/
 - WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/

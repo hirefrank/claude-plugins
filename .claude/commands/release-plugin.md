@@ -394,6 +394,98 @@ git ls-remote --exit-code origin >/dev/null 2>&1 && echo "✅ Remote accessible"
 
 ---
 
+## Documentation Consistency Rules
+
+### CRITICAL: Before release, verify README consistency
+
+#### Rule 1: Never List Partial Commands/Agents/Skills
+
+**Problem**: Listing SOME but not ALL items creates confusion.
+
+**Solution**: Use link-based approach with directory counts:
+```markdown
+## Commands (24)
+
+**Quick Start**: `/es-auth-setup` • `/es-billing-setup` • `/es-test-setup`
+
+**Browse all**: [See all 24 commands →](commands/)
+
+<details>
+<summary>View complete command list</summary>
+[Categorized list here]
+</details>
+```
+
+**Why**: When you add a new command, you don't have to update the README. Counts stay accurate automatically.
+
+#### Rule 2: Keep Counts Synchronized
+
+**Check these locations**:
+1. Marketplace README: `plugins/edge-stack/README.md`
+2. Plugin README: `README.md`
+3. `.claude-plugin/plugin.json`: `description` field
+
+**Actual counts** (verify before release):
+```bash
+# Commands
+ls -1 commands/*.md | wc -l
+
+# Agents
+ls -1 agents/*.md | wc -l
+
+# Skills
+find skills -name "SKILL.md" | wc -l
+```
+
+Update ALL locations with accurate counts.
+
+#### Rule 3: Command Prefix Consistency
+
+**Marketplace plugins require namespace prefixes**:
+- Generic commands: `/edge-stack:review`, `/edge-stack:work`, `/edge-stack:plan`
+- Edge-specific commands: Keep `es-` prefix (e.g., `/es-validate`, `/es-commit`)
+
+**Never show** commands without prefixes in documentation (confuses users).
+
+#### Rule 4: Cross-Reference Between READMEs
+
+**Marketplace README** should link to plugin README for details:
+```markdown
+[📖 Full Documentation](./plugins/edge-stack/README.md)
+```
+
+**Plugin README** should link to marketplace README for installation:
+```markdown
+[⬅️ Back to Marketplace](../../README.md) • [Installation Guide](../../README.md#installation)
+```
+
+### Pre-Release Documentation Checklist
+
+Run these checks before every release:
+
+```bash
+# 1. Verify counts match reality
+COMMANDS=$(ls -1 commands/*.md | wc -l)
+AGENTS=$(ls -1 agents/*.md | wc -l)
+SKILLS=$(find skills -name "SKILL.md" | wc -l)
+
+echo "Commands: $COMMANDS (should be in READMEs)"
+echo "Agents: $AGENTS (should be in READMEs)"
+echo "Skills: $SKILLS (should be in READMEs)"
+
+# 2. Check for command prefix errors
+grep -n "^/review\|^/work\|^/plan\|^/triage" README.md ../../README.md
+# Should return ZERO matches (all should have /edge-stack: or es- prefix)
+
+# 3. Verify cross-references exist
+grep -q "Full Documentation.*plugins/edge-stack/README" ../../README.md && echo "✅ Marketplace → Plugin link exists"
+grep -q "Back to Marketplace\|Installation Guide" README.md && echo "✅ Plugin → Marketplace link exists"
+```
+
+If any check fails, fix before releasing.
+
+---
+
 ## Error Handling
 
 **If documentation sync fails**:

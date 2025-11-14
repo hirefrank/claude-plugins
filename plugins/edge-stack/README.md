@@ -4,7 +4,7 @@
 
 Build modern web applications with **Tanstack Start** (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, and shadcn/ui design system. Features AI-powered development assistance, autonomous validation, and expert guidance that gets smarter with every use.
 
-**Note**: For Nuxt 4 projects, use the separate `nuxt-stack` local plugin.
+> **Installation**: See the [marketplace README](../../README.md) for installation instructions.
 
 **Philosophy**: Self-improving through feedback codification, multi-agent parallel analysis, and structured workflow orchestration.
 
@@ -13,9 +13,9 @@ Build modern web applications with **Tanstack Start** (React), Cloudflare Worker
 ## Overview
 
 This plugin transforms Claude Code into a complete edge-first full-stack development platform through:
-- **23 specialized agents** (16 Cloudflare + 4 Frontend + 3 Billing/Auth, all with MCP integration)
-- **12 autonomous SKILLs** (7 Cloudflare + 3 Frontend Design + 2 Security)
-- **20 workflow commands** (including setup wizards, migration tools, test generation, and automation)
+- **27 specialized agents** ([browse all](agents/)) - 16 Cloudflare + 7 Tanstack + 4 Integration, all with MCP integration
+- **12 autonomous SKILLs** ([browse all](skills/)) - 7 Cloudflare + 3 Frontend Design + 2 Security
+- **24 workflow commands** ([browse all](commands/)) - Setup wizards, migration tools, test generation, and automation
 - **Self-improvement** through feedback codification
 - **Multi-phase parallel execution**
 - **Real-time account context** via MCP servers (optional but recommended)
@@ -57,7 +57,7 @@ This plugin transforms Claude Code into a complete edge-first full-stack develop
 **Benefits**:
 - ✅ **98.7% token reduction** (via execution environment filtering)
 - ✅ **Real-time account data** (bindings, metrics, security events)
-- ✅ **Accurate documentation** (always latest from Cloudflare, shadcn/ui, Nuxt UI)
+- ✅ **Accurate documentation** (always latest from Cloudflare, shadcn/ui, shadcn/ui)
 - ✅ **No hallucinations** (component props validated from official sources)
 - ✅ **Data-driven recommendations** (based on your actual usage)
 
@@ -79,9 +79,10 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
       "args": ["-y", "mcp-remote", "https://www.shadcn.io/api/mcp"],
       "enabled": true
     },
-    "nuxt-ui": {
-      "type": "http",
-      "url": "https://ui.nuxt.com/mcp",
+    "shadcn-ui": {
+      "type": "sse",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://www.shadcn.io/api/mcp"],
       "enabled": true
     },
     "better-auth": {
@@ -105,7 +106,7 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 
 # You should see:
 # ✓ cloudflare-docs (active)
-# ✓ nuxt-ui (active)
+# ✓ shadcn-ui (active)
 # ✓ better-auth (active)
 # ⚠ polar (disabled - requires authentication)
 ```
@@ -118,9 +119,9 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 
 **MCP Server Features**:
 
-**Frontend Design** - `nuxt-ui` MCP provides:
+**Frontend Design** - `shadcn-ui` MCP provides:
 - `frontend-design-specialist` agent - Validates component customizations
-- `nuxt-ui-architect` agent - Prevents prop hallucination
+- `shadcn-ui-architect` agent - Prevents prop hallucination
 - `/es-component` command - Scaffolds components with correct props
 - `/es-design-review` command - Validates component usage
 
@@ -129,7 +130,7 @@ The plugin includes a `.mcp.json` file that automatically configures these serve
 - Provider configuration (OAuth, passkeys, magic links)
 - Session management patterns
 - Security best practices for Cloudflare Workers
-- Integration with Nuxt (via nuxt-auth-utils when appropriate)
+- Integration with Tanstack Start and Workers
 
 **Billing** - `polar` MCP provides (optional, requires authentication):
 - Product and subscription setup
@@ -200,307 +201,108 @@ This prevents sloppy code and ensures consistent quality across all commits.
 
 ## Commands
 
-### `/review` - Comprehensive Code Review
+All 24 commands are organized by functional area. [Browse all commands →](commands/)
 
-Multi-phase review with parallel Cloudflare-focused agents:
-- Workers runtime compatibility
-- Binding usage validation
-- Security analysis (env vars, runtime isolation)
-- Performance optimization (cold starts, edge patterns)
-- Architecture assessment (Workers/DO/KV/R2 patterns)
+### Workflow & Planning (6)
+- **[`/es-review`](commands/es-review.md)** - Multi-phase code review with parallel Cloudflare-focused agents
+- **[`/es-work`](commands/es-work.md)** - Execute work plans in isolated Git worktrees with validation
+- **[`/es-plan`](commands/es-plan.md)** - Create GitHub issues from feature descriptions (alias: `/es-issue`)
+- **[`/es-triage`](commands/es-triage.md)** - Process code review findings systematically
+- **[`/es-resolve-parallel`](commands/es-resolve-parallel.md)** - Execute multiple todos and GitHub issues concurrently
+- **[`/generate_command`](commands/generate_command.md)** - Meta-command for creating custom commands
 
-**Example**:
-```bash
-/review
-# Launches all agents in parallel
-# Synthesizes findings with P1/P2/P3 priorities
-# Creates triage-ready findings list
-```
+### Cloudflare Workers (4)
+- **[`/es-worker`](commands/es-worker.md)** - Generate Workers with bindings, validation, and deployment
+- **[`/es-deploy`](commands/es-deploy.md)** - Pre-flight validation + wrangler deploy
+- **[`/es-migrate`](commands/es-migrate.md)** - Migrate from other platforms to Cloudflare Workers
+- **[`/es-validate`](commands/es-validate.md)** - Run comprehensive code quality checks
 
-### `/work` - Execute Work Plan
+### Tanstack Start (5)
+- **[`/es-tanstack-migrate`](commands/es-tanstack-migrate.md)** - Migrate React apps to Tanstack Start
+- **[`/es-tanstack-route`](commands/es-tanstack-route.md)** - Create type-safe TanStack Router routes
+- **[`/es-tanstack-server-fn`](commands/es-tanstack-server-fn.md)** - Generate React Server Functions
+- **[`/es-tanstack-component`](commands/es-tanstack-component.md)** - Scaffold shadcn/ui components with distinctive design
 
-Structured execution of work documents:
-- Environment setup (Git worktree)
-- Document analysis
-- Task planning (TodoWrite)
-- Sequential execution with validation
-- Testing and PR creation
+### Frontend Design (3)
+- **[`/es-design-review`](commands/es-design-review.md)** - Comprehensive design review preventing generic aesthetics
+- **[`/es-component`](commands/es-component.md)** - Generate distinctive shadcn/ui components (legacy, use `/es-tanstack-component`)
+- **[`/es-theme`](commands/es-theme.md)** - Generate custom Tailwind + shadcn/ui themes
 
-**Example**:
-```bash
-/work plan.md
-# Sets up isolated worktree
-# Breaks down tasks
-# Executes systematically
-# Validates each step
-```
+### Integration Setup (4)
+- **[`/es-auth-setup`](commands/es-auth-setup.md)** - Configure better-auth authentication
+- **[`/es-billing-setup`](commands/es-billing-setup.md)** - Configure Polar.sh billing integration
+- **[`/es-email-setup`](commands/es-email-setup.md)** - Configure Resend email integration
+- **[`/es-test-setup`](commands/es-test-setup.md)** - Configure Playwright E2E testing
 
-### `/plan` - Create GitHub Issues
+### Testing & CI (2)
+- **[`/es-test-gen`](commands/es-test-gen.md)** - Generate Playwright E2E tests
+- **[`/es-validate`](commands/es-validate.md)** - Run comprehensive validation (build, lint, types, wrangler)
 
-Transform feature descriptions into well-structured GitHub issues:
-- Repository research (Cloudflare patterns)
-- Binding context analysis
-- Issue structuring with templates
-- Searchable titles and proper formatting
-
-**Example**:
-```bash
-/plan Add real-time presence tracking with Durable Objects
-# Researches existing patterns
-# Analyzes available bindings
-# Creates comprehensive GitHub issue
-```
-
-### `/triage` - Manage Findings
-
-Process code review findings systematically:
-- One-by-one presentation with severity
-- User decision (yes/next/custom)
-- Template-based todo creation
-- Progress tracking with metrics
-
-**Example**:
-```bash
-/triage
-# Shows finding #1 of 15
-# User: yes/next/custom
-# Creates: 001-pending-p1-workers-runtime-violation.md
-# Tracks: 1/15 complete, 14 remaining
-```
-
-### `/generate_command` - Create New Commands
-
-Meta-command for creating custom commands:
-- Analyzes requirements
-- Generates command structure
-- Includes agent orchestration patterns
-- Creates documentation
-
-### `/es-resolve-parallel` - Parallel Task Resolution
-
-Execute multiple todos and GitHub issues concurrently:
-- Resolves TODO files from `/todos/*.md` directory
-- Fetches and resolves open GitHub issues
-- Identifies independent tasks and runs them in parallel
-- Analyzes dependencies and creates execution flow diagrams
-- Validates each completion
-- Closes GitHub issues with commit references
-
-### `/es-design-review` - Frontend Design Review
-
-Comprehensive design review preventing generic aesthetics:
-- Detects Inter fonts, purple gradients, minimal animations
-- Maps aesthetic improvements to Tailwind/Nuxt UI code
-- Validates WCAG 2.1 AA accessibility compliance
-- Ensures brand distinctiveness vs "AI aesthetic"
-- Provides implementation-ready code examples
-
-**Example**:
-```bash
-/es-design-review
-
-# Output: Design review report with P1/P2/P3 findings
-# - Typography issues (generic fonts)
-# - Color palette opportunities (custom brand colors)
-# - Animation gaps (missing micro-interactions)
-# - Component customization depth
-# - Accessibility violations
-```
-
-### `/es-component` - Generate Distinctive Components
-
-Scaffold Nuxt UI components with design best practices built-in:
-- Custom fonts, colors, animations from the start
-- Deep Nuxt UI customization (ui prop + utilities)
-- Accessibility features (ARIA, keyboard, focus)
-- TypeScript types and usage examples included
-
-**Example**:
-```bash
-/es-component button PrimaryButton --animations rich
-/es-component card FeatureCard
-/es-component hero LandingHero --theme custom
-```
-
-### `/es-theme` - Generate Custom Design Theme
-
-Create distinctive Tailwind + Nuxt UI theme configuration:
-- Custom color palettes (not default purple)
-- Distinctive font pairings (not Inter/Roboto)
-- Animation presets (15+ micro-interactions)
-- WCAG 2.1 AA contrast-validated
-- Nuxt UI global customization
-
-**Example**:
-```bash
-/es-theme --palette coral-ocean --fonts modern --animations rich
-
-# Generates: tailwind.config.ts, app.config.ts, nuxt.config.ts
-# Result: Distinctive theme (90/100 distinctiveness score)
-```
-
-### `/es-commit` - Automated Commit and Push
-
-Automatically stage all changes, generate conventional commit message, and push to current branch:
-- Auto-generates commit messages from diff analysis
-- Supports custom messages via arguments
-- Branch-aware (works with PR branches, feature branches, main)
-- Sets upstream automatically if not configured
-- Includes Claude Code attribution
-
-**Example**:
-```bash
-/es-commit
-# Auto-generates message and pushes to current branch
-
-/es-commit "fix: Resolve authentication timeout issue"
-# Uses custom message
-```
+### Utilities (1)
+- **[`/es-commit`](commands/es-commit.md)** - Auto-stage, generate commit message, and push to current branch
 
 ## Agents
 
-All 22 agents are complete with MCP integration for enhanced real-time context.
+All 27 agents include MCP integration for real-time account context and documentation validation. [Browse all agents →](agents/)
 
-### Model Assignments (Optimized for Cost/Performance)
+### Core Cloudflare (10)
+- **[`workers-runtime-guardian`](agents/workers-runtime-guardian.md)** - Ensures Workers runtime compatibility (V8, not Node.js)
+- **[`binding-context-analyzer`](agents/binding-context-analyzer.md)** - Parses wrangler.toml, generates TypeScript Env interface
+- **[`durable-objects-architect`](agents/durable-objects-architect.md)** - DO lifecycle, state persistence, WebSocket patterns
+- **[`cloudflare-architecture-strategist`](agents/cloudflare-architecture-strategist.md)** - Workers/DO/KV/R2 architecture decisions
+- **[`cloudflare-security-sentinel`](agents/cloudflare-security-sentinel.md)** - Security model, secret management, CORS/CSP
+- **[`edge-performance-oracle`](agents/edge-performance-oracle.md)** - Cold start optimization, edge caching strategies
+- **[`cloudflare-pattern-specialist`](agents/cloudflare-pattern-specialist.md)** - Cloudflare-specific patterns and anti-patterns
+- **[`cloudflare-data-guardian`](agents/cloudflare-data-guardian.md)** - KV/D1/R2 data integrity and consistency models
+- **[`kv-optimization-specialist`](agents/kv-optimization-specialist.md)** - TTL strategies, key naming, batch operations
+- **[`r2-storage-architect`](agents/r2-storage-architect.md)** - Upload patterns, streaming, CDN integration
 
-Based on the latest Anthropic models (2025), agents are assigned models matching their task complexity:
+### Tanstack Start (7)
+- **[`tanstack-migration-specialist`](agents/tanstack-migration-specialist.md)** - Migrate React apps to Tanstack Start
+- **[`tanstack-routing-specialist`](agents/tanstack-routing-specialist.md)** - File-based routing, loaders, type-safe navigation
+- **[`tanstack-ssr-specialist`](agents/tanstack-ssr-specialist.md)** - Server-side rendering, React Server Functions
+- **[`tanstack-ui-architect`](agents/tanstack-ui-architect.md)** - shadcn/ui + TanStack integration patterns
+- **[`frontend-design-specialist`](agents/frontend-design-specialist.md)** - Prevents generic aesthetics, distinctive design patterns
+- **[`mcp-efficiency-specialist`](agents/mcp-efficiency-specialist.md)** - MCP integration patterns and best practices
+- **[`accessibility-guardian`](agents/accessibility-guardian.md)** - WCAG 2.1 AA compliance, keyboard navigation, screen readers
 
-| Model | Count | Use Case | Agents |
-|-------|-------|----------|--------|
-| **Haiku 4.5** | 15 | Pattern matching & rule enforcement | `binding-context-analyzer`, `git-history-analyzer`, `repo-research-analyst`, `code-simplicity-reviewer`, `workers-runtime-guardian`, `kv-optimization-specialist`, `r2-storage-architect`, `edge-caching-optimizer`, `cloudflare-security-sentinel`, `cloudflare-data-guardian`, `cloudflare-pattern-specialist`, `workers-ai-specialist`, `nuxt-migration-specialist`, `nuxt-ui-architect`, `accessibility-guardian` |
-| **Sonnet 4.5** | 3 | Complex reasoning & aesthetics | `durable-objects-architect`, `edge-performance-oracle`, `frontend-design-specialist` |
-| **Opus 4.1** | 1 | Strategic/creative | `cloudflare-architecture-strategist`, `feedback-codifier` |
+### Integration Specialists (6)
+- **[`better-auth-specialist`](agents/better-auth-specialist.md)** - OAuth, passkeys, magic links, session management
+- **[`polar-billing-specialist`](agents/polar-billing-specialist.md)** - Subscriptions, webhooks, customer lifecycle
+- **[`resend-email-specialist`](agents/resend-email-specialist.md)** - Transactional email, templates, deliverability
+- **[`playwright-testing-specialist`](agents/playwright-testing-specialist.md)** - E2E testing, Workers bindings, accessibility tests
+- **[`workers-ai-specialist`](agents/workers-ai-specialist.md)** - Vercel AI SDK, Cloudflare AI Agents, RAG patterns
+- **[`edge-caching-optimizer`](agents/edge-caching-optimizer.md)** - Cache hierarchy, invalidation strategies
 
-**Rationale:**
-- **Haiku 4.5**: 3x cheaper, 2x faster than Sonnet 4, similar coding performance. Perfect for well-defined tasks: checking forbidden APIs, validating patterns, enforcing rules, security checklists. The workhorse for executing defined review tasks.
-- **Sonnet 4.5**: Reserved for complex tradeoffs requiring deep reasoning: DO lifecycle decisions, performance analysis with multiple variables.
-- **Opus 4.1**: Only for strategic/creative work: architecture decisions, meta-learning from user feedback.
+### Meta-Learning & Analysis (4)
+- **[`feedback-codifier`](agents/feedback-codifier.md)** - Analyzes user corrections, extracts patterns, updates agents
+- **[`git-history-analyzer`](agents/git-history-analyzer.md)** - Commit history analysis, pattern identification
+- **[`repo-research-analyst`](agents/repo-research-analyst.md)** - Codebase pattern research, convention identification
+- **[`code-simplicity-reviewer`](agents/code-simplicity-reviewer.md)** - YAGNI enforcement, complexity reduction
 
-### Core Cloudflare Agents (3)
+## Skills
 
-**`workers-runtime-guardian`** ✅
-- Ensures Workers runtime compatibility (V8, not Node.js)
-- Detects forbidden APIs (fs, process, Buffer)
-- Validates env parameter patterns
-- **MCP**: Queries latest Workers runtime docs
+All 12 autonomous SKILLs provide real-time validation and guidance during development. [Browse all skills →](skills/)
 
-**`binding-context-analyzer`** ✅
-- Parses wrangler.toml bindings (KV/R2/D1/DO)
-- Generates TypeScript Env interface
-- Validates binding usage in code
-- **MCP**: Cross-checks bindings with real Cloudflare account
+### Cloudflare Validation (4)
+- **[`workers-runtime-validator`](skills/workers-runtime-validator/)** - Auto-validates Workers runtime compatibility (forbidden APIs, env patterns)
+- **[`workers-binding-validator`](skills/workers-binding-validator/)** - Auto-checks binding usage against wrangler.toml configuration
+- **[`durable-objects-pattern-checker`](skills/durable-objects-pattern-checker/)** - Auto-validates DO lifecycle, state persistence, ID generation
+- **[`edge-performance-optimizer`](skills/edge-performance-optimizer/)** - Auto-analyzes cold starts, bundle size, edge caching patterns
 
-**`durable-objects-architect`** ✅
-- DO lifecycle patterns & state persistence
-- ID generation strategies (idFromName/idFromString/newUniqueId)
-- WebSocket handling patterns
-- **MCP**: Real DO metrics (active count, CPU, requests)
+### Storage & Data (2)
+- **[`kv-optimization-advisor`](skills/kv-optimization-advisor/)** - Auto-suggests TTL strategies, key naming, batch operations
+- **[`cors-configuration-validator`](skills/cors-configuration-validator/)** - Auto-validates CORS headers, preflight handling
 
-### Cloudflare Architecture Agents (5)
+### Frontend Design (3)
+- **[`shadcn-ui-design-validator`](skills/shadcn-ui-design-validator/)** - Auto-validates component usage, prevents prop hallucination via MCP
+- **[`component-aesthetic-checker`](skills/component-aesthetic-checker/)** - Auto-detects generic patterns (Inter fonts, purple gradients)
+- **[`animation-interaction-validator`](skills/animation-interaction-validator/)** - Auto-ensures engaging UX (transitions, hover states, loading feedback)
 
-**`cloudflare-architecture-strategist`** ✅
-- Workers/DO/KV/R2 architecture decisions
-- Edge-first design patterns
-- Service binding strategies
-- **MCP**: Resource discovery + Nuxt UI component verification
-
-**`cloudflare-security-sentinel`** ✅
-- Workers security model (runtime isolation, env vars)
-- Secret management (wrangler secret, not process.env)
-- CORS, CSP, auth patterns
-- **MCP**: Security events + secret validation + bundle analysis
-
-**`edge-performance-oracle`** ✅
-- Cold start optimization (bundle size, dependencies)
-- Edge caching strategies (Cache API)
-- Global latency patterns
-- **MCP**: Real performance metrics (cold start, CPU, latency by region)
-
-**`cloudflare-pattern-specialist`** ✅
-- Cloudflare-specific patterns (KV TTL, DO state, service bindings)
-- Anti-patterns (stateful Workers, KV for strong consistency)
-- Idiomatic Cloudflare code
-- **MCP**: Pattern validation against official docs + Nuxt UI checks
-
-**`cloudflare-data-guardian`** ✅
-- KV/D1/R2 data integrity & consistency models
-- D1 migrations & schema validation
-- Storage selection guidance
-- **MCP**: D1 schema checks + KV/R2 usage metrics
-
-### Specialized Storage Agents (4)
-
-**`kv-optimization-specialist`** ✅
-- TTL strategies (tiered, scheduled, cache-specific)
-- Key naming & namespacing patterns
-- Batch operations & pagination
-- **MCP**: KV metrics (reads, writes, latency, storage limits)
-
-**`r2-storage-architect`** ✅
-- Upload patterns (simple, multipart, presigned URLs)
-- Streaming & download optimization
-- CDN integration & lifecycle
-- **MCP**: R2 metrics (storage, bandwidth, request rates)
-
-**`workers-ai-specialist`** ✅
-- Vercel AI SDK patterns (REQUIRED per preferences)
-- Cloudflare AI Agents (agentic workflows)
-- RAG patterns (Vectorize + AI SDK)
-- **MCP**: Latest AI docs + Nuxt UI for AI UIs
-
-**`edge-caching-optimizer`** ✅
-- Cache hierarchy (Browser/CDN/Cache API/KV/R2)
-- Cache API patterns (stale-while-revalidate)
-- Cache invalidation strategies
-- **MCP**: Cache hit rates + performance metrics
-
-### Frontend Design Agents (3) - NEW
-
-**`frontend-design-specialist`** ✅ (Sonnet 4.5)
-- Analyzes UI/UX for generic patterns (Inter fonts, purple gradients, minimal animations)
-- Maps aesthetic improvements to Tailwind/Nuxt UI code
-- Prioritizes by distinctiveness impact (P1/P2/P3)
-- Implements Claude Skills Blog methodology: "think like a frontend engineer"
-- **MCP**: Uses Nuxt UI MCP for accurate component guidance
-
-**`nuxt-ui-architect`** ✅ (Haiku 4.5)
-- Deep expertise in Nuxt UI component library
-- Validates component selection and prop usage (prevents hallucination via MCP)
-- Ensures `ui` prop deep customization
-- Enforces consistent design system patterns
-- **MCP**: ALWAYS queries Nuxt UI MCP before suggesting components
-
-**`accessibility-guardian`** ✅ (Haiku 4.5)
-- WCAG 2.1 AA compliance validation
-- Color contrast checking (4.5:1 text, 3:1 UI)
-- Keyboard navigation validation
-- Screen reader support (ARIA, semantic HTML)
-- Ensures distinctive designs remain accessible
-- Validates reduced motion support
-
-### Generic (4 agents - unchanged)
-
-**`feedback-codifier`** ✅
-- **THE LEARNING ENGINE**
-- Analyzes corrections from users
-- Extracts recurring patterns
-- Updates other agents automatically
-- Makes the plugin "get smarter with every use"
-
-**`git-history-analyzer`** ✅
-- Analyzes commit history
-- Identifies patterns over time
-- Understands project evolution
-
-**`repo-research-analyst`** ✅
-- Researches codebase patterns
-- Identifies conventions
-- Documents findings with file paths
-
-**`code-simplicity-reviewer`** ✅
-- YAGNI enforcement
-- Complexity reduction
-- Cognitive load minimization
+### Integration & Security (3)
+- **[`auth-security-validator`](skills/auth-security-validator/)** - Auto-validates better-auth patterns, session security, CSRF protection
+- **[`polar-integration-validator`](skills/polar-integration-validator/)** - Auto-checks Polar.sh webhook handling, subscription flows
+- **[`cloudflare-security-checker`](skills/cloudflare-security-checker/)** - Auto-validates secret management, runtime isolation, CORS/CSP
 
 ## How It Works
 
@@ -564,7 +366,7 @@ Based on the latest Anthropic models (2025), agents are assigned models matching
 - [x] All 13 Cloudflare agents with MCP integration
 - [x] Real-time account context support
 - [x] Documentation validation patterns
-- [x] Nuxt UI component verification
+- [x] shadcn/ui component verification
 - [x] MCP setup guide created
 - [x] README updated with MCP benefits
 
@@ -716,7 +518,7 @@ See [LICENSE](./LICENSE) for full details.
 
 **MCP Servers** (4 bundled with plugin):
 - [Cloudflare MCP](https://docs.mcp.cloudflare.com/mcp) - Account context + documentation
-- [Nuxt UI MCP](https://ui.nuxt.com/mcp) - Component documentation
+- [shadcn/ui MCP](https://www.shadcn.io/api/mcp) - Component documentation
 - [better-auth MCP](https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp) - Authentication patterns
 - [Polar MCP](https://mcp.polar.sh/mcp/polar-mcp) - Billing integration
 - [MCP Usage Examples](./docs/mcp-usage-examples.md) - Query patterns and workflows
@@ -731,7 +533,7 @@ See [LICENSE](./LICENSE) for full details.
 
 **User Preferences**:
 - [PREFERENCES.md](./PREFERENCES.md) - Strict framework/SDK requirements
-- [Nuxt 4](https://nuxt.com) - Required UI framework
+- [Tanstack Start](https://tanstack.com/start) - Required UI framework
 - [Hono](https://hono.dev) - Required backend framework
 - [Vercel AI SDK](https://ai-sdk.dev) - Required AI SDK
 - [Cloudflare AI Agents](https://developers.cloudflare.com/agents/) - Agentic workflows

@@ -1,7 +1,8 @@
 ---
 name: animation-interaction-validator
-description: Ensures engaging user experience through validation of animations, transitions, micro-interactions, and feedback states, preventing flat/static interfaces that lack polish and engagement
+description: Ensures engaging user experience through validation of animations, transitions, micro-interactions, and feedback states, preventing flat/static interfaces that lack polish and engagement. Works with Tanstack Start (React) + shadcn/ui components.
 triggers: ["interactive element creation", "event handler addition", "state changes", "async actions", "form submissions"]
+note: "Code examples use React/TSX with shadcn/ui components (Button, Card, Input). Adapt patterns to your component library."
 ---
 
 # Animation Interaction Validator SKILL
@@ -30,102 +31,102 @@ This SKILL automatically activates when:
 ### Specific Checks Performed
 
 #### ❌ Critical Issues (Missing Feedback)
-```vue
-<!-- These patterns trigger alerts: -->
+```tsx
+// These patterns trigger alerts:
 
-<!-- No hover state -->
-<UButton @click="submit">Submit</UButton>
+// No hover state
+<Button onClick={submit}>Submit</Button>
 
-<!-- No loading state during async action -->
-<UButton @click="async () => await submitForm()">Save</UButton>
+// No loading state during async action
+<Button onClick={async () => await submitForm()}>Save</Button>
 
-<!-- Jarring state change (no transition) -->
-<div v-if="showContent">Content</div>
+// Jarring state change (no transition)
+{showContent && <div>Content</div>}
 
-<!-- No focus state -->
-<a href="/page" class="text-blue-500">Link</a>
+// No focus state
+<a href="/page" className="text-blue-500">Link</a>
 
-<!-- Form without feedback -->
-<form @submit="handleSubmit">
-  <UInput v-model="value" />
+// Form without feedback
+<form onSubmit={handleSubmit}>
+  <Input value={value} onChange={setValue} />
   <button type="submit">Submit</button>
 </form>
 ```
 
 #### ✅ Correct Interactive Patterns
-```vue
-<!-- These patterns are validated as correct: -->
+```tsx
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Send } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-<!-- Hover state with smooth transition -->
-<UButton
-  class="transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
-  @click="submit"
+// These patterns are validated as correct:
+
+// Hover state with smooth transition
+<Button
+  className="transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
+  onClick={submit}
 >
   Submit
-</UButton>
+</Button>
 
-<!-- Loading state with visual feedback -->
-<UButton
-  :loading="isSubmitting"
-  :disabled="isSubmitting"
-  class="transition-all duration-200"
-  @click="handleSubmit"
+// Loading state with visual feedback
+<Button
+  disabled={isSubmitting}
+  className="transition-all duration-200 group"
+  onClick={handleSubmit}
 >
-  <span class="flex items-center gap-2">
-    <UIcon
-      v-if="!isSubmitting"
-      name="i-heroicons-paper-airplane"
-      class="transition-transform duration-300 group-hover:translate-x-1"
-    />
-    {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+  <span className="flex items-center gap-2">
+    {!isSubmitting && (
+      <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+    )}
+    {isSubmitting ? 'Submitting...' : 'Submit'}
   </span>
-</UButton>
+</Button>
 
-<!-- Smooth state transition -->
-<Transition
-  enter-active-class="transition-all duration-300 ease-out"
-  enter-from-class="opacity-0 translate-y-4"
-  enter-to-class="opacity-100 translate-y-0"
-  leave-active-class="transition-all duration-200 ease-in"
-  leave-from-class="opacity-100 translate-y-0"
-  leave-to-class="opacity-0 translate-y-4"
+// Smooth state transition (using framer-motion or CSS)
+<div
+  className={cn(
+    "transition-all duration-300 ease-out",
+    showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  )}
 >
-  <div v-if="showContent">Content</div>
-</Transition>
+  {showContent && <div>Content</div>}
+</div>
 
-<!-- Focus state with ring -->
+// Focus state with ring
 <a
   href="/page"
-  class="text-blue-500 transition-colors duration-200 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+  className="text-blue-500 transition-colors duration-200 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
 >
   Link
 </a>
 
 <!-- Form with success/error feedback -->
-<form @submit.prevent="handleSubmit" class="space-y-4">
-  <UInput
-    v-model="value"
-    :error="errors.value"
-    class="transition-all duration-200"
+<form onSubmit={(e) => { e.preventDefault(); handleSubmit" className="space-y-4">
+  <Input
+    value="value"
+    error={errors.value"
+    className="transition-all duration-200"
   />
 
-  <UButton
+  <Button
     type="submit"
-    :loading="isSubmitting"
-    :disabled="isSubmitting"
-    class="transition-all duration-300 hover:scale-105"
+    loading={isSubmitting"
+    disabled={isSubmitting"
+    className="transition-all duration-300 hover:scale-105"
   >
     Submit
-  </UButton>
+  </Button>
 
   <!-- Success message with animation -->
   <Transition name="fade">
-    <UAlert
-      v-if="showSuccess"
+    <Alert
+      if="showSuccess"
       color="green"
       icon="i-heroicons-check-circle"
       title="Success!"
-      class="animate-in slide-in-from-top"
+      className="animate-in slide-in-from-top"
     />
   </Transition>
 </form>
@@ -136,12 +137,12 @@ This SKILL automatically activates when:
 ### Complementary to Existing Components
 - **frontend-design-specialist agent**: Provides design direction, SKILL validates implementation
 - **component-aesthetic-checker**: Validates component customization, SKILL validates interactions
-- **nuxt-ui-design-validator**: Catches generic patterns, SKILL ensures engagement
+- **shadcn-ui-design-validator**: Catches generic patterns, SKILL ensures engagement
 - **accessibility-guardian agent**: Validates a11y, SKILL validates visual feedback
 
 ### Escalation Triggers
 - Complex animation sequences → `frontend-design-specialist` agent
-- Component interaction patterns → `nuxt-ui-architect` agent
+- Component interaction patterns → `tanstack-ui-architect` agent
 - Performance concerns → `edge-performance-oracle` agent
 - Accessibility issues → `accessibility-guardian` agent
 
@@ -171,53 +172,44 @@ This SKILL automatically activates when:
 ## Remediation Examples
 
 ### Fixing Missing Hover States
-```vue
+```tsx
 <!-- ❌ Critical: No hover feedback -->
-<template>
-  <UButton @click="handleClick">
+  <Button onClick="handleClick">
     Click me
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Multi-dimensional hover effects -->
-<template>
-  <UButton
-    class="
+  <Button
+    className="
       transition-all duration-300 ease-out
       hover:scale-105 hover:shadow-xl hover:-rotate-1
       active:scale-95 active:rotate-0
       focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500
     "
-    @click="handleClick"
+    onClick="handleClick"
   >
-    <span class="inline-flex items-center gap-2">
+    <span className="inline-flex items-center gap-2">
       Click me
-      <UIcon
+      <Icon
         name="i-heroicons-arrow-right"
-        class="transition-transform duration-300 group-hover:translate-x-1"
+        className="transition-transform duration-300 group-hover:translate-x-1"
       />
     </span>
-  </UButton>
-</template>
+  </Button>
 ```
 
 ### Fixing Missing Loading States
-```vue
+```tsx
 <!-- ❌ Critical: No loading feedback during async action -->
-<script setup>
 const submitForm = async () => {
   await api.submit(formData);
 };
-</script>
 
-<template>
-  <UButton @click="submitForm">
+  <Button onClick="submitForm">
     Submit
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Complete loading state with animations -->
-<script setup>
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
 
@@ -233,41 +225,39 @@ const submitForm = async () => {
     isSubmitting.value = false;
   }
 };
-</script>
 
-<template>
-  <div class="space-y-4">
-    <UButton
-      :loading="isSubmitting"
-      :disabled="isSubmitting"
-      class="
+  <div className="space-y-4">
+    <Button
+      loading={isSubmitting"
+      disabled={isSubmitting"
+      className="
         transition-all duration-300
         hover:scale-105 hover:shadow-xl
         disabled:opacity-50 disabled:cursor-not-allowed
       "
-      @click="submitForm"
+      onClick="submitForm"
     >
-      <span class="flex items-center gap-2">
-        <UIcon
-          v-if="!isSubmitting"
+      <span className="flex items-center gap-2">
+        <Icon
+          if="!isSubmitting"
           name="i-heroicons-paper-airplane"
-          class="transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+          className="transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
         />
-        {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+        { isSubmitting ? 'Submitting...' : 'Submit'}
       </span>
-    </UButton>
+    </Button>
 
     <!-- Success feedback with animation -->
     <Transition
-      enter-active-class="transition-all duration-500 ease-out"
-      enter-from-class="opacity-0 scale-50"
-      enter-to-class="opacity-100 scale-100"
-      leave-active-class="transition-all duration-300 ease-in"
-      leave-from-class="opacity-100 scale-100"
-      leave-to-class="opacity-0 scale-50"
+      enter-active-className="transition-all duration-500 ease-out"
+      enter-from-className="opacity-0 scale-50"
+      enter-to-className="opacity-100 scale-100"
+      leave-active-className="transition-all duration-300 ease-in"
+      leave-from-className="opacity-100 scale-100"
+      leave-to-className="opacity-0 scale-50"
     >
-      <UAlert
-        v-if="showSuccess"
+      <Alert
+        if="showSuccess"
         color="green"
         icon="i-heroicons-check-circle"
         title="Success!"
@@ -275,67 +265,59 @@ const submitForm = async () => {
       />
     </Transition>
   </div>
-</template>
 ```
 
 ### Fixing Jarring State Changes
-```vue
+```tsx
 <!-- ❌ Critical: Content appears/disappears abruptly -->
-<template>
   <div>
-    <UButton @click="showContent = !showContent">
+    <Button onClick="showContent = !showContent">
       Toggle
-    </UButton>
+    </Button>
 
-    <div v-if="showContent">
+    <div if="showContent">
       <p>This content appears instantly (jarring)</p>
     </div>
   </div>
-</template>
 
 <!-- ✅ Correct: Smooth transitions -->
-<template>
-  <div class="space-y-4">
-    <UButton
-      class="transition-all duration-300 hover:scale-105"
-      @click="showContent = !showContent"
+  <div className="space-y-4">
+    <Button
+      className="transition-all duration-300 hover:scale-105"
+      onClick="showContent = !showContent"
     >
-      {{ showContent ? 'Hide' : 'Show' }} Content
-    </UButton>
+      { showContent ? 'Hide' : 'Show'} Content
+    </Button>
 
     <Transition
-      enter-active-class="transition-all duration-300 ease-out"
-      enter-from-class="opacity-0 translate-y-4 scale-95"
-      enter-to-class="opacity-100 translate-y-0 scale-100"
-      leave-active-class="transition-all duration-200 ease-in"
-      leave-from-class="opacity-100 translate-y-0 scale-100"
-      leave-to-class="opacity-0 translate-y-4 scale-95"
+      enter-active-className="transition-all duration-300 ease-out"
+      enter-from-className="opacity-0 translate-y-4 scale-95"
+      enter-to-className="opacity-100 translate-y-0 scale-100"
+      leave-active-className="transition-all duration-200 ease-in"
+      leave-from-className="opacity-100 translate-y-0 scale-100"
+      leave-to-className="opacity-0 translate-y-4 scale-95"
     >
-      <div v-if="showContent" class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+      <div if="showContent" className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
         <p>This content transitions smoothly</p>
       </div>
     </Transition>
   </div>
-</template>
 ```
 
 ### Fixing Missing Focus States
-```vue
+```tsx
 <!-- ❌ Critical: No visible focus state -->
-<template>
   <nav>
-    <a href="/" class="text-gray-700">Home</a>
-    <a href="/about" class="text-gray-700">About</a>
-    <a href="/contact" class="text-gray-700">Contact</a>
+    <a href="/" className="text-gray-700">Home</a>
+    <a href="/about" className="text-gray-700">About</a>
+    <a href="/contact" className="text-gray-700">Contact</a>
   </nav>
-</template>
 
 <!-- ✅ Correct: Clear focus states for keyboard navigation -->
-<template>
-  <nav class="flex gap-4">
+  <nav className="flex gap-4">
     <a
       href="/"
-      class="
+      className="
         text-gray-700 dark:text-gray-300
         transition-all duration-200
         hover:text-primary-600 hover:translate-y-[-2px]
@@ -348,7 +330,7 @@ const submitForm = async () => {
     </a>
     <a
       href="/about"
-      class="
+      className="
         text-gray-700 dark:text-gray-300
         transition-all duration-200
         hover:text-primary-600 hover:translate-y-[-2px]
@@ -361,7 +343,7 @@ const submitForm = async () => {
     </a>
     <a
       href="/contact"
-      class="
+      className="
         text-gray-700 dark:text-gray-300
         transition-all duration-200
         hover:text-primary-600 hover:translate-y-[-2px]
@@ -373,20 +355,16 @@ const submitForm = async () => {
       Contact
     </a>
   </nav>
-</template>
 ```
 
 ### Adding Micro-interactions
-```vue
+```tsx
 <!-- ❌ P2: Static icons without micro-interactions -->
-<template>
-  <UButton icon="i-heroicons-heart">
+  <Button icon="i-heroicons-heart">
     Like
-  </UButton>
-</template>
+  </Button>
 
 <!-- ✅ Correct: Animated icon micro-interaction -->
-<script setup>
 const isLiked = ref(false);
 const heartScale = ref(1);
 
@@ -397,27 +375,24 @@ const toggleLike = () => {
   heartScale.value = 1.3;
   setTimeout(() => heartScale.value = 1, 200);
 };
-</script>
 
-<template>
-  <UButton
+  <Button
     :color="isLiked ? 'red' : 'gray'"
-    class="transition-all duration-300 hover:scale-105"
-    @click="toggleLike"
+    className="transition-all duration-300 hover:scale-105"
+    onClick="toggleLike"
   >
-    <span class="inline-flex items-center gap-2">
-      <UIcon
+    <span className="inline-flex items-center gap-2">
+      <Icon
         :name="isLiked ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'"
         :style="{ transform: `scale(${heartScale})` }"
-        :class="[
+        :className="[
           'transition-all duration-200',
           isLiked ? 'text-red-500 animate-pulse' : 'text-gray-500'
         ]"
       />
-      {{ isLiked ? 'Liked' : 'Like' }}
+      { isLiked ? 'Liked' : 'Like'}
     </span>
-  </UButton>
-</template>
+  </Button>
 ```
 
 ## Animation Best Practices
@@ -435,12 +410,12 @@ const toggleLike = () => {
 - `margin`, `padding`
 - `border-width`
 
-```vue
+```tsx
 <!-- ❌ P2: Animating width (causes reflow) -->
-<div class="transition-all hover:w-64">Content</div>
+<div className="transition-all hover:w-64">Content</div>
 
 <!-- ✅ Correct: Using transform (GPU-accelerated) -->
-<div class="transition-transform hover:scale-110">Content</div>
+<div className="transition-transform hover:scale-110">Content</div>
 ```
 
 ### Animation Duration Guidelines
@@ -450,21 +425,21 @@ const toggleLike = () => {
 - **Slow** (500-800ms): Page transitions, major UI changes
 - **Very Slow** (1000ms+): Celebration animations, complex sequences
 
-```vue
+```tsx
 <!-- Context-appropriate durations -->
-<UButton class="transition-all duration-200 hover:scale-105">
+<Button className="transition-all duration-200 hover:scale-105">
   <!-- Fast hover: 200ms -->
-</UButton>
+</Button>
 
 <Transition
-  enter-active-class="transition-all duration-300"
-  leave-active-class="transition-all duration-300"
+  enter-active-className="transition-all duration-300"
+  leave-active-className="transition-all duration-300"
 >
   <!-- Content change: 300ms -->
-  <div v-if="show">Content</div>
+  <div if="show">Content</div>
 </Transition>
 
-<div class="animate-in slide-in-from-bottom duration-500">
+<div className="animate-in slide-in-from-bottom duration-500">
   <!-- Page load: 500ms -->
   Main content
 </div>
@@ -477,43 +452,39 @@ const toggleLike = () => {
 - `ease-in-out`: Bidirectional animations
 - `linear`: Loading spinners, continuous animations
 
-```vue
+```tsx
 <!-- Appropriate easing -->
 <Transition
-  enter-active-class="transition-all duration-300 ease-out"
-  leave-active-class="transition-all duration-200 ease-in"
+  enter-active-className="transition-all duration-300 ease-out"
+  leave-active-className="transition-all duration-200 ease-in"
 >
-  <div v-if="show">Content</div>
+  <div if="show">Content</div>
 </Transition>
 ```
 
 ## Advanced Interaction Patterns
 
 ### Staggered List Animations
-```vue
-<script setup>
+```tsx
 const items = ref([1, 2, 3, 4, 5]);
-</script>
 
-<template>
   <TransitionGroup
     name="list"
     tag="div"
-    class="space-y-2"
+    className="space-y-2"
   >
     <div
-      v-for="(item, index) in items"
+      map((item, index) in items"
       :key="item"
       :style="{ transitionDelay: `${index * 50}ms` }"
-      class="
+      className="
         transition-all duration-300 ease-out
         hover:scale-105 hover:shadow-lg
       "
     >
-      Item {{ item }}
+      Item { item}
     </div>
   </TransitionGroup>
-</template>
 
 <style scoped>
 .list-enter-active,
@@ -538,8 +509,7 @@ const items = ref([1, 2, 3, 4, 5]);
 ```
 
 ### Success Celebration Animation
-```vue
-<script setup>
+```tsx
 const showSuccess = ref(false);
 
 const celebrate = () => {
@@ -547,67 +517,62 @@ const celebrate = () => {
   // Confetti or celebration animation here
   setTimeout(() => showSuccess.value = false, 3000);
 };
-</script>
 
-<template>
   <div>
-    <UButton
-      @click="celebrate"
-      class="transition-all duration-300 hover:scale-110 hover:rotate-3"
+    <Button
+      onClick="celebrate"
+      className="transition-all duration-300 hover:scale-110 hover:rotate-3"
     >
       Complete Task
-    </UButton>
+    </Button>
 
     <Transition
-      enter-active-class="transition-all duration-500 ease-out"
-      enter-from-class="opacity-0 scale-0 rotate-180"
-      enter-to-class="opacity-100 scale-100 rotate-0"
+      enter-active-className="transition-all duration-500 ease-out"
+      enter-from-className="opacity-0 scale-0 rotate-180"
+      enter-to-className="opacity-100 scale-100 rotate-0"
     >
       <div
-        v-if="showSuccess"
-        class="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+        if="showSuccess"
+        className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
       >
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
-          <UIcon
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
+          <Icon
             name="i-heroicons-check-circle"
-            class="w-16 h-16 text-green-500 animate-bounce"
+            className="w-16 h-16 text-green-500 animate-bounce"
           />
-          <p class="mt-4 text-xl font-heading">Success!</p>
+          <p className="mt-4 text-xl font-heading">Success!</p>
         </div>
       </div>
     </Transition>
   </div>
-</template>
 ```
 
 ### Loading Skeleton with Pulse
-```vue
-<template>
-  <div v-if="loading" class="space-y-4">
-    <div class="animate-pulse">
-      <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-      <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mt-2"></div>
-      <div class="h-32 bg-gray-200 dark:bg-gray-700 rounded mt-4"></div>
+```tsx
+  <div if="loading" className="space-y-4">
+    <div className="animate-pulse">
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mt-2"></div>
+      <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded mt-4"></div>
     </div>
   </div>
 
   <Transition
-    enter-active-class="transition-all duration-500 ease-out"
-    enter-from-class="opacity-0 translate-y-4"
-    enter-to-class="opacity-100 translate-y-0"
+    enter-active-className="transition-all duration-500 ease-out"
+    enter-from-className="opacity-0 translate-y-4"
+    enter-to-className="opacity-100 translate-y-0"
   >
-    <div v-if="!loading">
+    <div if="!loading">
       <!-- Actual content -->
     </div>
   </Transition>
-</template>
 ```
 
 ## MCP Server Integration
 
 While this SKILL doesn't directly use MCP servers, it complements MCP-enhanced agents:
 
-- **Nuxt UI MCP**: Validates that suggested animations work with Nuxt UI components
+- **shadcn/ui MCP**: Validates that suggested animations work with shadcn/ui components
 - **Cloudflare MCP**: Ensures animations don't bloat bundle size (performance check)
 
 ## Benefits
@@ -627,25 +592,25 @@ While this SKILL doesn't directly use MCP servers, it complements MCP-enhanced a
 ## Usage Examples
 
 ### During Button Creation
-```vue
-// Developer adds: <UButton @click="submit">Submit</UButton>
+```tsx
+// Developer adds: <Button onClick="submit">Submit</Button>
 // SKILL immediately activates: "⚠️ P1: Button lacks hover state. Add transition utilities: class='transition-all duration-300 hover:scale-105'"
 ```
 
 ### During Async Action
-```vue
+```tsx
 // Developer creates: const submitForm = async () => { await api.call(); }
 // SKILL immediately activates: "⚠️ P1: Async action without loading state. Add :loading and :disabled props to button."
 ```
 
 ### During State Toggle
-```vue
-// Developer adds: <div v-if="show">Content</div>
+```tsx
+// Developer adds: <div if="show">Content</div>
 // SKILL immediately activates: "⚠️ P1: Content appears abruptly. Wrap with <Transition> for smooth state changes."
 ```
 
 ### Before Deployment
-```vue
+```tsx
 // SKILL runs comprehensive check: "✅ Animation validation passed. 45 interactive elements with hover states, 12 async actions with loading feedback, 8 smooth transitions detected."
 ```
 
