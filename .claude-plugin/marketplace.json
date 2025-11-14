@@ -34,8 +34,8 @@
     {
       "name": "edge-stack",
       "source": "./plugins/edge-stack",
-      "description": "Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Tanstack Start (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, and shadcn/ui design system. Features 25 specialized agents, 12 autonomous SKILLs, 23 workflow commands, and 8 bundled MCP servers.",
-      "version": "2.0.0",
+      "description": "Complete full-stack development toolkit optimized for edge computing. Build modern web applications with Tanstack Start (React), Cloudflare Workers, Polar.sh billing, better-auth authentication, and shadcn/ui design system. Features 27 specialized agents, 12 autonomous SKILLs, 24 workflow commands, and 8 bundled MCP servers.",
+      "version": "3.0.0",
       "author": {
         "name": "Frank Harris",
         "email": "frank@hirefrank.com"
